@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: 'Rye';
+    src: url('./../../assets/fonts/Rye-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Fraunces';
+    src: url('./../../assets/fonts/Fraunces-VariableFont.ttf');
+}
+
+@font-face {
+    font-family: 'Fraunces-Italic';
+    src: url('./../../assets/fonts/Fraunces-Italic-VariableFont.ttf');
+}

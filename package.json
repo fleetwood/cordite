@@ -1,18 +1,42 @@
 {
-  "name": "@example/basics",
-  "type": "module",
-  "version": "0.0.1",
-  "private": true,
+  "name": "hello-next",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "build": "pnpm pr-gen && next build",
+    "clean": "rm -rf .next",
+    "dev": "clear && next dev",
+    "dev:debug": "next dev --inspect-brk=5858",
+    "pr-studio": "npx prisma studio",
+    "pr-migrate": "npx prisma migrate dev",
+    "pr-format": "npx prisma format",
+    "pr-pull": "npx prisma db pull",
+    "pr-gen-edge": "npx prisma generate --data-proxy",
+    "pr-gen": "npx prisma generate",
+    "pr-reset": "pnpm pr-migrate && pnpm pr-pull && pnpm pr-format && pnpm pr-gen",
+    "start": "next start",
+    "tw": "npx tailwindcss -i ./components/styles/cordite.css -o ./dist/cordite.css --watch",
+    "watch": "tsc -w",
+    "watcher": "pnpm clean && pnpm watch"
   },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
-    "astro": "^3.1.4",
-    "tailwindcss": "^3.0.24"
+    "next": "12.0.10",
+    "prisma": "^5.3.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-markdown": "8.0.0",
+    "theme-change": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.14",
+    "@types/react": "17.0.38",
+    "autoprefixer": "^10.4.16",
+    "daisyui": "^3.8.1",
+    "postcss-import": "^15.1.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "4.5.5"
   }
 }
