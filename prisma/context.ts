@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client'
 import useDebug from 'hooks/useDebug'
 import {__prod__} from 'utils/helpers'
 
-
 const { info } = useDebug('prismaContext')
 declare global {
   var prisma: PrismaClient
@@ -27,5 +26,7 @@ if (__prod__) {
   prisma = global.prisma
 }
 
+export * from '@prisma/client'
+
 // export * from './types'
-// export * from './entities'
+export * from './entities'
