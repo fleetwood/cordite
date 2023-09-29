@@ -1,11 +1,20 @@
-import React, { ReactNode } from 'react'
-import Header from './Header'
-import {MenuIcon, MoonIcon, SunIcon} from './ui/icons'
-import Link from 'next/link'
+import React,{ReactNode} from 'react'
+import GoogleLogin from './ui/googleLogin'
+import {MenuIcon} from './ui/icons'
 import ActiveLink from './ui/links/ActiveLink'
 
 type Props = {
   children: ReactNode
+}
+
+const NavMenu = () => {
+  return (
+    <>
+      <ActiveLink href="/">Home</ActiveLink>
+      <ActiveLink href="/theme">Theme</ActiveLink>
+      <GoogleLogin />
+    </>
+  )
 }
 
 const Layout: React.FC<Props> = (props) => (
@@ -41,12 +50,7 @@ const Layout: React.FC<Props> = (props) => (
           CORDITE
         </div>
         <div className="hidden lg:flex gap-2 items-center">
-          <ActiveLink variant="info" href="/">
-            Home
-          </ActiveLink>
-          <ActiveLink variant="info" href="/theme">
-            Theme
-          </ActiveLink>
+          <NavMenu />
         </div>
       </div>
       <div className="grid">
@@ -57,8 +61,7 @@ const Layout: React.FC<Props> = (props) => (
       <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
       <div className="menu p-4 w-80 min-h-full bg-base-200">
         {/* Sidebar content here */}
-        <ActiveLink href="/">Home</ActiveLink>
-        <ActiveLink href="/theme">Theme</ActiveLink>
+        <NavMenu />
       </div>
     </div>
   </div>
