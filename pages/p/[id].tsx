@@ -2,7 +2,7 @@ import React from "react"
 import { GetServerSideProps } from "next"
 import ReactMarkdown from "react-markdown"
 import Layout from "../../components/Layout"
-import { PostProps } from "../../components/Post"
+
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = {
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 }
 
-const Post: React.FC<PostProps> = (props) => {
+const Post = (props: {title: any; published: any; author: {name: any ; content: string }}) => {
   let title = props.title
   if (!props.published) {
     title = `${title} (Draft)`
@@ -31,7 +31,7 @@ const Post: React.FC<PostProps> = (props) => {
       <div>
         <h2>{title}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
+         {/* <ReactMarkdown children={props.content} /> */}
       </div>
     </Layout>
   )

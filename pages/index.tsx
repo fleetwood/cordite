@@ -10,33 +10,19 @@ import CastingSection from "components/containers/Casting/casting"
 import StatSection from "components/containers/Stat/stat"
 import HomeSection from "components/containers/Home/home"
 import {twMerge} from "tailwind-merge"
+import {userContext} from "context/UserContext"
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = [
-    {
-      id: "1",
-      title: "Prisma is the perfect ORM for Next.js",
-      content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-      published: false,
-      author: {
-        name: "Nikolas Burk",
-        email: "burk@prisma.io",
-      },
-    },
-  ]
-  return { 
-    props: { feed }, 
-    revalidate: 10 
-  }
+  return {props:{}}
 }
 
 type Props = {
   // feed: PostProps[]
 }
 
-const HomePage: React.FC<Props> = (props) => {
+const HomePage = (props) => {
+  const {data: user, isLoading} = userContext()
   const [activeSection, setActiveSection] = useState(-1)
-
   const activeClass = (i:number) => twMerge('absolute transition-all duration-200 ease-out', i === activeSection ? 'opacity-100 scale-y-100 z-1' : 'opacity-0 scale-y-0 z-0')
 
   return (
@@ -53,11 +39,11 @@ const HomePage: React.FC<Props> = (props) => {
             Casting Tree
           </VmenuLink>
         </div>
-        <div
-          className="col-span-4 relative p-4 bg-cover bg-opacity-20"
-          style={{ backgroundImage: 'url("./img/cd0.jpeg")' }}
-        >
-          <Section className={activeClass(-1)}>
+        <div className="col-span-4 relative p-4">
+          <Section 
+            className={twMerge('w-full h-full bg-cover bg-opacity-20',activeClass(-1))}
+            backgroundImage="img/cd0.jpeg"
+          >
             <h2 className="mt-4 text-secondary text-shadow-lg shadow-black">
               CHARACTER EXPRESSION TREES
             </h2>

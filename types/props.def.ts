@@ -16,6 +16,7 @@ export type IconProps = SvgProps & {
 
 export type classNameProps = {
   className?: string
+  style?:     React.CSSProperties
 }
 
 export type variantProps = {

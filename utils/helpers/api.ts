@@ -5,7 +5,7 @@ export const NotImplemented = (file?: string) => {
   return { code: 500, message: `${file ? file + ': ' : ''}Not implemented` }
 }
 
-export const apiUrl = (url: string) => `${__site__}/api/${url}`
+export const apiUrl = (url: string) => `/api/${url}`
 
 const postData = (body: any) => {
   return {

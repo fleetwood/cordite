@@ -44,4 +44,5 @@ export default NextAuth({
     // verifyRequest: '/auth/verify-request', // Used for check email page
     // newUser: "/user/setup", // If set, new users will be directed here on first sign in
   },
+  debug: true
 })

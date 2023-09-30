@@ -14,7 +14,7 @@ type ActiveLinkProps = classNameProps & variantProps & {
 
 const ActiveLink = ({children, ...props}:ActiveLinkProps) => {
   const {txtVariant, btnVariant} = useVariants(props.variant)
-  return <Link href={props.href}><a className={twMerge('btn btn-sm',btnVariant,props.className)}>{children}</a></Link>
+  return <Link href={props.href} className={twMerge('btn btn-sm',btnVariant,props.className)}>{children}</Link>
 }
 
 export default ActiveLink

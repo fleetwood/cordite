@@ -1,24 +1,22 @@
+import {userContext} from 'context/UserContext'
 import {BuiltInProviderType} from 'next-auth/providers'
 import {
   ClientSafeProvider,
   getProviders,
   LiteralUnion,
-  signIn,
+  signIn
 } from 'next-auth/react'
 import {useEffect,useState} from 'react'
 import useVariants from 'src/hooks/useVariants'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps,variantProps} from 'types'
 import {GoogleSVG} from './icons'
-import {useAmp} from 'next/amp'
-import useAuth from 'hooks/useAuth'
-import {capFirstLetter} from 'utils/helpers'
 
 type MenuLoginProps = classNameProps & variantProps & {
 }
 
 const GoogleLogin = (props: MenuLoginProps) => {
-  const {me, isLoading, error, invalidate} = useAuth()
+  const {data: user, isLoading, error, invalidate} = userContext()
 
   const [providers, setproviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
@@ -38,17 +36,17 @@ const GoogleLogin = (props: MenuLoginProps) => {
   return (
     <>
     {isLoading && <div className='animate-spin'>C</div>}
-    {me && 
+    {user && 
       <div className="avatar">
-        <div className="w-24 mask mask-triangle uppercase text-base-content">
-          {me.image 
-            ? <img src={me.image!} />
-            : (me.name.substring(0,1))
+        <div className="w-20 mask mask-hexagon uppercase text-base-content">
+          {user.image 
+            ? <img src={user.image!} />
+            : (user.name.substring(0,1))
           }
         </div>
       </div>
     }
-    {!isLoading && !me &&
+    {!isLoading && !user &&
       <div
         onClick={() => signIn(providers?.google.id)}
         className={twMerge(
