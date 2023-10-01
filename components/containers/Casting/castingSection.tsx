@@ -10,8 +10,12 @@ const CastingSection = (props: classNameProps) => {
 
 
   return (
-    <Section className={props.className} title="Casting">
-      {(isLoading) && <Spinner />}
+    <Section
+      className={props.className}
+      title="Casting"
+      titleClass="text-secondary"
+    >
+      {isLoading && <Spinner />}
       <div className="grid grid-cols-2">
         <div>
           <CastTreeView />

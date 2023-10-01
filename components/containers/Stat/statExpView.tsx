@@ -1,5 +1,6 @@
 import TextArea from 'components/forms/TextArea'
 import TextInput from 'components/forms/TextInput'
+import DialogContainer from 'components/ui/dialog'
 import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
 import {StatExpression, StatTree} from 'prisma/context'
@@ -54,55 +55,58 @@ const StatExpView = () => {
         </div>
       )}
       {user && (
-        <div className="rounded bg-neutral/50 p-2 flex flex-col">
-          <TextInput
-            label="Name"
-            placeholder="Give it a name"
-            value={statName}
-            setValue={setStatName}
-          />
-          <TextArea
-            label="Description"
-            placeholder="Describe it!"
-            value={statDescription}
-            setValue={setStatDescription}
-          />
-
-          <div className='flex flex-col my-2'>
-            <p>Tier {tier}</p>
-            <input
-              type="range"
-              min={1}
-              max="3"
-              value={tier}
-              className="range range-primary"
-              step="1"
-              onChange={(e) =>
-                setTier(e.currentTarget.value as unknown as number)
-              }
+        <DialogContainer buttonLabel='+' buttonClass='btn-secondary' modalTitle='Add a New Expression'>
+          <div className="rounded bg-neutral/50 p-2 flex flex-col">
+            <TextInput
+              label="Name"
+              placeholder="Give it a name"
+              value={statName}
+              setValue={setStatName}
             />
-            <div className="w-full flex justify-between text-xs px-2">
-              <span>1</span>
-              <span>2</span>
-              <span>3</span>
-            </div>
-          </div>
+            <TextArea
+              label="Description"
+              placeholder="Describe it!"
+              value={statDescription}
+              setValue={setStatDescription}
+            />
 
-          <div className='flex flex-col my-2'>
-            <label>Tree</label>
-            <select 
-              className='select w-full'
-              onChange={(e) => setStatTreeId(e.currentTarget.value)}
+            <div className="flex flex-col my-2">
+              <p>Tier {tier}</p>
+              <input
+                type="range"
+                min={1}
+                max="3"
+                value={tier}
+                className="range range-primary"
+                step="1"
+                onChange={(e) =>
+                  setTier(e.currentTarget.value as unknown as number)
+                }
+              />
+              <div className="w-full flex justify-between text-xs px-2">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col my-2">
+              <label>Tree</label>
+              <select
+                className="select w-full"
+                onChange={(e) => setStatTreeId(e.currentTarget.value)}
               >
-              {statTree && statTree.map((tree: StatTree) => (
-                <option value={tree.id}>{tree.name}</option>
-              ))}
-            </select>
+                {statTree &&
+                  statTree.map((tree: StatTree) => (
+                    <option value={tree.id}>{tree.name}</option>
+                  ))}
+              </select>
+            </div>
+            <button className="btn btn-secondary" onClick={addStat}>
+              Add Expression
+            </button>
           </div>
-          <button className="btn btn-secondary" onClick={addStat}>
-            Add Expression
-          </button>
-        </div>
+        </DialogContainer>
       )}
     </div>
   )

@@ -4,6 +4,8 @@ const {debug} = useDebug('entities/statExp')
 
 const all = async () => prisma.statExpression.findMany({})
 
+const find = async (id:string) => prisma.statExpression.findUnique({where: {id}, include: {exps: true}})
+
 const create = async ({
   name,
   description,
@@ -28,4 +30,5 @@ const create = async ({
 export const PrismaStatExp = {
   all,
   create,
+  find
 }

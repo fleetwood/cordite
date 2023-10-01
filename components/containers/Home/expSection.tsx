@@ -1,13 +1,14 @@
 import Section from 'components/ui/section'
+import Typography from 'components/ui/typography/typography'
 import React from 'react'
 import {classNameProps} from 'types'
 
 
-const HomeSection
+const CharExpressions
  = (props:classNameProps) => {
   return (
     <Section className={props.className} title="Character Expression" titleClass="text-secondary">
-      <>
+      <Typography>
         <p>
           Increasing your stats or getting better weapons is not the only means
           of progression in Cordite; you also accrue Character EXP(ression)
@@ -31,9 +32,9 @@ const HomeSection
           their higher tiers.
         </p>
         <p>Now, onto the trees!</p>
-      </>
+      </Typography>
     </Section>
   )
 }
 
-export default HomeSection
+export default CharExpressions
