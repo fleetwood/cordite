@@ -22,7 +22,7 @@ const TextArea = (props:TextAreaProps) => {
       )}
       <textarea
         placeholder={props.placeholder}
-        className={twMerge('textarea textarea-ghost', props.className)}
+        className={twMerge('textarea textarea-ghost w-full', props.className)}
         value={props.value}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           if (props.setValue) props.setValue(e.currentTarget.value)

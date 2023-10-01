@@ -1,6 +1,6 @@
 import useApi from 'hooks/useApi'
 import {NextApiRequest,NextApiResponse} from 'next'
-import {PrismaCastTree} from 'prisma/entities/cast'
+import {PrismaCastTree} from 'prisma/context'
 
 const request = async (req: NextApiRequest, res: NextApiResponse) =>{
   const {name, description} = req.body
