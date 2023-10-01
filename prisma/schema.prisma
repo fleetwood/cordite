@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db/cordite.db"
+}
+
+//////////////
+// STAT STUFF
+
+// PHY AND FIN
+// WIT AND INT
+// CHA
+model StatTree {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  name        String
+  icon        String
+  description String
+}
+
+model CharacterStat {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  tier     Int     @default(1)
+  maneuver Boolean @default(true)
+
+  name        String
+  icon        String
+  description String
+
+  physiques Character[] @relation("phys_stat")
+  finesses  Character[] @relation("fin_stat")
+  wits      Character[] @relation("wit_stat")
+  ints      Character[] @relation("int_stat")
+  chas      Character[] @relation("cha_stat")
+}
+
+model StatExpression {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+  level     Int      @default(0)
+
+  name        String
+  icon        String
+  description String
+
+  exps Expression[] @relation("stat_expressions")
+}
+
+///////////////////////
+// CAST STUFF 
+
+// EARTH AIR WATER FIRE
+// LIFE LIGHT SPACETIME
+model CastTree {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  name        String
+  icon        String
+  description String
+}
+
+model CharacterCast {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  tier     Int     @default(1)
+  maneuver Boolean @default(true)
+
+  name        String
+  icon        String
+  description String
+
+  earth     Character[] @relation("earth_exp")
+  water     Character[] @relation("water_exp")
+  fire      Character[] @relation("fire_exp")
+  air       Character[] @relation("air_exp")
+  life      Character[] @relation("life_exp")
+  light     Character[] @relation("light_exp")
+  spacetime Character[] @relation("spacetime_exp")
+}
+
+model CastExpression {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  name        String
+  icon        String
+  description String
+
+  exps Expression[] @relation("cast_expressions")
+}
+
+model Requirements {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+}
+
+model RequireGroup {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+}
+
+/////////////////////////
+// CHAR STUFF
+model Character {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  name   String
+  avatar String?
+  story  String?
+  level  Int     @default(1)
+
+  physiqueId String
+  physique   CharacterStat @relation("phys_stat", fields: [physiqueId], references: [id])
+
+  finesseId String
+  finesse   CharacterStat @relation("fin_stat", fields: [finesseId], references: [id])
+
+  witId String
+  wit   CharacterStat @relation("wit_stat", fields: [witId], references: [id])
+
+  intuitionId String
+  intuition   CharacterStat @relation("int_stat", fields: [intuitionId], references: [id])
+
+  charismaId String
+  charisma   CharacterStat @relation("cha_stat", fields: [charismaId], references: [id])
+
+  earthId String
+  earth   CharacterCast @relation("earth_exp", fields: [earthId], references: [id])
+
+  waterId String
+  water   CharacterCast @relation("water_exp", fields: [waterId], references: [id])
+
+  fireId String
+  fire   CharacterCast @relation("fire_exp", fields: [fireId], references: [id])
+
+  airId String
+  air   CharacterCast @relation("air_exp", fields: [airId], references: [id])
+
+  lifeId String
+  life   CharacterCast @relation("life_exp", fields: [lifeId], references: [id])
+
+  lightId String
+  light   CharacterCast @relation("light_exp", fields: [lightId], references: [id])
+
+  spacetimeId String
+  spacetime   CharacterCast @relation("spacetime_exp", fields: [spacetimeId], references: [id])
+
+  expressions Expression[] @relation("char_expressions")
+}
+
+model Expression {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  charId    String
+  character Character @relation("char_expressions", fields: [charId], references: [id])
+
+  statID String?
+  stat   StatExpression? @relation("stat_expressions", fields: [statID], references: [id])
+
+  castID String?
+  cast   CastExpression? @relation("cast_expressions", fields: [castID], references: [id])
+}
+
+/////////////////////////
+// USER STUFF
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?   @unique
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  slug          String?   @unique
+  visible       Boolean?  @default(true)
+
+  accounts Account[]
+  sessions Session[]
+
+  @@index([id, name, email])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
