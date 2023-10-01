@@ -22,6 +22,8 @@ model StatTree {
   name        String
   icon        String
   description String
+
+  expressions StatExpression[] @relation("stat_tree_exp")
 }
 
 model CharacterStat {
@@ -55,6 +57,9 @@ model StatExpression {
   icon        String
   description String
 
+  statTreeId String
+  statTree   StatTree @relation("stat_tree_exp", fields: [statTreeId], references: [id])
+
   exps Expression[] @relation("stat_expressions")
 }
 
@@ -72,6 +77,8 @@ model CastTree {
   name        String
   icon        String
   description String
+
+  expressions CastExpression[] @relation("cast_tree_exp")
 }
 
 model CharacterCast {
@@ -105,6 +112,9 @@ model CastExpression {
   name        String
   icon        String
   description String
+
+  castTreeId String   @map("treeId")
+  castTree   CastTree @relation("cast_tree_exp", fields: [castTreeId], references: [id])
 
   exps Expression[] @relation("cast_expressions")
 }

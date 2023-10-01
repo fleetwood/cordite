@@ -2,13 +2,13 @@ import {GetStaticProps} from "next"
 import {useState} from "react"
 
 import Layout from "components/Layout"
-import CastingSection from "components/containers/Casting/casting"
 import HomeSection from "components/containers/Home/home"
-import StatSection from "components/containers/Stat/stat"
 import VmenuLink from "components/ui/links/VerticalMenuLink"
 import Section from "components/ui/section"
 import {userContext} from "context/UserContext"
 import {twMerge} from "tailwind-merge"
+import StatSection from "components/containers/Stat/statSection"
+import CastingSection from "components/containers/Casting/castingSection"
 
 export const getStaticProps: GetStaticProps = async () => {
   return {props:{}}
