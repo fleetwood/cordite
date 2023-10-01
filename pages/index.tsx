@@ -1,16 +1,14 @@
-import React, {useState} from "react"
-import { GetStaticProps } from "next"
+import {GetStaticProps} from "next"
+import {useState} from "react"
 
 import Layout from "components/Layout"
-import Section from "components/ui/section"
-import {MoonIcon, SunIcon} from "components/ui/icons"
-import Link from "next/link"
-import VmenuLink from "components/ui/links/VerticalMenuLink"
 import CastingSection from "components/containers/Casting/casting"
-import StatSection from "components/containers/Stat/stat"
 import HomeSection from "components/containers/Home/home"
-import {twMerge} from "tailwind-merge"
+import StatSection from "components/containers/Stat/stat"
+import VmenuLink from "components/ui/links/VerticalMenuLink"
+import Section from "components/ui/section"
 import {userContext} from "context/UserContext"
+import {twMerge} from "tailwind-merge"
 
 export const getStaticProps: GetStaticProps = async () => {
   return {props:{}}
@@ -55,8 +53,8 @@ const HomePage = (props) => {
             </p>
           </Section>
           <HomeSection className={activeClass(0)} />
-          <CastingSection className={activeClass(1)} />
-          <StatSection className={activeClass(2)} />
+          <StatSection className={activeClass(1)} />
+          <CastingSection className={activeClass(2)} />
         </div>
         {/* {props.feed.map((post) => (
           <div key={post.id} className="post">

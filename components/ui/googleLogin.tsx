@@ -31,35 +31,33 @@ const GoogleLogin = (props: MenuLoginProps) => {
     setTheProviders()
   }, [])
 
-  const {txtVariantContent, bgVariant} = useVariants(props.variant??'primary')
+  const {txtVariantContent, bgVariant, borderVariant} = useVariants(props.variant??'primary')
 
   return (
     <>
-    {isLoading && <div className='animate-spin'>C</div>}
-    {user && 
-      <div className="avatar">
-        <div className="w-20 mask mask-hexagon uppercase text-base-content">
-          {user.image 
-            ? <img src={user.image!} />
-            : (user.name.substring(0,1))
-          }
+      {isLoading && <div className="animate-spin">C</div>}
+      {user && (
+        <div className="avatar">
+          <div className="w-20 mask mask-hexagon uppercase text-base-content">
+            {user.image ? <img src={user.image!} /> : user.name.substring(0, 1)}
+          </div>
         </div>
-      </div>
-    }
-    {!isLoading && !user &&
-      <div
-        onClick={() => signIn(providers?.google.id)}
-        className={twMerge(
-          `p-1 hover:scale-125 rounded-full transition-all duration-200 ease-in-out`,
-          txtVariantContent,
-          bgVariant,
-          props.className
-        )}
-      >
-        <GoogleSVG />
-      </div>
-    }
-  </>
+      )}
+      {!isLoading && !user && (
+        <div
+          onClick={() => signIn(providers?.google.id)}
+          className={twMerge(
+            `cursor-pointer rounded-full h-8 w-8`,
+            'hover:scale-125 transition-all duration-200 ease-out',
+            txtVariantContent,
+            bgVariant,
+            props.className
+          )}
+        >
+          <GoogleSVG />
+        </div>
+      )}
+    </>
   )
 }
 

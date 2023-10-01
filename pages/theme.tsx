@@ -5,7 +5,95 @@ const ThemePage = () => {
   return (
     <Layout>
       <div>
-        <h2 className="px-2 pb-4 text-xl font-bold">Preview</h2>
+        <h2 className="px-2 pb-4 text-xl font-bold">Colors</h2>
+
+        <div className="border border-primary p-2 grid grid-cols-2 gap-4">
+          <div className="col-span-1 grid grid-cols-3">
+            <div className="col-span-3 font-mono text-2xl bg-primary text-primary-content my-2">
+              Cordite Light
+            </div>
+
+            <div>Primary</div>
+            <div className="font-mono">#584B4B</div>
+            <div className="w-20px bg-[#584B4B]"></div>
+
+            <div>Secondary</div>
+            <div className="font-mono">#424143</div>
+            <div className="w-20px bg-[#424143]"></div>
+
+            <div>Accent</div>
+            <div className="font-mono">#1081B4</div>
+            <div className="w-20px bg-[#1081B4]"></div>
+
+            <div>Neutral</div>
+            <div className="font-mono">#372F2F</div>
+            <div className="w-20px bg-[#372F2F]"></div>
+
+            <div>Base-100</div>
+            <div className="font-mono">#D9D4D1</div>
+            <div className="w-20px bg-[#D9D4D1]"></div>
+
+            <div>Info</div>
+            <div className="font-mono">#32C4C0</div>
+            <div className="w-20px bg-[#32C4C0]"></div>
+
+            <div>Success</div>
+            <div className="font-mono">#01b768</div>
+            <div className="w-20px bg-[#01b768]"></div>
+
+            <div>Warning</div>
+            <div className="font-mono">#FB8500</div>
+            <div className="w-20px bg-[#FB8500]"></div>
+
+            <div>Error</div>
+            <div className="font-mono">#AD2325</div>
+            <div className="w-20px bg-[#AD2325]"></div>
+          </div>
+
+          <div className="col-span-1 grid grid-cols-3">
+            <div className="col-span-3 text-2xl font-mono bg-primary text-primary-content my-2">
+              Cordite Dark
+            </div>
+
+            <div>Primary</div>
+            <div className="font-mono">#A2A881</div>
+            <div className="w-20px bg-[#A2A881]"></div>
+
+            <div>Secondary</div>
+            <div className="font-mono">#7A8538</div>
+            <div className="w-20px bg-[#7A8538]"></div>
+
+            <div>Accent</div>
+            <div className="font-mono">#83781B</div>
+            <div className="w-20px bg-[#83781B]"></div>
+
+            <div>Neutral</div>
+            <div className="font-mono">#2b3440</div>
+            <div className="w-20px bg-[#2b3440]"></div>
+
+            <div>Base-100</div>
+            <div className="font-mono">#121212</div>
+            <div className="w-20px bg-[#121212]"></div>
+
+            <div>Info</div>
+            <div className="font-mono">#2ACBCB</div>
+            <div className="w-20px bg-[#2ACBCB]"></div>
+
+            <div>Success</div>
+            <div className="font-mono">#7AC465</div>
+            <div className="w-20px bg-[#7AC465]"></div>
+
+            <div>Warning</div>
+            <div className="font-mono">#EDE556</div>
+            <div className="w-20px bg-[#EDE556]"></div>
+
+            <div>Error</div>
+            <div className="font-mono">#781919</div>
+            <div className="w-20px bg-[#781919]"></div>
+          </div>
+        </div>
+
+        <h2 className="mt-8 px-2 pb-4 text-xl font-bold">Current</h2>
 
         <div data-theme="light" className="bg-transparent">
           <div
