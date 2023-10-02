@@ -2,10 +2,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// prisma/schema.prisma
 datasource db {
-  provider = "sqlite"
-  url      = "file:./db/cordite.db"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  // If you want to use Prisma Migrate, you will need to manually create a shadow database
+  // https://neon.tech/docs/guides/prisma-migrate#configure-a-shadow-database-for-prisma-migrate
+  // make sure to append ?connect_timeout=10 to the connection string
+  // shadowDatabaseUrl = env(“SHADOW_DATABASE_URL”)
 }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:./db/cordite.db"
+// }
 
 //////////////
 // STAT STUFF
@@ -22,6 +33,8 @@ model StatTree {
   name        String
   icon        String
   description String
+
+  expressions StatExpression[] @relation("stat_tree_exp")
 }
 
 model CharacterStat {
@@ -55,6 +68,9 @@ model StatExpression {
   icon        String
   description String
 
+  statTreeId String
+  statTree   StatTree @relation("stat_tree_exp", fields: [statTreeId], references: [id])
+
   exps Expression[] @relation("stat_expressions")
 }
 
@@ -72,6 +88,8 @@ model CastTree {
   name        String
   icon        String
   description String
+
+  expressions CastExpression[] @relation("cast_tree_exp")
 }
 
 model CharacterCast {
@@ -105,6 +123,9 @@ model CastExpression {
   name        String
   icon        String
   description String
+
+  castTreeId String   @map("treeId")
+  castTree   CastTree @relation("cast_tree_exp", fields: [castTreeId], references: [id])
 
   exps Expression[] @relation("cast_expressions")
 }
