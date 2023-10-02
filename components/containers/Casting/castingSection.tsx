@@ -10,20 +10,10 @@ const CastingSection = (props: classNameProps) => {
 
 
   return (
-    <Section
-      className={props.className}
-      title="Casting"
-      titleClass="text-secondary"
-    >
+    <Section className='mt-4 flex flex-col gap-4'>
       {isLoading && <Spinner />}
-      <div className="grid grid-cols-2">
-        <div>
-          <CastTreeView />
-        </div>
-        <div>
-          <CastExpView />
-        </div>
-      </div>
+      <CastTreeView className="border-t border-secondary/50 " />
+      <CastExpView className="bg-neutral/30 py-4" />
     </Section>
   )
 }

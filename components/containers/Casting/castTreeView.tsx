@@ -7,8 +7,14 @@ import {CastTree} from 'prisma/context'
 
 import React, {useState} from 'react'
 import {sendApi, uuid} from 'utils/helpers'
+import CastTreeCard from './castTreeCard'
+import {classNameProps} from 'types'
 
-const CastTreeView = () => {
+type CastTreeViewProps = classNameProps & {
+
+}
+
+const CastTreeView = (props:CastTreeViewProps) => {
   const { data: user, isLoading } = userContext()
 
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -39,38 +45,50 @@ const CastTreeView = () => {
     }
   }
   return (
-    <div className='grid grid-flow-col relative'>
-      <h2>Tree</h2>
-      {user && 
-        <OpenDialog 
-          btnLabel="+" btnClassname='btn-sm btn-circle btn-secondary'
-          title="Add a new Cast Tree"
-          open={dialogOpen} setOpen={setDialogOpen}
-          >
-          <div className="flex flex-col">
-            <TextInput
-              label="Name"
-              placeholder="Give it a name"
-              value={castName}
-              setValue={setCastName}
-            />
-            <TextArea
-              label="Description"
-              placeholder="Describe it!"
-              value={castDescription}
-              setValue={setCastDescription}
-            />
-            <button className="btn btn-secondary" onClick={addCast}>
-              Add Cast
-            </button>
+    <div className={props.className}>
+      <div className="grid grid-flow-col relative">
+        <h2>&nbsp;</h2>
+        {user && (
+          <div className="absolute right-0">
+            <OpenDialog
+              btnLabel="+"
+              btnClassname="btn-sm btn-circle btn-secondary"
+              title="Add a new Cast Tree"
+              open={dialogOpen}
+              setOpen={setDialogOpen}
+            >
+              <div className="flex flex-col">
+                <TextInput
+                  label="Name"
+                  placeholder="Give it a name"
+                  value={castName}
+                  setValue={setCastName}
+                />
+                <TextArea
+                  label="Description"
+                  placeholder="Describe it!"
+                  value={castDescription}
+                  setValue={setCastDescription}
+                />
+                <button className="btn btn-info" onClick={addCast}>
+                  Add Cast
+                </button>
+              </div>
+            </OpenDialog>
           </div>
-        </OpenDialog>
-      }
+        )}
+      </div>
       {castTree && (
-        <div className="flex flex-col">
-          {castTree.sort((a,b) => a.name > b.name ? -1 : 1).map((c: CastTree, i: number) => (
-            <div key={uuid()}>{c.name}</div>
-          ))}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 justify-evenly">
+          {castTree
+            .sort((a, b) => (a.name > b.name ? -1 : 1))
+            .map((c: CastTree, i: number) => (
+              <CastTreeCard
+                className="cursor-pointer border border-primary/0 hover:border-primary/50"
+                tree={c}
+                key={uuid()}
+              />
+            ))}
         </div>
       )}
     </div>

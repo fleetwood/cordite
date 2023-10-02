@@ -1,19 +1,23 @@
 import TextArea from 'components/forms/TextArea'
 import TextInput from 'components/forms/TextInput'
-import DialogContainer from 'components/ui/dialog'
+import OpenDialog from 'components/ui/dialogs/openDialog'
 import {userContext} from 'context/UserContext'
+import useDebug from 'hooks/useDebug'
 import useRocketQuery from 'hooks/useRocketQuery'
 import {StatTree} from 'prisma/context'
 import {Dispatch,ReactNode,SetStateAction,useState} from 'react'
-import {DEBUG, sendApi,uuid} from 'utils/helpers'
+import {DEBUG,sendApi,uuid} from 'utils/helpers'
 import StatTreeCard from './statTreeCard'
 import StatTreeDetailView from './statTreeDetail'
-import useDebug from 'hooks/useDebug'
-import OpenDialog from 'components/ui/dialogs/openDialog'
+import {classNameProps} from 'types'
 
 const {debug} = useDebug('statTreeView', DEBUG)
 
-const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) => {
+type StatTreeViewProps = classNameProps & {
+
+}
+
+const StatTreeView = (props:StatTreeViewProps) => {
   const { data: user, isLoading } = userContext()
 
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -28,11 +32,6 @@ const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) =
     name: 'stat-tree-all',
     url: 'stat/tree/all',
   })
-
-  const chooseViewport = async (stat:StatTree) => {
-    debug('chooseViewPort', {stat})
-    props.setViewPort(<StatTreeDetailView id={stat.id} /> )
-  }
 
   const addStat = async () => {
     if (newName && newDescription) {
@@ -50,35 +49,37 @@ const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) =
   }
 
   return (
-    <>
+    <div className={props.className}>
       <div className="grid grid-flow-col relative">
         <h3>&nbsp;</h3>
         {user && (
-        <div className="absolute right-0">
-          <OpenDialog 
-            title="Add a Stat" btnLabel="+" 
-            btnClassname='btn-sm rounded-full' 
-            open={dialogOpen} setOpen={setDialogOpen}
+          <div className="absolute right-0">
+            <OpenDialog
+              title="Add a Stat"
+              btnLabel="+"
+              btnClassname="btn-sm btn-circle btn-secondary"
+              open={dialogOpen}
+              setOpen={setDialogOpen}
             >
-            <div>
-              <TextInput
-                label="Name"
-                placeholder="Give it a name"
-                value={newName}
-                setValue={setNewName}
+              <div>
+                <TextInput
+                  label="Name"
+                  placeholder="Give it a name"
+                  value={newName}
+                  setValue={setNewName}
                 />
-              <TextArea
-                label="Description"
-                placeholder="Describe it!"
-                value={newDescription}
-                setValue={setNewDescription}
+                <TextArea
+                  label="Description"
+                  placeholder="Describe it!"
+                  value={newDescription}
+                  setValue={setNewDescription}
                 />
-              <button className="btn btn-secondary" onClick={addStat}>
-                Add Stat
-              </button>
-            </div>
-          </OpenDialog>
-        </div>
+                <button className="btn btn-info" onClick={addStat}>
+                  Add Stat
+                </button>
+              </div>
+            </OpenDialog>
+          </div>
         )}
       </div>
       {statTree && (
@@ -86,11 +87,16 @@ const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) =
           {statTree
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((s: StatTree, i: number) => (
-              <StatTreeCard statTree={s} key={uuid()} className='cursor-pointer border border-primary/0 hover:border-primary/50' onClick={() => chooseViewport(s)} noContent />
+              <StatTreeCard
+                className="cursor-pointer border border-primary/0 hover:border-primary/50"
+                statTree={s}
+                key={uuid()}
+                noContent
+              />
             ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
 

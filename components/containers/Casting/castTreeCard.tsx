@@ -1,24 +1,24 @@
-import { StatExpression, StatTree } from '@prisma/client'
+import { CastTree, StatExpression, StatTree } from '@prisma/client'
 import { Card, CardContent, CardProps, CardTitle } from 'components/ui/Card'
 import { classNameProps } from 'types'
 
-type StatTreeCardProps = classNameProps & {
+type CastTreeCardProps = classNameProps & {
   onClick?: () => void
-  statExp: StatExpression
+  tree: CastTree
   noContent?: boolean
 }
 
-const StatExpCard = ({ statExp, ...props }: StatTreeCardProps) => {
+const CastTreeCard = ({ tree, ...props }: CastTreeCardProps) => {
   return (
     <Card className="bg-neutral/20 odd:bg-neutral/30 group">
       <CardTitle className="text-primary group-odd:text-secondary">
-        {statExp.name}
+        {tree.name}
       </CardTitle>
       {props.noContent === undefined && (
-        <CardContent>{statExp.description}</CardContent>
+        <CardContent>{tree.description}</CardContent>
       )}
     </Card>
   )
 }
 
-export default StatExpCard
+export default CastTreeCard

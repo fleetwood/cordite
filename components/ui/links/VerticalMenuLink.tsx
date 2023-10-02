@@ -20,9 +20,9 @@ const VmenuLink = ({children, ...props}:VmenuLinkProps) => {
         `hover:${txtVariantContent}`,
         props.className
       )}
-      onClick={props.onClick ?props.onClick : () => {}}
+      onClick={props.onClick}
     >
-      <Link href={props.href??'#'}>{children}</Link>
+      <Link href={props.href ?? '#'}>{children}</Link>
     </span>
   )
 }
