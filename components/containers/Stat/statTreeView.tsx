@@ -9,16 +9,16 @@ import {DEBUG, sendApi,uuid} from 'utils/helpers'
 import StatTreeCard from './statTreeCard'
 import StatTreeDetailView from './statTreeDetail'
 import useDebug from 'hooks/useDebug'
+import OpenDialog from 'components/ui/dialogs/openDialog'
 
 const {debug} = useDebug('statTreeView', DEBUG)
 
 const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) => {
   const { data: user, isLoading } = userContext()
 
+  const [dialogOpen, setDialogOpen] = useState(false)
   const [newName, setNewName] = useState<string>()
   const [newDescription, setNewDescription] = useState<string>()
-
-  const modalId = 'add-stat-dialog'
 
   const {
     data: statTree,
@@ -44,8 +44,7 @@ const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) =
         setNewDescription(() => undefined)
         setNewName(() => undefined)
         invalidateTree()
-        // @ts-ignore
-        document.getElementById(modalId).closeModal()
+        setDialogOpen(false)
       }
     }
   }
@@ -53,34 +52,32 @@ const StatTreeView = (props:{setViewPort:Dispatch<SetStateAction<ReactNode>>}) =
   return (
     <>
       <div className="grid grid-flow-col relative">
-        <h3>Stat Trees</h3>
+        <h3>&nbsp;</h3>
         {user && (
         <div className="absolute right-0">
-          <DialogContainer
-            id={modalId}
-            buttonLabel="+"
-            buttonClass="btn-sm btn-secondary"
-            modalTitle="Add New Stat"
-            className="w-4/5"
-          >
+          <OpenDialog 
+            title="Add a Stat" btnLabel="+" 
+            btnClassname='btn-sm rounded-full' 
+            open={dialogOpen} setOpen={setDialogOpen}
+            >
             <div>
               <TextInput
                 label="Name"
                 placeholder="Give it a name"
                 value={newName}
                 setValue={setNewName}
-              />
+                />
               <TextArea
                 label="Description"
                 placeholder="Describe it!"
                 value={newDescription}
                 setValue={setNewDescription}
-              />
+                />
               <button className="btn btn-secondary" onClick={addStat}>
                 Add Stat
               </button>
             </div>
-          </DialogContainer>
+          </OpenDialog>
         </div>
         )}
       </div>

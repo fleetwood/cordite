@@ -1,6 +1,7 @@
 import TextArea from 'components/forms/TextArea'
 import TextInput from 'components/forms/TextInput'
 import DialogContainer from 'components/ui/dialog'
+import OpenDialog from 'components/ui/dialogs/openDialog'
 import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
 import {StatExpression, StatTree} from 'prisma/context'
@@ -10,6 +11,8 @@ import {sendApi, uuid} from 'utils/helpers'
 
 const StatExpView = () => {
   const { data: user, isLoading } = userContext()
+
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   const [statName, setStatName] = useState<string>()
   const [statDescription, setStatDescription] = useState<string>()
@@ -41,12 +44,13 @@ const StatExpView = () => {
         setStatDescription(() => undefined)
         setStatName(() => undefined)
         invalidateTree()
+        setDialogOpen(false)
       }
     }
   }
   return (
     <div>
-      <h3>Expressions</h3>
+      <h3>Skills</h3>
       {statExps && (
         <div className="flex flex-col">
           {statExps.map((c: StatTree, i: number) => (
@@ -55,7 +59,13 @@ const StatExpView = () => {
         </div>
       )}
       {user && (
-        <DialogContainer buttonLabel='+' buttonClass='btn-secondary' modalTitle='Add a New Expression'>
+        <OpenDialog
+          btnLabel="+"
+          btnClassname="btn-secondary btn-sm btn-circle"
+          title="Add a New Expression"
+          open={dialogOpen}
+          setOpen={setDialogOpen}
+        >
           <div className="rounded bg-neutral/50 p-2 flex flex-col">
             <TextInput
               label="Name"
@@ -106,7 +116,7 @@ const StatExpView = () => {
               Add Expression
             </button>
           </div>
-        </DialogContainer>
+        </OpenDialog>
       )}
     </div>
   )

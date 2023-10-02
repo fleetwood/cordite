@@ -1,11 +1,48 @@
-import React,{ReactNode} from 'react'
+import React,{ReactNode, useState} from 'react'
 import GoogleLogin from './ui/googleLogin'
 import {MenuIcon} from './ui/icons'
 import ActiveLink from './ui/links/ActiveLink'
+import VmenuLink from './ui/links/VerticalMenuLink'
+import {twMerge} from 'tailwind-merge'
 
 type Props = {
   children: ReactNode
 }
+
+  const sections = [
+    {
+      label: 'Cordite',
+      link: '/core',
+      submenu: [
+        {
+          link: 'Core',
+          children: <>Core</>,
+        },
+        {
+          link: 'Health',
+          children: <>Health</>,
+        },
+        {
+          link: 'Levels',
+          children: <>Levels</>,
+        },
+        {
+          link: 'RAD',
+          children: <>RADs</>,
+        },
+      ],
+    },
+    {
+      label: 'Character Expressions',
+      link: '/characters',
+      children: <>CharExpressions</>,
+    },
+    {
+      label: 'Stat Tree',
+      link: '/stats',
+      children: <>Stat</>,
+    }
+  ]
 
 const NavMenu = () => {
   return (
@@ -17,7 +54,17 @@ const NavMenu = () => {
   )
 }
 
-const Layout: React.FC<Props> = (props) => (
+const Layout: React.FC<Props> = (props) => {
+    const [activeSection, setActiveSection] = useState('')
+    // const activeClass = (item: MenuItem) =>
+    //   twMerge(
+    //     'absolute transition-all duration-200 ease-out',
+    //     item.link === activeSection
+    //       ? 'opacity-100 scale-y-100 z-1'
+    //       : 'opacity-0 scale-y-0 z-0'
+    //   )
+
+  return (
   <div className="drawer">
     <div
       className="hidden 
@@ -37,12 +84,12 @@ const Layout: React.FC<Props> = (props) => (
 
     "
     ></div>
-    <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+    <input id="mainMenuDrawer" type="checkbox" className="drawer-toggle" />
     <div className="drawer-content flex flex-col">
       {/* Navbar */}
       <div className="w-full navbar bg-base-300 sticky top-0 z-50">
         <div className="flex-none lg:hidden">
-          <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
+          <label htmlFor="mainMenuDrawer" className="btn btn-square btn-ghost">
             <MenuIcon className="text-primary" />
           </label>
         </div>
@@ -54,17 +101,31 @@ const Layout: React.FC<Props> = (props) => (
         </div>
       </div>
       <div className="grid">
-        {props.children}
+        <main className="grid grid-cols-5 min-h-screen">
+          <div className="col-span-1 flex flex-col pr-4 text-xl bg-gradient-to-b from-base-200 to-base-100">
+            <div className="flex flex-col">
+              {sections.map((item: any, i: number) => (
+                <VmenuLink
+                  href={item.link}
+                  className={twMerge('text-right')}
+                >
+                  {item.label}
+                </VmenuLink>
+              ))}
+            </div>
+          </div>
+          <div className="col-span-4 relative">{props.children}</div>
+        </main>
       </div>
     </div>
     <div className="drawer-side">
-      <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-      <div className="menu p-4 w-80 min-h-full bg-base-200">
+      <label htmlFor="mainMenuDrawer" className="drawer-overlay"></label>
+      <div className="menu pt-20 p-4 w-80 min-h-full bg-base-200">
         {/* Sidebar content here */}
         <NavMenu />
       </div>
     </div>
   </div>
-)
+)}
 
 export default Layout
