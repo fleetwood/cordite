@@ -1,20 +1,25 @@
-import {useState} from "react"
 
 import Layout from "components/Layout"
-import {MenuItem} from "components/ui/leftMenu/menuItemLink"
+import Section from "components/ui/section"
+import Typography from "components/ui/typography/typography"
 import {userContext} from "context/UserContext"
-import {twMerge} from "tailwind-merge"
-import CastingSection from "components/containers/Casting/castingSection"
-import StatSection from "components/containers/Stat/statSection"
 
-const HomePage = () => {
+const Page = () => {
   const {data: user, isLoading} = userContext()
 
   return (
     <Layout>
-      Character
+      <Section
+        title="Characters"
+        titleClass="text-secondary shadow-md shadow-black px-4"
+        className="p-4"
+      >
+        <Typography>
+        Characters
+        </Typography>
+      </Section>
     </Layout>
   )
 }
 
-export default HomePage
+export default Page

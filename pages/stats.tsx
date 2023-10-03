@@ -1,23 +1,23 @@
-import {useState} from "react"
 
 import Layout from "components/Layout"
-import {MenuItem} from "components/ui/leftMenu/menuItemLink"
-import {userContext} from "context/UserContext"
-import {twMerge} from "tailwind-merge"
-import StatSection from "components/containers/Stat/statSection"
 import CastingSection from "components/containers/Casting/castingSection"
+import StatSection from "components/containers/Stat/statSection"
+import Section from "components/ui/section"
 import Ital from "components/ui/typography/ital"
 import Typography from "components/ui/typography/typography"
-import Section from "components/ui/section"
+import {userContext} from "context/UserContext"
 
-const HomePage = () => {
+const Page = () => {
   const {data: user, isLoading} = userContext()
 
   return (
     <Layout>
-      <div className="p-4 flex flex-col gap-4">
-        <Section title="Stats" titleClass="text-secondary">
-          <Typography className="col-span-2 px-4 bg-neutral/20">
+      <div className="flex flex-col gap-4 p-4">
+        <Section
+          title="Stats"
+          titleClass="text-secondary shadow-md shadow-black px-4"
+        >
+          <Typography className="px-4 bg-neutral/20">
             <p>
               My system uses a similar stat system to 5e DnD, with some
               alterations; the stats are{' '}
@@ -45,4 +45,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default Page

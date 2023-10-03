@@ -10,16 +10,12 @@ const Page = () => {
   return (
     <Layout>
       <Section
-        title="Health"
+        title="Equipment"
         titleClass="text-secondary shadow-md shadow-black px-4"
         className="p-4"
       >
         <Typography>
-        <p>
-          Hit points are called Will in my system. Taking damage is not just
-          physical injury; it is primarily your will to fight eroding through
-          the stress of combat.
-        </p>
+          <p>Equipments!</p>
         </Typography>
       </Section>
     </Layout>
