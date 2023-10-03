@@ -16,7 +16,8 @@ const VmenuLink = ({children, ...props}:VmenuLinkProps) => {
   return (
     <Link
       className={twMerge(
-        `transition-all duration-200 ease-out flex items-center justify-end`,
+        `transition-all duration-200 ease-out`,
+        `flex items-center justify-end font-semibold`,
         `hover:${bgVariant} hover:${txtVariantContent}`,
         // `pr-4 border-r-4 ${borderVariant}`, 
         // props.selected ? 'border-opacity-50' : 'border-opacity-0',

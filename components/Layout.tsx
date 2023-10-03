@@ -94,11 +94,16 @@ const Layout: React.FC<Props> = (props) => {
       ></div>
       <div className="col-span-2 lg:col-span-1">
         <div
-          className="min-w-full min-h-full bg-cover"
+          className={twMerge(
+            'min-w-full min-h-full bg-contain',
+            'shadow-lg shadow-black',
+            'border-r-[0.5rem] border-base-300/50'
+          )}
           style={{ backgroundImage: 'url(img/wallDark.jpg)' }}
         >
-          <div className="grid grid-col justify-items-end gap-3 p-2 ">
+          <div className="grid grid-col justify-items-end gap-3 p-2">
             <GoogleLogin />
+            <div className="border-t-4 border-primary/20 min-w-full"></div>
             {sections.map((item: any, i: number) => (
               <VmenuLink
                 href={item.link}
