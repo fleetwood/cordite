@@ -212,6 +212,37 @@ model Expression {
   cast   CastExpression? @relation("cast_expressions", fields: [castID], references: [id])
 }
 
+model Melee {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  name   String
+  image  String?
+  damage String
+  weight String
+}
+
+model Ranged {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  name   String
+  image  String?
+  damage String
+  weight String
+
+  rof       Int
+  penalty   Int
+  capacity  Int
+  medRange  Int
+  longRange Int
+  ammo      String
+}
+
 /////////////////////////
 // USER STUFF
 model Account {

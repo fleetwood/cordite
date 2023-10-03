@@ -20,7 +20,7 @@
 
 @layer components {
     body {
-        @apply scrollbar-hide
+        @apply scrollbar-hide bg-base-100 text-base-content
     }
     h1 {
         @apply text-4xl md:text-5xl lg:text-6xl

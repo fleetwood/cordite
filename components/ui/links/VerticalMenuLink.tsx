@@ -12,18 +12,15 @@ type VmenuLinkProps = classNameProps & variantProps & onClickProps & {
 const VmenuLink = ({children, ...props}:VmenuLinkProps) => {
   const {bgVariant, txtVariant, txtVariantContent, } = useVariants(props.variant)
   return (
-    <span
+    <Link
       className={twMerge(
-        'min-w-full ',
-        txtVariant,
-        `hover:${bgVariant}`,
-        `hover:${txtVariantContent}`,
-        props.className
+        `transition-all duration-200 ease-out`,
+        `hover:${bgVariant} hover:${txtVariantContent}`,
+        txtVariant, props.className
       )}
       onClick={props.onClick}
-    >
-      <Link href={props.href ?? '#'}>{children}</Link>
-    </span>
+      href={props.href ?? '#'}>{children}
+    </Link>
   )
 }
 
