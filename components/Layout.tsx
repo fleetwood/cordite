@@ -4,6 +4,7 @@ import { MenuIcon } from './ui/icons'
 import ActiveLink from './ui/links/ActiveLink'
 import VmenuLink from './ui/links/VerticalMenuLink'
 import { twMerge } from 'tailwind-merge'
+import {useRouter} from 'next/router'
 
 type Props = {
   children: ReactNode
@@ -70,6 +71,7 @@ const NavMenu = () => {
 
 const Layout: React.FC<Props> = (props) => {
   const [activeSection, setActiveSection] = useState('')
+  const currentPath = useRouter().pathname
   return (
     <main className="grid grid-cols-9 min-h-screen">
       <div
@@ -104,6 +106,7 @@ const Layout: React.FC<Props> = (props) => {
                   'min-w-full text-right',
                   item.submenu ? 'text-secondary text-sm' : null
                 )}
+                selected={item.link === currentPath}
               >
                 {item.label}
               </VmenuLink>

@@ -10,7 +10,7 @@ import {useEffect,useState} from 'react'
 import useVariants from 'src/hooks/useVariants'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps,variantProps} from 'types'
-import {GoogleSVG} from './icons'
+import {GoogleIcon} from './icons'
 
 type MenuLoginProps = classNameProps & variantProps & {
 }
@@ -54,7 +54,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
             props.className
           )}
         >
-          <GoogleSVG />
+          <GoogleIcon />
         </div>
       )}
     </>
