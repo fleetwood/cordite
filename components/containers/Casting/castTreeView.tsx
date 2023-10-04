@@ -81,7 +81,7 @@ const CastTreeView = (props:CastTreeViewProps) => {
       {castTree && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 justify-evenly">
           {castTree
-            .sort((a, b) => (a.name > b.name ? -1 : 1))
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((c: CastTree, i: number) => (
               <CastTreeCard
                 className="cursor-pointer border border-primary/0 hover:border-primary/50"

@@ -8,12 +8,12 @@ const HomePage = () => {
 
   return (
     <Layout>
-      <div className="min-h-full text-center bg-cover hero"
+      <div className="min-h-full min-w-full text-center sm:bg-cover sm:hero"
           style={{
             backgroundImage: 'url(img/clockwork.jpg)',
           }}
         >
-        <div className="hero-content p-20 w-3/4 bg-base-100/90 flex flex-col">
+        <div className="sm:hero-content p-20 w-3/4 sm:bg-base-100/90 flex flex-col">
           <h1 className="text-9xl font-semibold font-fraunces text-primary text-shadow shadow-black">
             CORDITE
           </h1>

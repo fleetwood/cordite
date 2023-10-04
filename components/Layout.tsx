@@ -92,7 +92,7 @@ const Layout: React.FC<Props> = (props) => {
 
     "
       ></div>
-      <div className="col-span-2 lg:col-span-1">
+      <div className="hidden sm:inline sm:col-span-2 lg:col-span-1">
         <div
           className={twMerge(
             'min-w-full min-h-full bg-contain',
@@ -119,7 +119,7 @@ const Layout: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <div className="col-span-7 lg:col-span-8 relative">{props.children}</div>
+      <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative">{props.children}</div>
     </main>
   )
 }
