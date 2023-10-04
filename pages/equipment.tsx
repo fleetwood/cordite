@@ -1,5 +1,5 @@
 
-import Layout from "components/Layout"
+import PageLayout from "components/ui/layouts/Page"
 import Section from "components/ui/section"
 import Typography from "components/ui/typography/typography"
 import {userContext} from "context/UserContext"
@@ -8,17 +8,17 @@ const Page = () => {
   const {data: user, isLoading} = userContext()
 
   return (
-    <Layout>
+    <PageLayout title="Equipment">
+      <Typography className="col-span-3 lg:col-span-2 px-4 bg-neutral h-fit">
+        <p>Equipments!</p>
+      </Typography>
       <Section
-        title="Equipment"
-        titleClass="text-secondary shadow-md shadow-black px-4"
-        className="p-4"
+        className="hidden lg:inline col-span-1 h-full opacity-50"
+        backgroundImage="/img/characters.jpg"
       >
-        <Typography>
-          <p>Equipments!</p>
-        </Typography>
+        {' '}
       </Section>
-    </Layout>
+    </PageLayout>
   )
 }
 

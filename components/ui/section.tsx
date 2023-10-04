@@ -2,7 +2,7 @@ import React, {ReactNode, useEffect} from 'react'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps, variantProps} from 'types'
 
-type SectionProps = 
+export type SectionProps = 
   classNameProps &
   variantProps & 
   {

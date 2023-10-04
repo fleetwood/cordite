@@ -1,25 +1,17 @@
-import Layout from "components/Layout"
-import Section from "components/ui/section"
-import Semibold from "components/ui/typography/semibold"
-import Typography from "components/ui/typography/typography"
-import {userContext} from "context/UserContext"
+import PageLayout from 'components/ui/layouts/Page'
+import Semibold from 'components/ui/typography/semibold'
+import Typography from 'components/ui/typography/typography'
+import { userContext } from 'context/UserContext'
 
 const Page = () => {
-  const {data: user, isLoading} = userContext()
+  const { data: user, isLoading } = userContext()
 
   return (
-    <Layout>
-      <Section
-        title="Ranged Weapons"
-        titleClass="text-secondary shadow-md shadow-black px-4"
-        className="p-4"
-      >
-        <Typography>
-          It's the <Semibold>.88</Semibold> Magnum. They made it for him
-          special.
-        </Typography>
-      </Section>
-    </Layout>
+    <PageLayout title="Ranged Weapons">
+      <Typography className="px-4 bg-neutral/20">
+        It's the <Semibold>.88</Semibold> Magnum. They made it for him special.
+      </Typography>
+    </PageLayout>
   )
 }
 

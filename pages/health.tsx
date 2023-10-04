@@ -1,28 +1,20 @@
-
-import Layout from "components/Layout"
-import Section from "components/ui/section"
-import Typography from "components/ui/typography/typography"
-import {userContext} from "context/UserContext"
+import PageLayout from 'components/ui/layouts/Page'
+import Typography from 'components/ui/typography/typography'
+import {userContext} from 'context/UserContext'
 
 const Page = () => {
-  const {data: user, isLoading} = userContext()
+  const { data: user, isLoading } = userContext()
 
   return (
-    <Layout>
-      <Section
-        title="Health"
-        titleClass="text-secondary shadow-md shadow-black px-4"
-        className="p-4"
-      >
-        <Typography>
+    <PageLayout title="Health">
+      <Typography className="px-4 bg-neutral/20">
         <p>
           Hit points are called Will in my system. Taking damage is not just
           physical injury; it is primarily your will to fight eroding through
           the stress of combat.
         </p>
-        </Typography>
-      </Section>
-    </Layout>
+      </Typography>
+    </PageLayout>
   )
 }
 

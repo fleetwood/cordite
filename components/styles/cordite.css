@@ -34,4 +34,12 @@
     p {
         @apply min-h-[1rem] py-2
     }
+    .pageMesh {
+        background-color:hsla(245,0%,2%,1);
+        background-image:
+            radial-gradient(at 78% 95%, hsla(69,28%,14%,1) 0px, transparent 50%),
+            radial-gradient(at 23% 72%, hsla(0,13%,26%,0.48) 0px, transparent 50%),
+            radial-gradient(at 70% 23%, hsla(201,0%,0%,1) 0px, transparent 50%),
+            radial-gradient(at 52% 35%, hsla(41,78%,35%,0.48) 0px, transparent 50%);
+    }
 }

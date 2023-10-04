@@ -1,20 +1,13 @@
-
-import Layout from "components/Layout"
-import Section from "components/ui/section"
-import Typography from "components/ui/typography/typography"
-import {userContext} from "context/UserContext"
+import PageLayout from 'components/ui/layouts/Page'
+import Typography from 'components/ui/typography/typography'
+import {userContext} from 'context/UserContext'
 
 const Page = () => {
-  const {data: user, isLoading} = userContext()
+  const { data: user, isLoading } = userContext()
 
   return (
-    <Layout>
-      <Section
-        title="Core System"
-        titleClass="text-secondary shadow-md shadow-black px-4"
-        className="p-4"
-      >
-        <Typography>
+    <PageLayout title="Core System">
+      <Typography className="px-4 bg-neutral/20">
         Cordite originated as a fork of 5th Edition DnD (and some inspiration
         from other systems), and while it has long since deviated enough to be
         considered its own system, its lineage is evident. This would not exist
@@ -22,9 +15,8 @@ const Page = () => {
         others, to stand on. nor without the help of many people in my life,
         primarily my wonderful beans, who have accompanied me every single step
         of the way. I love you so much beans. &lt;3
-        </Typography>
-      </Section>
-    </Layout>
+      </Typography>
+    </PageLayout>
   )
 }
 
