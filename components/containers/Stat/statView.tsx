@@ -4,12 +4,12 @@ import OpenDialog from 'components/ui/dialogs/openDialog'
 import {userContext} from 'context/UserContext'
 import useDebug from 'hooks/useDebug'
 import useRocketQuery from 'hooks/useRocketQuery'
-import {StatTree} from 'prisma/context'
-import {Dispatch,ReactNode,SetStateAction,useState} from 'react'
 import {DEBUG,sendApi,uuid} from 'utils/helpers'
-import StatTreeCard from './statTreeCard'
-import StatTreeDetailView from './statTreeDetail'
+import StatCard from './statCard'
 import {classNameProps} from 'types'
+import {useState} from 'react'
+import {Stat} from 'prisma/context'
+import {twMerge} from 'tailwind-merge'
 
 const {debug} = useDebug('statTreeView', DEBUG)
 
@@ -17,18 +17,19 @@ type StatTreeViewProps = classNameProps & {
 
 }
 
-const StatTreeView = (props:StatTreeViewProps) => {
+const StatView = (props:StatTreeViewProps) => {
   const { data: user, isLoading } = userContext()
 
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newName, setNewName] = useState<string>()
   const [newDescription, setNewDescription] = useState<string>()
+  const [cast, setCast] = useState(false)
 
   const {
     data: statTree,
     isLoading: statTreeLoading,
     invalidate: invalidateTree,
-  } = useRocketQuery<StatTree[]>({
+  } = useRocketQuery<Stat[]>({
     name: 'stat-tree-all',
     url: 'stat/tree/all',
   })
@@ -74,6 +75,19 @@ const StatTreeView = (props:StatTreeViewProps) => {
                   value={newDescription}
                   setValue={setNewDescription}
                 />
+                // TODO: create a toggle
+                <label className="cursor-pointer label">
+                  <span className={twMerge('label-text', !cast ? 'text-primary' : '')}>Material Stat</span>
+                  <input
+                    type="checkbox"
+                    className="toggle"
+                    onChange={(e) => {
+                      console.log('CAST??', e.currentTarget.value)
+                      setCast((c) => e.currentTarget ? e.currentTarget.value === 'on' : false)
+                    }}
+                  />
+                  <span className={twMerge('label-text', cast ? 'text-primary' : '')}>Casting Stat</span>
+                </label>
                 <button className="btn btn-info" onClick={addStat}>
                   Add Stat
                 </button>
@@ -86,10 +100,10 @@ const StatTreeView = (props:StatTreeViewProps) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 justify-evenly">
           {statTree
             .sort((a, b) => (a.name > b.name ? 1 : -1))
-            .map((s: StatTree, i: number) => (
-              <StatTreeCard
+            .map((s: Stat, i: number) => (
+              <StatCard
                 className="cursor-pointer border border-primary/0 hover:border-primary/50"
-                statTree={s}
+                stat={s}
                 key={uuid()}
                 noContent
               />
@@ -100,4 +114,4 @@ const StatTreeView = (props:StatTreeViewProps) => {
   )
 }
 
-export default StatTreeView
+export default StatView

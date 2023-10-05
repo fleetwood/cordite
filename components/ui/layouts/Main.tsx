@@ -6,6 +6,7 @@ import VmenuLink from '../links/VerticalMenuLink'
 import { twMerge } from 'tailwind-merge'
 import {useRouter} from 'next/router'
 import Tw from './tw'
+import {uuid} from 'utils/helpers'
 
 type Props = {
   children: ReactNode
@@ -91,10 +92,13 @@ const MainLayout: React.FC<Props> = (props) => {
                 href={item.link}
                 className={twMerge(
                   'min-w-full text-right hover:bg-neutral/30 hover:text-success',
-                  item.submenu ? 'font-normal opacity-80' : 'uppercase font-bold',
-                  item.link === currentPath ? 'text-secondary' : '',
+                  item.submenu
+                    ? 'font-normal opacity-80'
+                    : 'uppercase font-bold',
+                  item.link === currentPath ? 'text-secondary' : ''
                 )}
                 selected={item.link === currentPath}
+                key={uuid()}
               >
                 {item.label}
               </VmenuLink>
@@ -102,7 +106,9 @@ const MainLayout: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative">{props.children}</div>
+      <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative">
+        {props.children}
+      </div>
     </main>
   )
 }

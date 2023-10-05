@@ -6,6 +6,7 @@ import VmenuLink from '../links/VerticalMenuLink'
 import Tw from './tw'
 import Section, {SectionProps} from '../section'
 import Typography from '../typography/typography'
+import {uuid} from 'utils/helpers'
 
 type Props = SectionProps & {
   children: ReactNode
@@ -97,6 +98,7 @@ const PageLayout: React.FC<Props> = (props) => {
                   item.link === currentPath ? 'text-secondary' : ''
                 )}
                 selected={item.link === currentPath}
+                key={uuid()}
               >
                 {item.label}
               </VmenuLink>

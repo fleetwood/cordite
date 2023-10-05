@@ -1,7 +1,7 @@
-const all = async () => prisma.castTree.findMany({})
+const all = async () => prisma.stat.findMany({})
 
 const create = async ({name, description}:{name: string, description:string}) => {
-  return prisma.castTree.create({
+  return prisma.stat.create({
     data: {
       name,
       description,
@@ -10,7 +10,7 @@ const create = async ({name, description}:{name: string, description:string}) =>
   })
 }
 
-export const PrismaCastTree = {
+export const PrismaStat = {
   all,
   create
 }

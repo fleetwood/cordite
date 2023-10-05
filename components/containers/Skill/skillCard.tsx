@@ -1,25 +1,26 @@
-import {StatTree} from '@prisma/client'
-import {Card,CardContent,CardProps,CardTitle} from 'components/ui/Card'
+
+import {Card,CardContent,CardTitle} from 'components/ui/Card'
+import {Skill, Stat} from 'prisma/context'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps} from 'types'
 
-type StatTreeCardProps = classNameProps & {
+type SkillCardProps = classNameProps & {
   onClick?: () => void
-  statTree: StatTree
+  skill: Skill
   noContent?: boolean
 }
 
-const StatTreeCard = ({statTree, ...props}:StatTreeCardProps) => {
+const SkillCard = ({ skill, ...props }: SkillCardProps) => {
   return (
     <Card className="bg-neutral/20 odd:bg-neutral/30 group">
       <CardTitle className="text-primary group-odd:text-secondary">
-        {statTree.name}
+        {skill.name}
       </CardTitle>
       {props.noContent === undefined && (
-        <CardContent>{statTree.description}</CardContent>
+        <CardContent>{skill.description}</CardContent>
       )}
     </Card>
   )
 }
 
-export default StatTreeCard
+export default SkillCard

@@ -3,19 +3,19 @@ import TextInput from 'components/forms/TextInput'
 import OpenDialog from 'components/ui/dialogs/openDialog'
 import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
-import {StatExpression, StatTree} from 'prisma/context'
 
 import React, {useState} from 'react'
 import {sendApi, uuid} from 'utils/helpers'
-import StatExpCard from './statExpCard'
+import StatCard from './skillCard'
 import {classNameProps} from 'types'
 import Typography from 'components/ui/typography/typography'
+import {Skill, Stat} from 'prisma/context'
 
 type StatExpViewProps = classNameProps & {
 
 }
 
-const StatExpView = (props:StatExpViewProps) => {
+const SkillView = (props:StatExpViewProps) => {
   const { data: user, isLoading } = userContext()
 
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -25,17 +25,17 @@ const StatExpView = (props:StatExpViewProps) => {
   const [statTreeId, setStatTreeId] = useState<string>()
   const [tier, setTier] = useState(1)
 
-  const {data: statTree} = useRocketQuery<StatTree[]>({
+  const {data: statTree} = useRocketQuery<Stat[]>({
     name: 'stat-tree-all',
     url: 'stat/tree/all'
   })
 
   const {
-    data: statExps,
-    isLoading: statExpLoading,
+    data: skills,
+    isLoading: statLoading,
     invalidate: invalidateTree,
-  } = useRocketQuery<StatExpression[]>({
-    name: 'stat-exp-all',
+  } = useRocketQuery<Skill[]>({
+    name: 'skill-all',
     url: 'stat/exp/all',
   })
 
@@ -110,7 +110,7 @@ const StatExpView = (props:StatExpViewProps) => {
                     onChange={(e) => setStatTreeId(e.currentTarget.value)}
                   >
                     {statTree &&
-                      statTree.map((tree: StatTree) => (
+                      statTree.map((tree: Stat) => (
                         <option value={tree.id}>{tree.name}</option>
                       ))}
                   </select>
@@ -123,14 +123,14 @@ const StatExpView = (props:StatExpViewProps) => {
           </div>
         )}
       </div>
-      {statExps && (
+      {skills && (
         <div className="flex flex-col">
-          {statExps.map((c: StatExpression, i: number) => (
-            <StatExpCard key={uuid()} statExp={c} />
+          {skills.map((c: Skill, i: number) => (
+            <StatCard key={uuid()} skill={c} />
           ))}
         </div>
       )}
     </div>
   )}
 
-export default StatExpView
+export default SkillView
