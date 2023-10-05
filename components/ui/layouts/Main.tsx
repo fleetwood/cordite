@@ -91,11 +91,14 @@ const MainLayout: React.FC<Props> = (props) => {
               <VmenuLink
                 href={item.link}
                 className={twMerge(
-                  'min-w-full text-right hover:bg-neutral/30 hover:text-success',
+                  'min-w-full text-right bg-opacity-0',
+                  'bg-gradient-to-r from-transparent to-neutral/50 hover:text-primary-content rounded-lg',
                   item.submenu
                     ? 'font-normal opacity-80'
                     : 'uppercase font-bold',
-                  item.link === currentPath ? 'text-secondary' : ''
+                  item.link === currentPath
+                    ? 'text-secondary to-secondary/50'
+                    : ''
                 )}
                 selected={item.link === currentPath}
                 key={uuid()}

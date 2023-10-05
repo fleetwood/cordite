@@ -31,18 +31,18 @@ module.exports = {
     themes: [
       {
         corditeDark: {
-          primary: '#BB9933',
-          secondary: '#779911',
-          accent: '#663399',
-          neutral: '#334444',
+          primary: '#B93',
+          secondary: '#9B6',
+          accent: '#B79',
+          neutral: '#344',
           'base-100': '#121212',
           'base-200': '#242424',
           'base-300': '#363636',
           'base-content': '#999',
-          info: '#77AADD',
-          success: '#88BB66',
-          warning: '#DD8822',
-          error: '#882211',
+          info: '#7AD',
+          success: '#670',
+          warning: '#D82',
+          error: '#821',
         },
       },
       {

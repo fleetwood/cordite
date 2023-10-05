@@ -10,6 +10,7 @@ import {classNameProps} from 'types'
 import {useState} from 'react'
 import {Stat} from 'prisma/context'
 import {twMerge} from 'tailwind-merge'
+import Toggle from 'components/ui/toggle'
 
 const {debug} = useDebug('statTreeView', DEBUG)
 
@@ -39,10 +40,12 @@ const StatView = (props:StatTreeViewProps) => {
       const result = await sendApi('stat/tree/create', {
         name: newName,
         description: newDescription,
+        cast
       })
       if (result) {
-        setNewDescription(() => undefined)
-        setNewName(() => undefined)
+        setNewDescription(undefined)
+        setNewName(undefined)
+        setCast(false)
         invalidateTree()
         setDialogOpen(false)
       }
@@ -75,19 +78,9 @@ const StatView = (props:StatTreeViewProps) => {
                   value={newDescription}
                   setValue={setNewDescription}
                 />
-                // TODO: create a toggle
-                <label className="cursor-pointer label">
-                  <span className={twMerge('label-text', !cast ? 'text-primary' : '')}>Material Stat</span>
-                  <input
-                    type="checkbox"
-                    className="toggle"
-                    onChange={(e) => {
-                      console.log('CAST??', e.currentTarget.value)
-                      setCast((c) => e.currentTarget ? e.currentTarget.value === 'on' : false)
-                    }}
-                  />
-                  <span className={twMerge('label-text', cast ? 'text-primary' : '')}>Casting Stat</span>
-                </label>
+                <Toggle label='Cast Stat?' value={cast} setValue={setCast} 
+                className='my-2' background yn
+                />
                 <button className="btn btn-info" onClick={addStat}>
                   Add Stat
                 </button>

@@ -16,7 +16,6 @@ const Tw = () => (
     hover:text-primary-content hover:text-secondary-content hover:text-accent-content hover:text-neutral-content hover:text-base-content hover:text-warning-content hover:text-info-content hover:text-success-content
     hover:bg-primary-content hover:bg-secondary-content hover:bg-accent-content hover:bg-neutral-content hover:bg-base-content hover:bg-warning-content hover:bg-info-content hover:bg-success-content
     hover:border-primary-content hover:border-secondary-content hover:border-accent-content hover:border-neutral-content hover:border-base-content hover:border-warning-content hover:border-info-content hover:border-success-content
-
     "
   ></div>
 )

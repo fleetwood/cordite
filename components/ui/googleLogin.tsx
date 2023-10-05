@@ -31,7 +31,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
     setTheProviders()
   }, [])
 
-  const {txtVariantContent, bgVariant, borderVariant} = useVariants(props.variant??'primary')
+  const {textVariantContent: txtVariantContent, bgVariant, borderVariant} = useVariants(props.variant??'primary')
 
   return (
     <>

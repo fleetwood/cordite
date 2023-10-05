@@ -74,7 +74,6 @@ const PageLayout: React.FC<Props> = (props) => {
   const currentPath = useRouter().pathname
   return (
     <main className="grid grid-cols-9 min-h-screen">
-      <Tw />
       <div className="hidden sm:inline sm:col-span-2 lg:col-span-1">
         <div
           className={twMerge(
@@ -91,11 +90,14 @@ const PageLayout: React.FC<Props> = (props) => {
               <VmenuLink
                 href={item.link}
                 className={twMerge(
-                  'min-w-full text-right hover:bg-neutral/30 hover:text-success',
+                  'min-w-full text-right bg-opacity-0',
+                  'bg-gradient-to-r from-transparent to-neutral/50 hover:text-primary-content rounded-lg',
                   item.submenu
                     ? 'font-normal opacity-80'
                     : 'uppercase font-bold',
-                  item.link === currentPath ? 'text-secondary' : ''
+                  item.link === currentPath
+                    ? 'text-secondary to-secondary/50'
+                    : ''
                 )}
                 selected={item.link === currentPath}
                 key={uuid()}
@@ -107,13 +109,16 @@ const PageLayout: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative pageMesh">
-          <Section
-            title={props.title}
-            titleClass={twMerge("text-secondary shadow-md shadow-black px-4", props.titleClass)}
-            className={twMerge("p-4 bg-cover h-full", props.className)}
-          >
-            {props.children}
-          </Section>
+        <Section
+          title={props.title}
+          titleClass={twMerge(
+            'text-secondary shadow-md shadow-black px-4',
+            props.titleClass
+          )}
+          className={twMerge('p-4 bg-cover h-full', props.className)}
+        >
+          {props.children}
+        </Section>
       </div>
     </main>
   )

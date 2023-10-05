@@ -1,11 +1,12 @@
 const all = async () => prisma.stat.findMany({})
 
-const create = async ({name, description}:{name: string, description:string}) => {
+const create = async ({name, description, cast}:{name: string, description:string, cast?: boolean}) => {
   return prisma.stat.create({
     data: {
       name,
       description,
-      icon: ''
+      icon: '',
+      cast
     }
   })
 }
