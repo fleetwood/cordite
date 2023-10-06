@@ -38,7 +38,7 @@ export type RocketQueryProps = {
  *
  * The return properties should be renamed contextually,
  *
- * Example: `const {data: userPosts, ...} = useRocketQuery<UserPosts[]>({props:RocketQueryProps})`
+ * Example: `const { userPosts, ...} = useRocketQuery<UserPosts[]>({props:RocketQueryProps})`
  *
  * **see** {@link RocketQueryProps}
  */

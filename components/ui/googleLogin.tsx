@@ -10,13 +10,13 @@ import {useEffect,useState} from 'react'
 import useVariants from 'src/hooks/useVariants'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps,variantProps} from 'types'
-import {GoogleSVG} from './icons'
+import {GoogleIcon} from './icons'
 
 type MenuLoginProps = classNameProps & variantProps & {
 }
 
 const GoogleLogin = (props: MenuLoginProps) => {
-  const {data: user, isLoading, error, invalidate} = userContext()
+  const { user, isLoading, error, invalidate} = userContext()
 
   const [providers, setproviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
@@ -31,7 +31,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
     setTheProviders()
   }, [])
 
-  const {txtVariantContent, bgVariant, borderVariant} = useVariants(props.variant??'primary')
+  const {textVariantContent: txtVariantContent, bgVariant, borderVariant} = useVariants(props.variant??'primary')
 
   return (
     <>
@@ -54,7 +54,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
             props.className
           )}
         >
-          <GoogleSVG />
+          <GoogleIcon />
         </div>
       )}
     </>

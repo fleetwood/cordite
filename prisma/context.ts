@@ -27,6 +27,5 @@ if (__prod__) {
 }
 
 export * from '@prisma/client'
-
-// export * from './types'
+export * from './types'
 export * from './entities'

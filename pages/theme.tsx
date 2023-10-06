@@ -1,9 +1,9 @@
-import Layout from 'components/Layout'
+import MainLayout from 'components/ui/layouts/Main'
 import React from 'react'
 
 const ThemePage = () => {
   return (
-    <Layout>
+    <MainLayout>
       <div>
         <h2 className="px-2 pb-4 text-xl font-bold">Colors</h2>
 
@@ -56,40 +56,40 @@ const ThemePage = () => {
             </div>
 
             <div>Primary</div>
-            <div className="font-mono">#A2A881</div>
-            <div className="w-20px bg-[#A2A881]"></div>
+            <div className="font-mono">#BB9933</div>
+            <div className="w-20px bg-[#BB9933]"></div>
 
             <div>Secondary</div>
-            <div className="font-mono">#7A8538</div>
-            <div className="w-20px bg-[#7A8538]"></div>
+            <div className="font-mono">#779911</div>
+            <div className="w-20px bg-[#779911]"></div>
 
             <div>Accent</div>
-            <div className="font-mono">#83781B</div>
-            <div className="w-20px bg-[#83781B]"></div>
+            <div className="font-mono">#663399</div>
+            <div className="w-20px bg-[#663399]"></div>
 
             <div>Neutral</div>
-            <div className="font-mono">#2b3440</div>
-            <div className="w-20px bg-[#2b3440]"></div>
+            <div className="font-mono">#334444</div>
+            <div className="w-20px bg-[#334444]"></div>
 
             <div>Base-100</div>
             <div className="font-mono">#121212</div>
             <div className="w-20px bg-[#121212]"></div>
 
             <div>Info</div>
-            <div className="font-mono">#2ACBCB</div>
-            <div className="w-20px bg-[#2ACBCB]"></div>
+            <div className="font-mono">#77AADD</div>
+            <div className="w-20px bg-[#77AADD]"></div>
 
             <div>Success</div>
-            <div className="font-mono">#7AC465</div>
-            <div className="w-20px bg-[#7AC465]"></div>
+            <div className="font-mono">#88BB66</div>
+            <div className="w-20px bg-[#88BB66]"></div>
 
             <div>Warning</div>
-            <div className="font-mono">#EDE556</div>
-            <div className="w-20px bg-[#EDE556]"></div>
+            <div className="font-mono">#DD8822</div>
+            <div className="w-20px bg-[#DD8822]"></div>
 
             <div>Error</div>
-            <div className="font-mono">#781919</div>
-            <div className="w-20px bg-[#781919]"></div>
+            <div className="font-mono">#882211</div>
+            <div className="w-20px bg-[#882211]"></div>
           </div>
         </div>
 
@@ -467,7 +467,7 @@ const ThemePage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </MainLayout>
   )
 }
 
