@@ -23,7 +23,9 @@ datasource db {
 
 // PHY AND FIN
 // WIT AND INT
-// CHA  f 
+// CHA AND FOR
+// CAST:
+// AIR, FIRE, WATER, EARTH, LIFE, LIGHT, SPACETIME
 model Stat {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
