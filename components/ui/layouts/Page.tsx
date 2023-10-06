@@ -42,6 +42,10 @@ const sections = [
     link: '/stats'
   },
   {
+    label: 'Skills',
+    link: '/skills'
+  },
+  {
     label: 'Equipment',
     link: '/equipment'
   },

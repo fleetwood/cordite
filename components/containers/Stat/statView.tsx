@@ -19,7 +19,7 @@ type StatTreeViewProps = classNameProps & {
 }
 
 const StatView = (props:StatTreeViewProps) => {
-  const { data: user, isLoading } = userContext()
+  const { user, isLoading } = userContext()
 
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newName, setNewName] = useState<string>()

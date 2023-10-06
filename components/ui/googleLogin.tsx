@@ -16,7 +16,7 @@ type MenuLoginProps = classNameProps & variantProps & {
 }
 
 const GoogleLogin = (props: MenuLoginProps) => {
-  const {data: user, isLoading, error, invalidate} = userContext()
+  const { user, isLoading, error, invalidate} = userContext()
 
   const [providers, setproviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,

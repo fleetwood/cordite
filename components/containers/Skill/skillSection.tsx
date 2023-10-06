@@ -6,7 +6,7 @@ import StatView from '../Stat/statView'
 import SkillView from './skillView'
 
 const SkillSection = (props: classNameProps) => {
-  const { data: user, isLoading } = userContext()
+  const { user, isLoading } = userContext()
 
   return (
     <Section className="mt-4 flex flex-col gap-4">

@@ -4,7 +4,7 @@ import Typography from 'components/ui/typography/typography'
 import { userContext } from 'context/UserContext'
 
 const Page = () => {
-  const { data: user, isLoading } = userContext()
+  const { user, isLoading } = userContext()
 
   return (
     <PageLayout title="Characters">

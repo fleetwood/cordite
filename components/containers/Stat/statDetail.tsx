@@ -17,7 +17,7 @@ type StatDetailProps = {
 }
 
 const StatTreeDetailView = ({id, ...props}:StatDetailProps) => {
-  const { data: user, isLoading } = userContext()
+  const { user, isLoading } = userContext()
   const {
     data: stat,
     isLoading: statLoading,
