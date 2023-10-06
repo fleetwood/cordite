@@ -9,7 +9,7 @@ const request = async (req: NextApiRequest, res: NextApiResponse) =>{
   const id = req.query.id
   try {
     debug('handler', {id})
-    const result = id !== undefined ? PrismaStat.stub(id.toString()) : PrismaStat.stubs()
+    const result = PrismaStat.stubs()
     res.status(200).json(result)
   } catch (e) {
     fail('FAIL', e)
