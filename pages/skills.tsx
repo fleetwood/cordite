@@ -1,3 +1,4 @@
+import StatStubView from 'components/containers/Stat/statStubView'
 import PageLayout from 'components/ui/layouts/Page'
 import Semibold from 'components/ui/typography/semibold'
 import Typography from 'components/ui/typography/typography'
@@ -15,7 +16,7 @@ const Page = () => {
     invalidate: invalidateStats
   } = useRocketQuery<StatStub[]>({
     name: 'stat-stubs',
-    url: 'stat/stub'
+    url: 'stat/stubs'
   })
 
   return (
@@ -39,9 +40,9 @@ const Page = () => {
         </p>
       </Typography>
       
-      {/* {stats && stats.map((statStub:StatStub) => (
-        <div key={statStub.id}>{statStub.name}</div>
-      ))} */}
+      {stats && stats.sort((a,b) => a.name > b.name ? 1 : -1).filter(s => s.cast !== true).map((statStub:StatStub) => (
+        <StatStubView key={statStub.id} statStub={statStub} />
+      ))}
     </PageLayout>
   )
 }

@@ -32,12 +32,12 @@ ${methodData(t)}
   const fail = (method: string, data?: any) => log(method, { data })
 
   const debug = (method: string, data?: any, overrideLevel = false) => {
-    if (overrideLevel === true || level === 'DEBUG') {
+    if (overrideLevel === true || level === DEBUG) {
       log(method, { level, data })
     }
   }
   const info = (method: string, data?: any, overrideLevel = false) => {
-    if (overrideLevel === true || level === 'DEBUG' || level === 'INFO') {
+    if (overrideLevel === true || level === DEBUG || level === INFO) {
       log(method, { level, data })
     }
   }
@@ -49,6 +49,7 @@ ${methodData(t)}
     stringify,
     level,
     fileMethod,
+    DEBUG, INFO, ERROR
   }
 }
 export default useDebug

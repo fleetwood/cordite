@@ -13,8 +13,10 @@ const create = async ({name, description, cast}:{name: string, description:strin
   })
 }
 
-const stubs = async ():Promise<StatStub[]> => prisma.stat.findMany({
-  ...StatStubInclude
+const stubs = async () => prisma.stat.findMany({
+  include: {
+    skills: true
+  }
 })
 
 const stub = async (id:string):Promise<StatStub> => prisma.stat.findUnique({
