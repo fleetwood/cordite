@@ -4,6 +4,7 @@ import useVariants from 'src/hooks/useVariants'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps, onClickProps, variantProps} from 'types'
 import {CaretLeftIcon, GearStatIcon} from '../icons'
+import {useRouter} from 'next/router'
 
 type VmenuLinkProps = classNameProps & variantProps & onClickProps & {
   href? : string
@@ -12,20 +13,25 @@ type VmenuLinkProps = classNameProps & variantProps & onClickProps & {
 }
 
 const VmenuLink = ({children, ...props}:VmenuLinkProps) => {
-  const {bgVariant, textVariant: txtVariant, textVariantContent: txtVariantContent, borderVariant} = useVariants(props.variant)
+  const {bgVariant, textVariant, textVariantContent, borderVariant} = useVariants(props.variant)
+  const {push} = useRouter()
   return (
-    <Link
+    <div
       className={twMerge(
-        `transition-all duration-200 ease-out`,
+        `cursor-pointer transition-all duration-200 ease-out`,
         `flex items-center justify-end font-semibold`,
-        `hover:${bgVariant} hover:${txtVariantContent}`,
-        txtVariant, props.className
+        `hover:${bgVariant} hover:${textVariantContent}`,
+        textVariant, props.className
       )}
-      onClick={props.onClick}
-      href={props.href ?? '#'}>
-        {children}
-        <GearStatIcon className={twMerge('pt-1 h-6 w-6',props.selected ? 'opacity-100' : 'opacity-0')} />
-    </Link>
+      onClick={() => props.onClick ?? push(props.href)}
+    >
+      {children}
+      <GearStatIcon
+        className={twMerge(
+          'pt-1 h-6 w-6',
+          props.selected ? 'opacity-100' : 'opacity-0'
+        )} />
+    </div>
   )
 }
 
