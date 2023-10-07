@@ -1,10 +1,114 @@
 import MainLayout from 'components/ui/layouts/Main'
 import React from 'react'
+import {__host__, __logLevel__, __port__, __prod__, __site__, env, google} from 'utils/helpers'
+import JsonData from 'utils/helpers/JsonData'
+
 
 const ThemePage = () => {
   return (
     <MainLayout>
       <div>
+        <h2>DEBUG</h2>
+        <div className="p-4 font-serif grid grid-cols-2">
+          <h3 className="col-span-2">Constants</h3>
+
+          <div className="font-semibold text-primary bg-base-200/50">
+            __prod__
+          </div>
+          <div className="bg-base-200/50">{__prod__ ? 'true' : 'false'}</div>
+
+          <div className="font-semibold text-primary">__logLevel__</div>
+          <div className="">{__logLevel__}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            __host__
+          </div>
+          <div className="bg-base-200/50 ">{__host__}</div>
+
+          <div className="font-semibold text-primary">__port__</div>
+          <div className="">{__port__}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            __site__
+          </div>
+          <div className="bg-base-200/50 ">{__site__}</div>
+
+          <div className="font-semibold text-primary">google</div>
+          <div className="">
+            <JsonData data={google} />
+          </div>
+
+          <h3 className="col-span-2">ENV</h3>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            NEXT_PUBLIC_GOOGLE_API_KEY
+          </div>
+          <div className="bg-base-200/50 ">
+            {env.NEXT_PUBLIC_GOOGLE_API_KEY}
+          </div>
+
+          <div className="font-semibold text-primary">
+            NEXT_PUBLIC_GOOGLE_CLIENT_ID
+          </div>
+          <div className="">{env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+          </div>
+          <div className="bg-base-200/50 ">
+            {env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET}
+          </div>
+
+          <div className="font-semibold text-primary">NEXT_PUBLIC_SECRET</div>
+          <div className="">{env.NEXT_PUBLIC_SECRET}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+          </div>
+          <div className="bg-base-200/50 ">
+            {env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+          </div>
+
+          <div className="font-semibold text-primary">
+            NEXT_PUBLIC_CLOUDINARY_API_KEY
+          </div>
+          <div className="">{env.NEXT_PUBLIC_CLOUDINARY_API_KEY}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            NEXT_PUBLIC_CLOUDINARY_API_SECRET
+          </div>
+          <div className="bg-base-200/50 ">
+            {env.NEXT_PUBLIC_CLOUDINARY_API_SECRET}
+          </div>
+
+          <div className="font-semibold text-primary">
+            NEXT_PUBLIC_CLOUDINARY_URL
+          </div>
+          <div className="">{env.NEXT_PUBLIC_CLOUDINARY_URL}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            NEXT_PUBLIC_CLOUDINARY_BASE_URL
+          </div>
+          <div className="bg-base-200/50 ">
+            {env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}
+          </div>
+
+          <div className="font-semibold text-primary">
+            NEXT_PUBLIC_DATABASE_URL
+          </div>
+          <div className="">{env.NEXT_PUBLIC_DATABASE_URL}</div>
+
+          <div className="bg-base-200/50 font-semibold text-primary">
+            NEXT_PUBLIC_DIRECT_URL
+          </div>
+          <div className="bg-base-200/50 ">{env.NEXT_PUBLIC_DIRECT_URL}</div>
+
+          <div className="font-semibold text-primary">
+            NEXT_PUBLIC_PROXY_URL
+          </div>
+          <div className="">{env.NEXT_PUBLIC_PROXY_URL}</div>
+        </div>
+
         <h2 className="px-2 pb-4 text-xl font-bold">Colors</h2>
 
         <div className="border border-primary p-2 grid grid-cols-2 gap-4">
@@ -350,9 +454,9 @@ const ThemePage = () => {
                       className="inline-block h-5 w-5 stroke-current"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M4 6h16M4 12h16M4 18h16"
                       ></path>
                     </svg>
@@ -391,9 +495,9 @@ const ThemePage = () => {
                   className="stroke-info h-6 w-6 flex-shrink-0"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -407,9 +511,9 @@ const ThemePage = () => {
                   className="h-6 w-6 flex-shrink-0 stroke-current"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -423,9 +527,9 @@ const ThemePage = () => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -439,9 +543,9 @@ const ThemePage = () => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                   ></path>
                 </svg>
@@ -455,9 +559,9 @@ const ThemePage = () => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
