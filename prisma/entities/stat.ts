@@ -1,4 +1,4 @@
-import {StatStub, StatStubInclude} from "prisma/context"
+import {StatStub, StatStubInclude, prisma} from "prisma/context"
 
 const all = async () => prisma.stat.findMany({})
 

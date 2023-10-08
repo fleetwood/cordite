@@ -1,6 +1,6 @@
 import { NextApiRequest } from 'next'
 import { getSession } from 'next-auth/react'
-import { User } from 'prisma/context'
+import { User, prisma } from 'prisma/context'
 
 const me = async (req: NextApiRequest): Promise<User> =>{
   try {

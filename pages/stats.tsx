@@ -5,6 +5,8 @@ import Section from "components/ui/section"
 import Ital from "components/ui/typography/ital"
 import Typography from "components/ui/typography/typography"
 import {userContext} from "context/UserContext"
+import useRocketQuery from "hooks/useRocketQuery"
+import {Stat} from "prisma/context"
 
 const Page = () => {
   const { user, isLoading} = userContext()
@@ -31,8 +33,11 @@ const Page = () => {
           you cannot raise a second stat to +5 until level 9.
         </p>
       </Typography>
-      <StatView />
-      <Section title="Casting Stats" titleClass="mt-5 text-secondary text-xl bg-neutral/20 shadow shadow-black">
+      <StatView physicalStats />
+      <Section
+        title="Casting Stats"
+        titleClass="mt-5 text-secondary text-xl bg-neutral/20 shadow shadow-black"
+      >
         <Typography>
           <p>
             Also included are specific stats for casting. My system and setting
@@ -54,6 +59,7 @@ const Page = () => {
             than 0. Casting stats may only be increased every odd level.
           </p>
         </Typography>
+        <StatView castingStats />
       </Section>
     </PageLayout>
   )
