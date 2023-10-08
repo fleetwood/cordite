@@ -1,8 +1,4 @@
 import MainLayout from 'components/ui/layouts/Main'
-import React from 'react'
-import {__host__, __logLevel__, __port__, __prod__, __site__, env, google} from 'utils/helpers'
-import JsonData from 'utils/helpers/JsonData'
-
 
 const ThemePage = () => {
   return (
