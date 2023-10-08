@@ -5,4 +5,5 @@ import {PrismaStat} from 'prisma/context'
 
 const {debug, fail} = useDebug('api/stat/detail', DEBUG)
 
-export default async function handle(req: NextApiRequest, res: NextApiResponse) { useApi(res, 'api/stat/stubs', PrismaStat.stubs())}
+const handle = async (req: NextApiRequest, res: NextApiResponse) => useApi(res, 'api/stat/stubs', PrismaStat.stubs())
+export default handle
