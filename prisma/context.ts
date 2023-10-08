@@ -1,31 +1,20 @@
-import { PrismaClient } from '@prisma/client'
 import useDebug from 'hooks/useDebug'
-import {__prod__} from 'utils/helpers'
+import {__prod__, env} from 'utils/helpers'
+// Import needed packages
+import { Pool, neonConfig } from '@neondatabase/serverless'
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { PrismaClient } from '@prisma/client'
+import ws from 'ws'
 
-const { info } = useDebug('prismaContext')
-declare global {
-  var prisma: PrismaClient
-}
+neonConfig.webSocketConstructor = ws
+const connectionString = `${env.NEXT_PUBLIC_DATABASE_URL}`
 
-/**
- * Prisma Client is a singleton in the global scope
- * @type {PrismaClient}
- */
-export var prisma: PrismaClient
+// Init prisma client
+const pool = new Pool({ connectionString })
+const adapter = new PrismaNeon(pool)
+export const prisma = new PrismaClient({ adapter })
 
-if (__prod__) {
-  info(`prisma is running on prod`)
-  prisma = new PrismaClient()
-} else {
-  info(`prisma is running globally`)
-  if (!global.prisma) {
-    global.prisma = new PrismaClient({
-      // log: ['query']
-    })
-  }
-  prisma = global.prisma
-}
-
+// Use Prisma Client as normal
 export * from '@prisma/client'
 export * from './types'
 export * from './entities'

@@ -1,4 +1,5 @@
 import useDebug from "hooks/useDebug"
+import {prisma} from "prisma/context"
 
 const {debug} = useDebug('entities/statExp')
 
