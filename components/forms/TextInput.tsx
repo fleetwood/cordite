@@ -1,11 +1,10 @@
 import React, {Dispatch, SetStateAction} from 'react'
 import {classNameProps, variantProps} from 'types'
 import { twMerge } from 'tailwind-merge'
+import Label, {LabelProps} from './Label'
 
-type TextInputProps = classNameProps & variantProps & {
+type TextInputProps = classNameProps & variantProps & LabelProps & {
   placeholder?: string
-  label?:       string
-  labelClass?:  string
   value?:       string
   setValue?:    Dispatch<SetStateAction<string|undefined>>
 }
@@ -13,11 +12,7 @@ type TextInputProps = classNameProps & variantProps & {
 const TextInput = (props:TextInputProps) => {
   return (
     <div>
-      {props.label && (
-        <label className="label">
-          <span className={twMerge('label-text', props.labelClass)}>{props.label}</span>
-        </label>
-      )}
+      {props.label && <Label label={props.label} labelClass={props.label} />}
       <input
         type="text"
         placeholder={props.placeholder}

@@ -6,5 +6,5 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  useApi(res, 'api/me', PrismaUser.me(req))
+  return useApi(res, 'api/me', PrismaUser.me(req))
 }
