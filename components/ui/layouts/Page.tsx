@@ -1,3 +1,4 @@
+import {useSession} from 'next-auth/react'
 import {useRouter} from 'next/router'
 import React,{ReactNode} from 'react'
 import {twMerge} from 'tailwind-merge'
@@ -7,6 +8,7 @@ import VmenuLink from '../links/VerticalMenuLink'
 import Section,{SectionProps} from '../section'
 
 type Props = SectionProps & {
+  requireLogin?: boolean
   children: ReactNode
 }
 
@@ -14,6 +16,7 @@ const sections = [
   {
     label: 'Core',
     link: '/',
+    noLogin: true
   },
   {
     label: 'System',
@@ -71,8 +74,15 @@ const sections = [
   },
 ]
 
-const PageLayout: React.FC<Props> = (props) => {
-  const currentPath = useRouter().pathname
+const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
+  const {data: session, status} = useSession()
+  const router = useRouter()
+  const currentPath = router.pathname
+
+  if (requireLogin && status === 'unauthenticated') {
+    router.push('/')
+  }
+
   return (
     <main className="grid grid-cols-9 min-h-screen">
       <div className="hidden sm:inline sm:col-span-2 lg:col-span-1">
@@ -88,28 +98,31 @@ const PageLayout: React.FC<Props> = (props) => {
             <GoogleLogin />
             <div className="border-t-4 border-primary/20 min-w-full"></div>
             {sections.map((item: any, i: number) => (
-              <VmenuLink
-                href={item.link}
-                className={twMerge(
-                  'min-w-full text-right bg-opacity-0',
-                  'bg-gradient-to-r from-transparent to-neutral/50 hover:text-primary-content rounded-lg',
-                  item.submenu
-                    ? 'font-normal opacity-80'
-                    : 'uppercase font-bold',
-                  item.link === currentPath
-                    ? 'text-secondary to-secondary/50'
-                    : ''
-                )}
-                selected={item.link === currentPath}
-                key={uuid()}
-              >
-                {item.label}
-              </VmenuLink>
+                <VmenuLink
+                  href={item.link}
+                  className={twMerge(
+                    'min-w-full text-right bg-opacity-0',
+                    'bg-gradient-to-r from-transparent to-neutral/50 hover:text-primary-content rounded-lg',
+                    item.submenu
+                      ? 'font-normal opacity-80'
+                      : 'uppercase font-bold',
+                    item.link === currentPath
+                      ? 'text-secondary to-secondary/50'
+                      : ''
+                  )}
+                  selected={item.link === currentPath}
+                  key={uuid()}
+                >
+                  {item.label}
+                </VmenuLink>
             ))}
           </div>
         </div>
       </div>
       <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative pageMesh">
+        {status === 'loading' ? (
+              <div>...</div>
+            ): (requireLogin === false || status === 'authenticated') && (
         <Section
           title={props.title}
           titleClass={twMerge(
@@ -117,9 +130,11 @@ const PageLayout: React.FC<Props> = (props) => {
             props.titleClass
           )}
           className={twMerge('p-4 bg-cover h-full', props.className)}
-        >
-          {props.children}
+          >
+            {props.children}
+          <div className='sticky bottom-0 text-center p-1 bg-base-100'>Copyright &copy;2021 John Fleetwood</div>
         </Section>
+      )}
       </div>
     </main>
   )

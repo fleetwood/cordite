@@ -4,7 +4,8 @@ import {
   ClientSafeProvider,
   getProviders,
   LiteralUnion,
-  signIn
+  signIn,
+  signOut
 } from 'next-auth/react'
 import {useEffect,useState} from 'react'
 import useVariants from 'src/hooks/useVariants'
@@ -59,6 +60,9 @@ const GoogleLogin = (props: MenuLoginProps) => {
             </li>
             <li>
               <Link href='/user/characters'>Characters</Link>
+            </li>
+            <li>
+              <div className='cursor-pointer hover:text-warning' onClick={() => signOut()}>Sign Out</div>
             </li>
           </ul>
         </div>

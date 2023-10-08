@@ -1,4 +1,4 @@
-import MainLayout from "components/ui/layouts/Main"
+import PageLayout from "components/ui/layouts/Page"
 import Typography from "components/ui/typography/typography"
 import useAuth from "hooks/useAuth"
 
@@ -6,7 +6,7 @@ const HomePage = () => {
   const {me, isLoading} = useAuth()
 
   return (
-    <MainLayout>
+    <PageLayout requireLogin={false}>
       <div
         className="min-h-full min-w-full text-center sm:bg-cover sm:hero bg-base-100"
         style={{
@@ -38,7 +38,7 @@ const HomePage = () => {
           </Typography>
         </div>
       </div>
-    </MainLayout>
+    </PageLayout>
   )
 }
 
