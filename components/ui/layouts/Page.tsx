@@ -1,12 +1,10 @@
 import {useRouter} from 'next/router'
-import React,{ReactNode,useState} from 'react'
+import React,{ReactNode} from 'react'
 import {twMerge} from 'tailwind-merge'
+import {uuid} from 'utils/helpers'
 import GoogleLogin from '../googleLogin'
 import VmenuLink from '../links/VerticalMenuLink'
-import Tw from './tw'
-import Section, {SectionProps} from '../section'
-import Typography from '../typography/typography'
-import {uuid} from 'utils/helpers'
+import Section,{SectionProps} from '../section'
 
 type Props = SectionProps & {
   children: ReactNode
@@ -74,7 +72,6 @@ const sections = [
 ]
 
 const PageLayout: React.FC<Props> = (props) => {
-  const [activeSection, setActiveSection] = useState('')
   const currentPath = useRouter().pathname
   return (
     <main className="grid grid-cols-9 min-h-screen">
