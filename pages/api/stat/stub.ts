@@ -5,10 +5,13 @@ import {DEBUG, __prod__} from 'utils/helpers'
 
 const {debug, fail} = useDebug('api/stat/detail', DEBUG)
 
-const request = async (req: NextApiRequest, res: NextApiResponse) =>{
+const handle = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const id = req.query.id
   try {
-    debug('handler', {id})
+    debug('handler', { id })
     const result = PrismaStat.stubs()
     res.status(200).json(result)
   } catch (e) {
@@ -17,4 +20,4 @@ const request = async (req: NextApiRequest, res: NextApiResponse) =>{
     res.status(status).json({ code: name, message: JSON.stringify(e) })
   }
 }
-export default request
+export default handle
