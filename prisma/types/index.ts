@@ -1,1 +1,2 @@
-export * from './stat.def'
+export * from './character'
+export * from './stat'

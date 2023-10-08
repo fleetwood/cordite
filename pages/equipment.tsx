@@ -9,15 +9,17 @@ const Page = () => {
 
   return (
     <PageLayout title="Equipment">
-      <Typography className="col-span-3 lg:col-span-2 px-4 bg-neutral h-fit">
-        <p>Equipments!</p>
-      </Typography>
-      <Section
-        className="hidden lg:inline col-span-1 h-full opacity-50"
-        backgroundImage="/img/characters.jpg"
-      >
-        {' '}
-      </Section>
+      <div className="grid grid-cols-3">
+        <Typography className="col-span-3 lg:col-span-2 px-4 bg-neutral h-fit">
+          <p>Equipments!</p>
+        </Typography>
+        <Section
+          className="hidden lg:inline col-span-1 h-full opacity-50"
+          backgroundImage="/img/characters.jpg"
+          >
+          {' '}
+        </Section>
+      </div>
     </PageLayout>
   )
 }

@@ -148,7 +148,7 @@ const Page = () => {
                             .indexOf((search??'').toLowerCase()) >= 0
                       )
                       .map((skill: Skill) => (
-                        <SkillCard skill={skill} key={skill.id} />
+                        <SkillCard skill={skill} key={skill.id} className='col-span-3 lg:col-span-1' />
                       ))}
                 </div>
               </CardContent>
