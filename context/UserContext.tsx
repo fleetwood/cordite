@@ -12,7 +12,17 @@ export const userContext = () => useContext(UserContext)
 const UserProvider = ({ children }: UserProviderProps) => {
   const {data:user, isLoading, error, invalidate, refetch} = useRocketQuery<User>({ name: 'user', url: 'me' })
   return (
-    <UserContext.Provider value={{user, isLoading, error, invalidate, refetch}}>
+    <UserContext.Provider
+      value={{
+        user,
+        isLoading,
+        error,
+        invalidate,
+        refetch,
+        isDM: user && user.role === 'DM',
+        isAdmin: user && user.role === 'ADMIN',
+      }}
+    >
       {children}
     </UserContext.Provider>
   )

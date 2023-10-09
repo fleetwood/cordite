@@ -44,7 +44,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
     <>
       {isLoading && <div className="animate-spin">C</div>}
       {user &&
-      <label tabIndex={0} className="m-1 cursor-pointer">
+      <label tabIndex={0} className="m-1">
         <div className="avatar">
           <div className="w-20 mask mask-hexagon uppercase text-base-content">
             {user.image ? <img src={user.image!} /> : user.name.substring(0, 1)}

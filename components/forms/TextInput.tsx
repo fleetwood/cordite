@@ -7,6 +7,7 @@ type TextInputProps = classNameProps & variantProps & LabelProps & {
   placeholder?: string
   value?:       string
   setValue?:    Dispatch<SetStateAction<string|undefined>>
+  onChange?:    (value:string) => void
 }
 
 const TextInput = (props:TextInputProps) => {
@@ -23,6 +24,7 @@ const TextInput = (props:TextInputProps) => {
         value={props.value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           if (props.setValue) props.setValue(e.currentTarget.value)
+          if (props.onChange) props.onChange(e.currentTarget.value)
         }}
       />
     </div>
