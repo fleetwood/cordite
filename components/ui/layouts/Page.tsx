@@ -6,73 +6,13 @@ import {uuid} from 'utils/helpers'
 import GoogleLogin from '../googleLogin'
 import VmenuLink from '../links/VerticalMenuLink'
 import Section,{SectionProps} from '../section'
+import {GearboxIcon} from '../icons'
+import NavMenu from './NavMenu'
 
 type Props = SectionProps & {
   requireLogin?: boolean
   children: ReactNode
 }
-
-const sections = [
-  {
-    label: 'Core',
-    link: '/',
-    noLogin: true
-  },
-  {
-    label: 'System',
-    link: '/system',
-    submenu: true
-  },
-  {
-    label: 'Health',
-    link: '/health',
-    submenu: true,
-  },
-  {
-    label: 'Levels',
-    link: '/levels',
-    submenu: true
-  },
-  {
-    label: 'RAD',
-    link: '/rad',
-    submenu: true,
-  },
-  {
-    label: 'Stats',
-    link: '/stats'
-  },
-  {
-    label: 'Skills',
-    link: '/skills'
-  },
-  {
-    label: 'Equipment',
-    link: '/equipment'
-  },
-  {
-    label: 'Melee',
-    link: '/melee',
-    submenu: true
-  },
-  {
-    label: 'Ranged',
-    link: '/ranged',
-    submenu: true
-  },
-  {
-    label: 'Classes',
-    link: '/classes'
-  },
-  {
-    label: 'Characters',
-    link: '/characters'
-  },
-  {
-    label: 'Theme',
-    link: '/theme'
-  },
-]
 
 const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
   const {data: session, status} = useSession()
@@ -85,6 +25,25 @@ const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
 
   return (
     <main className="grid grid-cols-9 min-h-screen">
+      <div className="sm:hidden drawer absolute z-50 w-max">
+        <input id="mobile-menu" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-side">
+          <label
+            htmlFor="mobile-menu"
+            aria-label="close sidebar"
+            className="drawer-overlay"
+          ></label>
+          <div className="menu p-4 w-80 min-h-full bg-base-200 ">
+            <label
+              htmlFor="mobile-menu"
+              className="btn btn-neutral drawer-button sm:hidden"
+            >
+              <GearboxIcon className="text-primary h-8 w-8" />
+            </label>
+            <NavMenu currentPath={currentPath} mobile />
+          </div>
+        </div>
+      </div>
       <div className="hidden sm:inline sm:col-span-2 lg:col-span-1">
         <div
           className={twMerge(
@@ -94,47 +53,41 @@ const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
           )}
           style={{ backgroundImage: 'url(img/wallDark.jpg)' }}
         >
-          <div className="grid grid-col justify-items-end gap-3 p-2">
-            <GoogleLogin />
-            <div className="border-t-4 border-primary/20 min-w-full"></div>
-            {sections.map((item: any, i: number) => (
-                <VmenuLink
-                  href={item.link}
-                  className={twMerge(
-                    'min-w-full text-right bg-opacity-0',
-                    'bg-gradient-to-r from-transparent to-neutral/50 hover:text-primary-content rounded-lg',
-                    item.submenu
-                      ? 'font-normal opacity-80'
-                      : 'uppercase font-bold',
-                    item.link === currentPath
-                      ? 'text-secondary to-secondary/50'
-                      : ''
-                  )}
-                  selected={item.link === currentPath}
-                  key={uuid()}
-                >
-                  {item.label}
-                </VmenuLink>
-            ))}
-          </div>
+          <NavMenu currentPath={currentPath} />
         </div>
       </div>
       <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative pageMesh">
+        {/* Page content here */}
+        <div className="sticky top-0 z-50 bg-base-100 col-span-8 grid grid-cols-2 items-center">
+          <div>
+            <label
+              htmlFor="mobile-menu"
+              className="btn btn-neutral drawer-button sm:hidden p-2 m-2"
+              >
+              <GearboxIcon className="text-primary h-8 w-8" />
+            </label>
+          </div>
+          <div className='text-right text-4xl pr-2 font-fraunces font-semibold text-primary'>CORDITE</div>
+        </div>
         {status === 'loading' ? (
-              <div>...</div>
-            ): (requireLogin === false || status === 'authenticated') && (
-        <Section
-          title={props.title}
-          titleClass={twMerge(
-            'text-secondary shadow-md shadow-black px-4',
-            props.titleClass
-          )}
-          className={twMerge('p-4 bg-cover h-full', props.className)}
-          >
-            {props.children}
-          <div className='sticky bottom-0 text-center p-1 bg-base-100'>Copyright &copy;2021 John Fleetwood</div>
-        </Section>
-      )}
+          <div>...</div>
+        ) : (
+          (requireLogin === false || status === 'authenticated') && (
+            <Section
+              title={props.title}
+              titleClass={twMerge(
+                'text-secondary shadow-md shadow-black px-4',
+                props.titleClass
+              )}
+              className={twMerge('p-4 bg-cover h-full', props.className)}
+            >
+              {props.children}
+              <div className="sticky bottom-0 text-center p-1 bg-base-100">
+                Copyright &copy;2021 John Fleetwood
+              </div>
+            </Section>
+          )
+        )}
       </div>
     </main>
   )
