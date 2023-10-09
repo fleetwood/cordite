@@ -47,7 +47,7 @@ const PageLayout: React.FC<Props> = ({
           </div>
         </div>
       </div>
-      <div className="hidden md:inline md:col-span-2 relative">
+      <div className="hidden md:inline md:col-span-2 xl:col-span-1 relative">
         <div
           className={twMerge(
             'min-w-full min-h-full bg-contain',
@@ -59,7 +59,7 @@ const PageLayout: React.FC<Props> = ({
           <NavMenu currentPath={currentPath} />
         </div>
       </div>
-      <div className="overflow-y-scroll scrollbar-hide col-span-9 md:col-span-7 relative pageMesh">
+      <div className="overflow-y-scroll scrollbar-hide col-span-9 md:col-span-7 xl:col-span-8 relative pageMesh">
         <div className="md:hidden sticky top-0 z-50 bg-base-100 col-span-8 grid grid-cols-2 items-center">
           <div>
             <label
