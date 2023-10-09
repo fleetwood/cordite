@@ -8,6 +8,7 @@ import VmenuLink from '../links/VerticalMenuLink'
 import Section, { SectionProps } from '../section'
 import { GearboxIcon } from '../icons'
 import NavMenu from './NavMenu'
+import Toasts from '../toasts'
 
 type Props = SectionProps & {
   requireLogin?: boolean
@@ -28,6 +29,7 @@ const PageLayout: React.FC<Props> = ({
 
   return (
     <main className="grid grid-cols-9 h-screen">
+      <Toasts />
       <div className="md:hidden drawer absolute z-50 w-max">
         <input id="mobile-menu" type="checkbox" className="drawer-toggle" />
         <div className="drawer-side">

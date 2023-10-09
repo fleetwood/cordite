@@ -2,6 +2,7 @@ import { NextApiRequest } from 'next'
 import { getSession } from 'next-auth/react'
 import { Role, User, prisma } from 'prisma/context'
 import {CharacterStub, CharacterStubInclude} from 'prisma/types/character'
+import {toSlug} from 'utils/helpers'
 
 const me = async (req: NextApiRequest): Promise<User> =>{
   try {
@@ -23,13 +24,22 @@ const characters = async (id:string):Promise<CharacterStub[]> => {
 
 export type UserUpdateProps = {
    id: string
-   userName:string
+   name:string
    image:string
    role: Role
+   visible: boolean
 }
 
-const update = async ({id, userName, image, role}:UserUpdateProps) => null // prisma.user.update(
-  // {where: id}, data: { name: userName } )
+const update = async ({id, name, image, role, visible}:UserUpdateProps) => await prisma.user.update({
+  where: { id },
+  data: {
+    name,
+    role,
+    image,
+    slug: toSlug(name),
+    visible
+  }
+})
 
 export const PrismaUser = {
   characters,

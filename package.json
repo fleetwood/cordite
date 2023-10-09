@@ -29,6 +29,7 @@
     "@headlessui/react": "^1.7.17",
     "@neondatabase/serverless": "^0.6.0",
     "@prisma/adapter-neon": "^5.4.1",
+    "@react-hook/debounce": "^4.0.0",
     "@tailwindcss/forms": "^0.5.6",
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",

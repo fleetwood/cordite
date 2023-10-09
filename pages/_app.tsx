@@ -8,6 +8,7 @@ import UserProvider from 'context/UserContext'
 import useDebug from 'hooks/useDebug'
 import {DEBUG, env} from 'utils/helpers'
 import {SessionProvider} from 'next-auth/react'
+import ToastProvider from 'context/ToastContextProvider'
 
 const {debug} = useDebug('__app', DEBUG)
 
@@ -20,11 +21,13 @@ const App = ({ Component, pageProps: {session, ...pageProps} }: AppProps) => {
   return (
     <QueryClientProvider client={qc}>
       <Hydrate state={pageProps.dehydratedState}>
-        <UserProvider {...pageProps}>
-          <SessionProvider session={session}>
-            <Component {...pageProps} />
-          </SessionProvider>
-        </UserProvider>
+        <ToastProvider {...pageProps}>
+          <UserProvider {...pageProps}>
+            <SessionProvider session={session}>
+              <Component {...pageProps} />
+            </SessionProvider>
+          </UserProvider>
+        </ToastProvider>
       </Hydrate>
     </QueryClientProvider>
 )}

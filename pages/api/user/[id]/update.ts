@@ -6,10 +6,10 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {id, userName, image, role} = req.body
+  const {id, name, image, role, visible} = req.body
   return useApi(
     res,
     'api/user/id/update',
-    PrismaUser.update({ id, userName, image, role })
+    PrismaUser.update({ id, name, image, role, visible })
   )
 }
