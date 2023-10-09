@@ -9,10 +9,12 @@ import Section, { SectionProps } from '../section'
 import { GearboxIcon } from '../icons'
 import NavMenu from './NavMenu'
 import Toasts from '../toasts'
+import Semibold from '../typography/semibold'
 
 type Props = SectionProps & {
-  requireLogin?: boolean
-  children: ReactNode
+  requireLogin?:  boolean
+  children:       ReactNode
+  dark?:          boolean
 }
 
 const PageLayout: React.FC<Props> = ({
@@ -82,13 +84,16 @@ const PageLayout: React.FC<Props> = ({
             <Section
               title={props.title}
               titleClass={twMerge(
-                'text-secondary shadow-md shadow-black px-4',
+                props.dark
+                  ? 'text-secondary shadow-md shadow-black px-4'
+                  : 'bg-base-100 border-b border-neutral/50',
                 props.titleClass
               )}
               className={twMerge('p-4 bg-cover h-full', props.className)}
             >
               {props.children}
-              <div className="sticky bottom-0 text-center p-1 bg-base-100">
+              <div className="sticky bottom-0 text-center p-1 bg-base-100 mt-4 text-sm">
+                <Semibold>CORDITE role-playing system</Semibold> {' '}
                 Copyright &copy;2021 John Fleetwood
               </div>
             </Section>
