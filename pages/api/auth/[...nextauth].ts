@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth'
+import NextAuth, {AuthOptions} from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 
@@ -10,7 +10,7 @@ const { debug, fail } = useDebug('api/auth/nextauth')
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
-export default NextAuth({
+export const options:AuthOptions = {
   // https://next-auth.js.org/configuration/providers
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
@@ -44,5 +44,7 @@ export default NextAuth({
     // verifyRequest: '/auth/verify-request', // Used for check email page
     // newUser: "/user/setup", // If set, new users will be directed here on first sign in
   },
-  debug: true
-})
+  debug: true,
+}
+
+export default NextAuth(options)
