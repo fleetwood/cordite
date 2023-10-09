@@ -6,10 +6,6 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {id, name, image, role, visible} = req.body
-  return useApi(
-    res,
-    'api/user/id/update',
-    PrismaUser.update({ id, name, image, role, visible })
-  )
+  const slug = req.query.slug.toString()
+  return useApi(res, `api/user/${slug}/characters`, PrismaUser.characters(slug))
 }

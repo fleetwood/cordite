@@ -19,8 +19,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
         error,
         invalidate,
         refetch,
-        isDM: user && user.role === 'DM',
-        isAdmin: user && user.role === 'ADMIN',
+        isDM: user?.role === 'DM',
+        isAdmin: user?.role === 'ADMIN',
       }}
     >
       {children}

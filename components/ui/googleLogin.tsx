@@ -47,7 +47,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
       <label tabIndex={0} className="m-1">
         <div className="avatar">
           <div className="w-20 mask mask-hexagon uppercase text-base-content">
-            {user.image ? <img src={user.image!} /> : user.name.substring(0, 1)}
+            {user.image ? <img loading='lazy' src={user.image!} /> : user.name.substring(0, 1)}
           </div>
         </div>
       </label>

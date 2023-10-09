@@ -2,6 +2,7 @@ import { NextApiRequest } from 'next'
 import { getSession } from 'next-auth/react'
 import { Role, User, prisma } from 'prisma/context'
 import {CharacterStub, CharacterStubInclude} from 'prisma/types/character'
+import {UserDetailProps, getUserWhere} from 'prisma/types/user'
 import {toSlug} from 'utils/helpers'
 
 const me = async (req: NextApiRequest): Promise<User> =>{
@@ -15,9 +16,19 @@ const me = async (req: NextApiRequest): Promise<User> =>{
   }
 }
 
-const characters = async (id:string):Promise<CharacterStub[]> => {
+const profile = async (props:UserDetailProps): Promise<User> =>{
+  try {
+    return await prisma.user.findUnique({
+      where: getUserWhere(props),
+    })
+  } catch (error) {
+   return undefined 
+  }
+}
+
+const characters = async (slug:string):Promise<CharacterStub[]> => {
   return await prisma.character.findMany({
-    where: { visible: true},
+    where: { visible: true, owner: { slug } },
     include: CharacterStubInclude
   }) as CharacterStub[]
 }
@@ -44,5 +55,6 @@ const update = async ({id, name, image, role, visible}:UserUpdateProps) => await
 export const PrismaUser = {
   characters,
   me,
+  profile,
   update
 }
