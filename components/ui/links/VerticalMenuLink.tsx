@@ -1,10 +1,9 @@
-import Link from 'next/link'
-import React, {ReactNode} from 'react'
+import {useRouter} from 'next/router'
+import {ReactNode} from 'react'
 import useVariants from 'src/hooks/useVariants'
 import {twMerge} from 'tailwind-merge'
-import {classNameProps, onClickProps, variantProps} from 'types'
-import {CaretLeftIcon, GearStatIcon} from '../icons'
-import {useRouter} from 'next/router'
+import {classNameProps,onClickProps,variantProps} from 'types'
+import {GearmenuIcon} from '../icons'
 
 type VmenuLinkProps = classNameProps & variantProps & onClickProps & {
   href? : string
@@ -26,7 +25,7 @@ const VmenuLink = ({children, ...props}:VmenuLinkProps) => {
       onClick={() => props.onClick ?? push(props.href)}
     >
       {children}
-      <GearStatIcon
+      <GearmenuIcon
         className={twMerge(
           'pt-1 h-6 w-6',
           props.selected ? 'opacity-100' : 'opacity-0'

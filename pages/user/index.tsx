@@ -1,25 +1,20 @@
+import UserProfile from 'components/containers/User/UserProfile'
 import PageLayout from 'components/ui/layouts/Page'
 import Section from 'components/ui/section'
-import Typography from 'components/ui/typography/typography'
 import {userContext} from 'context/UserContext'
-import React from 'react'
+import useDebug from 'hooks/useDebug'
+import {DEBUG} from 'utils/helpers'
+
+const {debug} = useDebug('pages/user/index', DEBUG)
 
 const Page = () => {
   const {user} = userContext()
-
+  
   return (
-    <PageLayout title='Profile'>
-      <Typography className="col-span-3 lg:col-span-2 px-4 bg-neutral h-fit">
-        Characters
-      </Typography>
-      <Section
-        className="hidden lg:inline col-span-1 h-full opacity-70 bg-contain bg-no-repeat"
-        backgroundImage="/img/casting.jpg"
-      >
-        {user && 
-        <Typography>
-          <h2>{user.name}</h2>
-        </Typography>
+    <PageLayout title="Profile" dark>
+      <Section className="bg-neutral/30 mb-4">
+        {user &&
+          <UserProfile slug={user.slug ?? user.name} />
         }
       </Section>
     </PageLayout>
