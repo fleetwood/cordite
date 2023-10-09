@@ -1,12 +1,12 @@
-import {useSession} from 'next-auth/react'
-import {useRouter} from 'next/router'
-import React,{ReactNode} from 'react'
-import {twMerge} from 'tailwind-merge'
-import {uuid} from 'utils/helpers'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import React, { ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { uuid } from 'utils/helpers'
 import GoogleLogin from '../googleLogin'
 import VmenuLink from '../links/VerticalMenuLink'
-import Section,{SectionProps} from '../section'
-import {GearboxIcon} from '../icons'
+import Section, { SectionProps } from '../section'
+import { GearboxIcon } from '../icons'
 import NavMenu from './NavMenu'
 
 type Props = SectionProps & {
@@ -14,8 +14,11 @@ type Props = SectionProps & {
   children: ReactNode
 }
 
-const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
-  const {data: session, status} = useSession()
+const PageLayout: React.FC<Props> = ({
+  requireLogin = true,
+  ...props
+}: Props) => {
+  const { data: session, status } = useSession()
   const router = useRouter()
   const currentPath = router.pathname
 
@@ -24,8 +27,8 @@ const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
   }
 
   return (
-    <main className="grid grid-cols-9 min-h-screen">
-      <div className="sm:hidden drawer absolute z-50 w-max">
+    <main className="grid grid-cols-9 h-screen">
+      <div className="md:hidden drawer absolute z-50 w-max">
         <input id="mobile-menu" type="checkbox" className="drawer-toggle" />
         <div className="drawer-side">
           <label
@@ -44,7 +47,7 @@ const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
           </div>
         </div>
       </div>
-      <div className="hidden sm:inline sm:col-span-2 lg:col-span-1">
+      <div className="hidden md:inline md:col-span-2 relative">
         <div
           className={twMerge(
             'min-w-full min-h-full bg-contain',
@@ -56,18 +59,19 @@ const PageLayout: React.FC<Props> = ({requireLogin = true, ...props}:Props) => {
           <NavMenu currentPath={currentPath} />
         </div>
       </div>
-      <div className="col-span-9 sm:col-span-7 lg:col-span-8 relative pageMesh">
-        {/* Page content here */}
-        <div className="sticky top-0 z-50 bg-base-100 col-span-8 grid grid-cols-2 items-center">
+      <div className="overflow-y-scroll scrollbar-hide col-span-9 md:col-span-7 relative pageMesh">
+        <div className="md:hidden sticky top-0 z-50 bg-base-100 col-span-8 grid grid-cols-2 items-center">
           <div>
             <label
               htmlFor="mobile-menu"
-              className="btn btn-neutral drawer-button sm:hidden p-2 m-2"
-              >
+              className="btn btn-neutral drawer-button p-2 m-2"
+            >
               <GearboxIcon className="text-primary h-8 w-8" />
             </label>
           </div>
-          <div className='text-right text-4xl pr-2 font-fraunces font-semibold text-primary'>CORDITE</div>
+          <div className="text-right text-4xl pr-2 font-fraunces font-semibold text-primary">
+            CORDITE
+          </div>
         </div>
         {status === 'loading' ? (
           <div>...</div>
