@@ -88,20 +88,20 @@ const Page = () => {
                   </div>
                 )}
               </ImageDrop>
-              {/* {isAdmin && ( */}
-              <SelectInput
-                label="Role"
-                items={[
-                  { id: 'PLAYER', name: 'PLAYER' },
-                  { id: 'DM', name: 'DM' },
-                  { id: 'ADMIN', name: 'ADMIN' },
-                ]}
-                item={role}
-                setItem={(role) => update({role: role.id})}
-                className="my-2"
-                
-              />
-              {/* )} */}
+              {isAdmin && (
+                <SelectInput
+                  label="Role"
+                  items={[
+                    { id: 'PLAYER', name: 'PLAYER' },
+                    { id: 'DM', name: 'DM' },
+                    { id: 'ADMIN', name: 'ADMIN' },
+                  ]}
+                  item={role}
+                  setItem={(role) => update({role: role.id})}
+                  className="my-2"
+                  
+                />
+              )}
               <button type="submit" className="btn-primary btn">
                 Save
               </button>
