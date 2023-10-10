@@ -2,6 +2,7 @@ import React, {Dispatch, SetStateAction} from 'react'
 import {classNameProps, variantProps} from 'types'
 import { twMerge } from 'tailwind-merge'
 import Label, {LabelProps} from './Label'
+import useVariants from 'src/hooks/useVariants'
 
 type TextInputProps = classNameProps &
   variantProps &
@@ -15,6 +16,7 @@ type TextInputProps = classNameProps &
   }
 
 const TextInput = (props:TextInputProps) => {
+  const {bgVariant, textVariant, textVariantContent} = useVariants(props.variant ?? 'neutral')
   return (
     <div>
       {props.label && <Label label={props.label} labelClass={props.label} />}
@@ -22,7 +24,8 @@ const TextInput = (props:TextInputProps) => {
         type="text"
         placeholder={props.placeholder}
         className={twMerge(
-          'input input-ghost w-full max-w-xs',
+          'input input-ghost w-full',
+          props.variant ? [bgVariant, textVariantContent] : [],
           props.className
         )}
         value={props.value}
