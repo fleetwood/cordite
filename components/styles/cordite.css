@@ -42,4 +42,14 @@
             radial-gradient(at 70% 23%, hsla(201,0%,0%,1) 0px, transparent 50%),
             radial-gradient(at 52% 35%, hsla(41,78%,35%,0.48) 0px, transparent 50%);
     }
+
+    .corditeMesh {
+        @apply text-transparent bg-clip-text;
+        background-color:hsla(30,90%,42%,1);
+        background-image:
+            radial-gradient(at 0% 54%, hsla(301,0%,100%,1) 0px, transparent 50%),
+            radial-gradient(at 98% 54%, hsla(59,100%,93%,1) 0px, transparent 50%),
+            radial-gradient(at 52% 26%, hsla(36,72%,52%,1) 0px, transparent 50%),
+            radial-gradient(at 52% 74%, hsla(36,100%,25%,1) 0px, transparent 50%);
+    }
 }

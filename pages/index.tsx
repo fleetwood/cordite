@@ -23,12 +23,16 @@ const HomePage = () => {
         >
           <h1
             className="w-full mt-10
-              text-5xl text-success/60 text-shadow 
-              xl:text-9xl lg:text-shadow-lg 
-              font-semibold font-fraunces leading-relaxed
               bg-gradient-to-b from-primary/10 to-primary/30 shadow shadow-black"
           >
-            CORDITE
+            <span
+              className="
+              text-5xl xl:text-9xl
+              corditeMesh text-shadow-lg shadow-black/50
+              font-semibold font-fraunces leading-relaxed"
+            >
+              CORDITE
+            </span>
           </h1>
           <Typography className="text-primary/70">
             tabletop role-playing game system

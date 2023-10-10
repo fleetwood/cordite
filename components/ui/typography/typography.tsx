@@ -8,7 +8,7 @@ type TypographyProps = classNameProps & {
 
 const Typography = ({children, ...props}:TypographyProps) => {
   return (
-    <div className={twMerge('text-base-content p-2', props.className)}>
+    <div className={twMerge('text-base-content leading-relaxed p-2', props.className)}>
       {children}
     </div>
   )
