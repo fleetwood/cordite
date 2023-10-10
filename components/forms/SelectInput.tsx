@@ -38,7 +38,6 @@ const SelectInput = ({variant='neutral', ...props}:SelectInputProps) => {
       )}
       <select
         className={twMerge(bgVariant, textVariantContent)}
-        placeholder={props.placeholder ?? props.label}
         onChange={(e) => onChange(e.currentTarget.value)}
       >
         {props.default !== false && (
