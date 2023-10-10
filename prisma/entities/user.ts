@@ -1,7 +1,10 @@
-import { NextApiRequest } from 'next'
-import { getSession } from 'next-auth/react'
-import { CharacterStub, CharacterStubInclude, Role, User, UserDetailProps, UserStub, UserStubInclude, getUserWhere, prisma } from 'prisma/context'
-import {toSlug} from 'utils/helpers'
+import useDebug from 'hooks/useDebug'
+import {NextApiRequest} from 'next'
+import {getSession} from 'next-auth/react'
+import {CharacterStub,Role,User,UserDetailProps,UserStub,UserStubInclude,getUserWhere,prisma} from 'prisma/context'
+import {DEBUG,toSlug} from 'utils/helpers'
+
+const {debug} = useDebug('/entities/user')
 
 const me = async (req: NextApiRequest): Promise<User> =>{
   try {
@@ -38,11 +41,18 @@ const players = async (): Promise<UserStub[]> =>{
   }
 }
 
-const characters = async (slug:string):Promise<CharacterStub[]> => {
-  return await prisma.character.findMany({
-    where: { visible: true, owner: { slug } },
-    ...CharacterStubInclude
-  }) as CharacterStub[]
+const characters = async ({slug}:{slug:string}):Promise<CharacterStub[]> => {
+  const find = {
+    where: {owner: {slug}},
+    include: {
+      owner: true,
+      charClass: true,
+      stats: true,
+      skills: true,
+    },
+  }
+  debug('characters', {find})
+  return await prisma.character.findMany(find) as CharacterStub[]
 }
 
 export type UserUpdateProps = {

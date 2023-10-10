@@ -1,11 +1,12 @@
-import UserProfile from 'components/containers/User/UserProfile'
+
+import UserProfile from 'components/containers/User/userProfile'
 import PageLayout from 'components/ui/layouts/Page'
 import Section from 'components/ui/section'
 import {userContext} from 'context/UserContext'
 import useDebug from 'hooks/useDebug'
 import {DEBUG} from 'utils/helpers'
 
-const {debug} = useDebug('pages/user/index', DEBUG)
+const {debug} = useDebug('pages/user/index')
 
 const Page = () => {
   const {user} = userContext()

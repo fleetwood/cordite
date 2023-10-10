@@ -15,7 +15,7 @@ import {Skill, Stat, StatStub} from 'prisma/context'
 import {useEffect, useState} from 'react'
 import {DEBUG, sendApi} from 'utils/helpers'
 
-const {debug} = useDebug('skills', DEBUG)
+const {debug} = useDebug('skills')
 
 const Page = () => {
   const { user, isLoading } = userContext()

@@ -11,7 +11,7 @@ import {classNameProps} from 'types'
 import {DEBUG,sendApi,uuid} from 'utils/helpers'
 import StatCard from './statCard'
 
-const {debug} = useDebug('statTreeView', DEBUG)
+const {debug} = useDebug('statTreeView')
 
 type StatTreeViewProps = classNameProps & {
   physicalStats?: boolean

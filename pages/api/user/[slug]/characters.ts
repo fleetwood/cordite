@@ -7,5 +7,5 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const slug = req.query.slug.toString()
-  return useApi(res, `api/user/${slug}/characters`, PrismaUser.characters(slug))
+  return useApi(res, `api/user/${slug}/characters`, PrismaUser.characters({slug}))
 }
