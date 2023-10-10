@@ -3,7 +3,7 @@ import {NextApiRequest,NextApiResponse} from 'next'
 import {PrismaStat} from 'prisma/context'
 import {DEBUG, __prod__} from 'utils/helpers'
 
-const {debug, fail} = useDebug('api/stat/detail', DEBUG)
+const {debug, fail} = useDebug('api/stat/detail')
 
 const handle = async (
   req: NextApiRequest,

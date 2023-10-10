@@ -4,13 +4,13 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 
 import { Adapter } from 'next-auth/adapters'
 import useDebug from 'hooks/useDebug'
-import {google} from 'utils/helpers'
+import {google, toSlug} from 'utils/helpers'
 import {prisma} from 'prisma/context'
 const { debug, fail } = useDebug('api/auth/nextauth')
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
-export const options:AuthOptions = {
+export const options: AuthOptions = {
   // https://next-auth.js.org/configuration/providers
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
@@ -44,6 +44,38 @@ export const options:AuthOptions = {
     // verifyRequest: '/auth/verify-request', // Used for check email page
     // newUser: "/user/setup", // If set, new users will be directed here on first sign in
   },
+
+  events: {
+    signIn: async ({ user, account, profile, isNewUser }) => {
+      try {
+        let data = await prisma.user.findUnique({
+          where: { email: user.email || undefined }
+        })
+        if (isNewUser || data.slug === null) {
+          debug(
+            `
+          >>>>>>>>>>>>>>>>>>>>>>>>
+          This user needs a slug!!
+          >>>>>>>>>>>>>>>>>>>>>>>>
+          `,
+            user
+          )
+
+          await prisma.user.update({
+            where: { id: data.id },
+            data: {
+              ...data,
+              slug: toSlug(data.name),
+            },
+          })
+        }
+      } catch (e) {
+        fail('signIn Error', { error: e, user })
+        throw e
+      }
+    },
+  },
+
   debug: true,
 }
 

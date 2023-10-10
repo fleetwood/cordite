@@ -11,7 +11,7 @@ import {DEBUG, __prod__, env} from 'utils/helpers'
 import {SessionProvider} from 'next-auth/react'
 import ToastProvider from 'context/ToastContextProvider'
 
-const {debug} = useDebug('__app', DEBUG)
+const {debug} = useDebug('__app')
 
 const App = ({ Component, pageProps: {session, ...pageProps} }: AppProps) => {
 
