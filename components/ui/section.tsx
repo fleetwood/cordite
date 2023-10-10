@@ -17,7 +17,7 @@ const Section = ({children, ...props}:SectionProps) => {
   return (
     <div className={twMerge(props.className)} style={style}>
       {props.title &&
-        <h2 className={twMerge('py-2',props.titleClass)}>{props.title}</h2>
+        <h2 className={twMerge('p-2',props.titleClass)}>{props.title}</h2>
       }
       {children}
     </div>

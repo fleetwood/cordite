@@ -1,8 +1,6 @@
 import { NextApiRequest } from 'next'
 import { getSession } from 'next-auth/react'
-import { Role, User, prisma } from 'prisma/context'
-import {CharacterStub, CharacterStubInclude} from 'prisma/types/character'
-import {UserDetailProps, getUserWhere} from 'prisma/types/user'
+import { CharacterStub, CharacterStubInclude, Role, User, UserDetailProps, UserStub, UserStubInclude, getUserWhere, prisma } from 'prisma/context'
 import {toSlug} from 'utils/helpers'
 
 const me = async (req: NextApiRequest): Promise<User> =>{
@@ -26,10 +24,24 @@ const profile = async (props:UserDetailProps): Promise<User> =>{
   }
 }
 
+const players = async (): Promise<UserStub[]> =>{
+  try {
+    return await prisma.user.findMany({
+      where: {
+        visible: true,
+        role: 'PLAYER'
+      },
+      ...UserStubInclude
+    })
+  } catch (error) {
+   return undefined 
+  }
+}
+
 const characters = async (slug:string):Promise<CharacterStub[]> => {
   return await prisma.character.findMany({
     where: { visible: true, owner: { slug } },
-    include: CharacterStubInclude
+    ...CharacterStubInclude
   }) as CharacterStub[]
 }
 
@@ -55,6 +67,7 @@ const update = async ({id, name, image, role, visible}:UserUpdateProps) => await
 export const PrismaUser = {
   characters,
   me,
+  players,
   profile,
   update
 }

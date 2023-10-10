@@ -1,3 +1,22 @@
+import {Character, CharacterStub, CharacterStubInclude, User} from "prisma/context"
+
+export type UserStub = User & {
+  characters: CharacterStub[]
+}
+
+export const UserStubInclude = {
+  include: {
+    characters: {
+      include: {
+        owner: true,
+        charClass: true,
+        stats: true,
+        skills: true,
+      },
+    },
+  },
+}
+
 export type UserDetailProps = {
   id?: string
   name?: string
