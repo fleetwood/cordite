@@ -10,6 +10,16 @@ const playerCharacters = async (ownerId:string) => {
   }) as CharacterStub[]
 }
 
+const stubs = async (ownerId: string) => {
+  return (await prisma.character.findMany({
+    where: {
+      visible: true,
+      ownerId,
+    },
+    ...CharacterStubInclude,
+  })) as CharacterStub[]
+}
+
 const detail = async (id:string) => {
   return await prisma.character.findUnique({
     where: { id },
@@ -24,5 +34,6 @@ const detail = async (id:string) => {
 
 export const PrismaCharacter = {
   detail,
-  playerCharacters
+  playerCharacters,
+  stubs
 }
