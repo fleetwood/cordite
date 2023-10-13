@@ -1,20 +1,19 @@
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import React, { ReactNode } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { uuid } from 'utils/helpers'
-import GoogleLogin from '../googleLogin'
-import VmenuLink from '../links/VerticalMenuLink'
-import Section, { SectionProps } from '../section'
-import { GearboxIcon } from '../icons'
-import NavMenu from './NavMenu'
+import {useSession} from 'next-auth/react'
+import {useRouter} from 'next/router'
+import React,{ReactNode} from 'react'
+import {twMerge} from 'tailwind-merge'
+import {GearboxIcon} from '../icons'
+import Section,{SectionProps} from '../section'
 import Toasts from '../toasts'
 import Semibold from '../typography/semibold'
+import NavMenu from './NavMenu'
 
 type Props = SectionProps & {
   requireLogin?:  boolean
   children:       ReactNode
   dark?:          boolean
+  banner?:        string
+  randomBanner?:  boolean
 }
 
 const PageLayout: React.FC<Props> = ({
@@ -90,6 +89,7 @@ const PageLayout: React.FC<Props> = ({
                 props.titleClass
               )}
               className={twMerge('p-4 bg-cover h-full', props.className)}
+              {...props}
             >
               {props.children}
               <div className="sticky bottom-0 text-center p-1 bg-base-100 mt-4 text-sm">

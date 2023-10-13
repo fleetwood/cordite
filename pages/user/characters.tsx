@@ -17,7 +17,7 @@ const Page = (props) => {
         </Typography>
         <Section
           className="col-span-2 h-full opacity-70 bg-contain bg-no-repeat"
-          backgroundImage="/img/casting.jpg"
+          bannerImage="/img/casting.jpg"
           >
           {' '}
         </Section>

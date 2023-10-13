@@ -1,10 +1,8 @@
-import CharacterCard from 'components/containers/Character/characterCard'
+import CharClassDetailView from 'components/containers/CharClass/charClassDetail'
 import PageLayout from 'components/ui/layouts/Page'
-import Section from 'components/ui/section'
 import Spinner from 'components/ui/spinner'
-import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
-import {CharClassDetail} from 'prisma/types'
+import {CharClassDetail} from 'prisma/context'
 
 export async function getServerSideProps(context: any) {
   const { slug } = context.params
@@ -12,8 +10,7 @@ export async function getServerSideProps(context: any) {
 }
 
 const Page = ({ slug, ...props }) => {
-  const {isAdmin, isDM} = userContext()
-  const {data: charClass, isLoading} = useRocketQuery<CharClassDetail>({
+  const {data: charClass, isLoading, invalidate} = useRocketQuery<CharClassDetail>({
     name: 'char-class',
     url: `charClass/${slug}`
   })
@@ -23,37 +20,21 @@ const Page = ({ slug, ...props }) => {
     : ''
 
   return (
-    <PageLayout title={title}>
-      <Section>
-        {isLoading && <Spinner />}
-        {charClass && (
-          <div className="bg-base-200/50 flex flex-col gap-4">
-            <div>{charClass.description}</div>
-            <div>
-              <Section
-                titleClass="bg-base-100 text-primary text-2xl border-t border-primary/50"
-                title="Abilities"
-              >
-                {charClass.abilities.map((ability) => (
-                  <div>{ability.name}</div>
-                ))}
-              </Section>
-            </div>
-            {(isAdmin || isDM) && (
-              <div>
-                <Section
-                  titleClass="bg-base-100 text-primary text-2xl border-t border-primary/50"
-                  title={`Characters (${charClass.characters.length})`}
-                >
-                  {charClass.characters.map((char) => (
-                    <CharacterCard character={char} />
-                  ))}
-                </Section>
-              </div>
-            )}
-          </div>
-        )}
-      </Section>
+    <PageLayout
+      title={title}
+      bannerImage={
+        charClass
+          ? `/img/charClasses/${charClass.name.toLowerCase()}-banner.png`
+          : undefined
+      }
+      sideImage={
+        charClass
+          ? `/img/charClasses/${charClass.name.toLowerCase()}-side.png`
+          : undefined
+      }
+    >
+      {isLoading && <Spinner />}
+      {charClass && <CharClassDetailView charClass={charClass} invalidate={invalidate} />}
     </PageLayout>
   )
 }
