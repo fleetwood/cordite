@@ -22,7 +22,7 @@ const PlayerStubCard = ({player, ...props}:Props) => {
     <Card key={player.id} className="bg-neutral odd:bg-neutral/30">
       <CardTitle>{player.name}</CardTitle>
       <CardContent>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
           {player.characters.map((char) => (
             <CharacterCard
               className={twMerge(

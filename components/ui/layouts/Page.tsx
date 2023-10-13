@@ -57,7 +57,7 @@ const PageLayout: React.FC<Props> = ({
             'shadow-lg shadow-black',
             'border-r-[0.5rem] border-base-300/50'
           )}
-          style={{ backgroundImage: 'url(img/wallDark.jpg)' }}
+          style={{ backgroundImage: 'url(/img/wallDark.jpg)' }}
         >
           <NavMenu currentPath={currentPath} />
         </div>

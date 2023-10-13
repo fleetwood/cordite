@@ -1,10 +1,12 @@
 import {Card, CardContent, CardFooter, CardTitle} from 'components/ui/Card'
+import BackgroundImage from 'components/ui/image/backgroundImage'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {CharacterStub} from 'prisma/types'
 import React from 'react'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps} from 'types'
+import {cloudinary} from 'utils/cloudinary'
 
 type Props = classNameProps & {
   character:  CharacterStub
@@ -27,19 +29,19 @@ const CharacterCard = ({character, ...props}:Props) => {
         props.link ? go(character.id) : props.onClick ? props.onClick() : {}
       }
       className={twMerge(
-        'bg-neutral/50 odd:bg-neutral/30',
-        props.link !== undefined
+        'bg-base-100/50 odd:bg-base-100/30',
+        (props.link !== undefined || props.onClick !== undefined)
           ? 'hover:bg-neutral transition-colors duration-200 cursor-pointer'
           : ''
       )}
     >
-      <CardTitle>{character.name}</CardTitle>
-      <CardContent>
-        <div className="font-semibold">{character.charClass?.name}</div>
+      <CardContent className="grid grid-cols-2 min-h-[80px]">
+        {character.avatar && <BackgroundImage url={cloudinary.avatar(character.avatar, 'md')} contain />}
+        <div>
+          <h3 className='text-primary'>{character.name}</h3>
+          <div className="font-semibold">{character.charClass.name}</div>
+        </div>
       </CardContent>
-      <CardFooter>
-        <Link href={`/character/${character.id}`}>View</Link>
-      </CardFooter>
     </Card>
   )
 }

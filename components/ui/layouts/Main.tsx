@@ -82,7 +82,7 @@ const MainLayout: React.FC<Props> = (props) => {
             'shadow-lg shadow-black',
             'border-r-[0.5rem] border-base-300/50'
           )}
-          style={{ backgroundImage: 'url(img/wallDark.jpg)' }}
+          style={{ backgroundImage: 'url(/img/wallDark.jpg)' }}
         >
           <div className="grid grid-col justify-items-end gap-3 p-2">
             <GoogleLogin />
