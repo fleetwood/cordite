@@ -4,6 +4,7 @@ import TextInput from 'components/forms/TextInput'
 import OpenDialog from 'components/ui/dialogs/openDialog'
 import {useToast} from 'context/ToastContextProvider'
 import {useState} from 'react'
+import {twMerge} from 'tailwind-merge'
 import {sendApi} from 'utils/helpers'
 
 type Props = {
@@ -55,34 +56,39 @@ const AddAbilityDialog = ({charClassId, ...props}:Props) => {
         setOpen={setOpen}
       >
         <TextInput label="Name" value={name} setValue={setName} />
-        <Label label={`Required Level: ${level === 0 ? 'None' : level.toString()}`} />
+        <Label
+          label={`Required Level: ${level === 0 ? 'None' : level.toString()}`}
+        />
         <input
           type="range"
           min={0}
           max={10}
           value={level}
-          onChange={(e) => setLevel((v) => {
-            try {
-              return parseInt(e.currentTarget.value)
-            } catch (error) {
-              return v
-            }
-          })}
+          onChange={(e) =>
+            setLevel((v) => {
+              try {
+                return parseInt(e.currentTarget.value)
+              } catch (error) {
+                return v
+              }
+            })
+          }
           className="range"
           step="1"
         />
         <div className="w-full flex justify-between text-xs px-2">
-          <span>0</span>
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
-          <span>6</span>
-          <span>7</span>
-          <span>8</span>
-          <span>9</span>
-          <span>10</span>
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+            <span
+              className={twMerge(
+                'cursor-pointer transition-colors duration-200',
+                'btn btn-xs btn-circle hover:btn-primary',
+                i === level ? 'btn-secondary' : 'btn-neutral'
+              )}
+              onClick={() => setLevel(i)}
+            >
+              {i}
+            </span>
+          ))}
         </div>
         <HtmlEditor
           label="Description"

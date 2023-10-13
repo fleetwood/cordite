@@ -1,9 +1,12 @@
 import Section from 'components/ui/section'
 import {userContext} from 'context/UserContext'
-import {CharClassDetail} from 'prisma/context'
+import {Ability, CharClassDetail} from 'prisma/context'
 import {classNameProps} from 'types'
+import AbilityCard from '../Ability/AbilityCard'
 import CharacterCard from '../Character/characterCard'
 import AddAbilityDialog from './charClassAddAbility'
+import {useState} from 'react'
+import {twMerge} from 'tailwind-merge'
 
 type Props = classNameProps & {
   charClass: CharClassDetail
@@ -12,6 +15,7 @@ type Props = classNameProps & {
 
 const CharClassDetailView = ({ charClass, ...props }: Props) => {
   const { isAdmin, isDM } = userContext()
+  const [ability, setAbility] = useState<Ability>()
 
   return (
     <div>
@@ -26,9 +30,42 @@ const CharClassDetailView = ({ charClass, ...props }: Props) => {
             onComplete={props.invalidate}
           />
         )}
-        {charClass.abilities.map((ability) => (
-          <div>{ability.name}</div>
-        ))}
+        <div className="flex flex-row gap-2 px-2">
+          {charClass.abilities
+            .sort((a, b) => (a.level > b.level ? 1 : -1))
+            .map((a) => (
+              <button
+                className={twMerge(
+                  'btn btn-sm text-xs',
+                  ability && ability.id === a.id
+                    ? 'btn-primary'
+                    : 'btn-secondary'
+                )}
+                onClick={() => setAbility(a)}
+              >
+                {a.name}
+              </button>
+            ))}
+          <button
+            className={twMerge('btn btn-sm btn-circle text-xs', 'btn-info')}
+            onClick={() => setAbility(undefined)}
+          >
+            x
+          </button>
+        </div>
+        {ability ? (
+          <AbilityCard ability={ability} />
+        ) : (
+          charClass.abilities
+            .sort((a, b) => (a.level > b.level ? 1 : -1))
+            .map((ability) => (
+              <AbilityCard
+                className="bg-neutral/20 odd:bg-neutral/30 m-2"
+                ability={ability}
+                key={ability.id}
+              />
+            ))
+        )}
       </Section>
       {(isAdmin || isDM) && (
         <Section

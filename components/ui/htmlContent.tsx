@@ -7,12 +7,8 @@ type HtmlContentProps = classNameProps & {
   limit?: number
 }
 
-export const HtmlContent = ({
-  content,
-  limit,
-  ...props
-}: HtmlContentProps) => (
-  <div className={props.className}>
+export const HtmlContent = ({ content, limit, ...props }: HtmlContentProps) => (
+  <div className={twMerge('htmlContent', props.className)}>
     <>{ReactHtmlParser(content)}</>
   </div>
 )
