@@ -9,7 +9,6 @@
     "clean": "rm -rf .next",
     "dev": "clear && next dev",
     "dev:debug": "next dev --inspect-brk=5858",
-    "postinstall": "node ./postinstall.js",
     "pr-studio": "npx prisma studio",
     "pr-migrate": "npx prisma migrate dev",
     "pr-format": "npx prisma format",
