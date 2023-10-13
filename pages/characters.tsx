@@ -7,15 +7,15 @@ const Page = () => {
   const { user, isLoading } = userContext()
 
   return (
-    <PageLayout title="Characters">
-      <Typography className="col-span-3 lg:col-span-2 px-4 bg-neutral h-fit">
-        Characters
-      </Typography>
-      <Section
-        className="hidden lg:inline col-span-1 h-full opacity-70 bg-contain bg-no-repeat"
-        backgroundImage="/img/casting.jpg"
-      >
-        {' '}
+    <PageLayout
+      title="Characters"
+      bannerImage="/img/casting-banner.png"
+      sideImage='img/casting-side.png'
+    >
+      <Section>
+        <Typography className="col-span-3 lg:col-span-2 px-4 bg-neutral h-fit">
+          Characters
+        </Typography>
       </Section>
     </PageLayout>
   )

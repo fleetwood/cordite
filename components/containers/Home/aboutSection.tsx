@@ -6,7 +6,7 @@ const AboutSection = () => {
   return (
     <Section
       className="w-full h-full bg-cover bg-opacity-20 flex flex-col items-center"
-      backgroundImage="img/cd0.jpeg"
+      bannerImage="img/cd0.jpeg"
     >
       <h1 className="mt-4 text-secondary text-shadow-lg shadow-black">
         CORDITE

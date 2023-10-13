@@ -16,7 +16,7 @@ const Page = () => {
     <PageLayout title="Players">
       <Section
         className="hidden lg:inline col-span-1 h-full opacity-70 bg-contain bg-no-repeat"
-        backgroundImage="/img/casting.jpg"
+        bannerImage="/img/casting.jpg"
       >
         {isLoading && <Spinner />}
         {(isAdmin || isDM) && 

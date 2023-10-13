@@ -13,12 +13,12 @@ const BackgroundImage = (props: Props) => {
   return (
     <div
       className={twMerge(
-        'w-full h-full bg-no-repeat',
+        'bg-no-repeat',
         props.contain
           ? 'bg-contain'
           : props.cover
           ? 'bg-cover'
-          : 'bg-auto text-opacity-0',
+          : 'bg-auto',
         props.className
       )}
       style={style}
