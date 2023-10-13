@@ -9,7 +9,7 @@ export type LabelProps = variantProps & {
 const Label = (props:LabelProps) => {
   return (
     <label className="label">
-      <span className={twMerge('label-text', props.labelClass)}>
+      <span className={twMerge('label-text font-semibold text-primary mt-4', props.labelClass)}>
         {props.label}
       </span>
     </label>

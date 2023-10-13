@@ -1,6 +1,7 @@
 export * from './ability'
 export * from './character'
 export * from './charClass'
+export * from './charStat'
 export * from './skill'
 export * from './stat'
 export * from './user'

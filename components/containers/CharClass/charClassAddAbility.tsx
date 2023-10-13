@@ -1,5 +1,6 @@
 import HtmlEditor from 'components/forms/HtmlEditor'
 import Label from 'components/forms/Label'
+import SelectRange from 'components/forms/SelectRange'
 import TextInput from 'components/forms/TextInput'
 import OpenDialog from 'components/ui/dialogs/openDialog'
 import {useToast} from 'context/ToastContextProvider'
@@ -59,37 +60,7 @@ const AddAbilityDialog = ({charClassId, ...props}:Props) => {
         <Label
           label={`Required Level: ${level === 0 ? 'None' : level.toString()}`}
         />
-        <input
-          type="range"
-          min={0}
-          max={10}
-          value={level}
-          onChange={(e) =>
-            setLevel((v) => {
-              try {
-                return parseInt(e.currentTarget.value)
-              } catch (error) {
-                return v
-              }
-            })
-          }
-          className="range"
-          step="1"
-        />
-        <div className="w-full flex justify-between text-xs px-2">
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-            <span
-              className={twMerge(
-                'cursor-pointer transition-colors duration-200',
-                'btn btn-xs btn-circle hover:btn-primary',
-                i === level ? 'btn-secondary' : 'btn-neutral'
-              )}
-              onClick={() => setLevel(i)}
-            >
-              {i}
-            </span>
-          ))}
-        </div>
+        <SelectRange label='level' min={1} max={10} step={1} value={level} setValue={setLevel} />
         <HtmlEditor
           label="Description"
           content={description}

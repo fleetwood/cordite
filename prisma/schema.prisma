@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
@@ -36,8 +36,8 @@ model Stat {
   description String
   cast        Boolean? @default(false)
 
-  skills Skill[]     @relation("skill_stats")
-  chars  Character[] @relation("char_stats")
+  skills    Skill[]    @relation("skill_stats")
+  charStats CharStat[] @relation("character_stats")
 }
 
 model Skill {
@@ -52,8 +52,9 @@ model Skill {
   description String
 
   statId String
-  stat   Stat        @relation("skill_stats", fields: [statId], references: [id])
-  char   Character[] @relation("char_skills")
+  stat   Stat   @relation("skill_stats", fields: [statId], references: [id])
+
+  charSkills CharSkill[] @relation("character_skills")
 }
 
 model CharClass {
@@ -90,6 +91,8 @@ model Ability {
 
   charClassId String
   charClass   CharClass @relation("charClass_abilities", fields: [charClassId], references: [id])
+
+  charAbilities CharAbility[] @relation("character_abilities")
 }
 
 model Requirements {
@@ -124,8 +127,55 @@ model Character {
 
   charClassId String
   charClass   CharClass @relation("character_class", fields: [charClassId], references: [id])
-  stats       Stat[]    @relation("char_stats")
-  skills      Skill[]   @relation("char_skills")
+
+  stats     CharStat[]    @relation("char_stats")
+  skills    CharSkill[]   @relation("char_skills")
+  abilities CharAbility[] @relation("char_abilities")
+}
+
+model CharStat {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  level Int @default(0)
+
+  characterId String
+  character   Character @relation("char_stats", fields: [characterId], references: [id])
+
+  statId String
+  stat   Stat   @relation("character_stats", fields: [statId], references: [id])
+}
+
+model CharSkill {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  level Int @default(0)
+
+  characterId String
+  character   Character @relation("char_skills", fields: [characterId], references: [id])
+
+  skillId String
+  skill   Skill  @relation("character_skills", fields: [skillId], references: [id])
+}
+
+model CharAbility {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visible   Boolean  @default(true)
+
+  level Int @default(0)
+
+  characterId String
+  character   Character @relation("char_abilities", fields: [characterId], references: [id])
+
+  abilityId String
+  ability   Ability @relation("character_abilities", fields: [abilityId], references: [id])
 }
 
 model Melee {

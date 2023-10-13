@@ -21,6 +21,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         refetch,
         isDM: user?.role === 'DM',
         isAdmin: user?.role === 'ADMIN',
+        loggedOut: !isLoading && !user
       }}
     >
       {children}

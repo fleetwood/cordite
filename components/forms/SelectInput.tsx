@@ -40,13 +40,18 @@ const SelectInput = ({variant='neutral', ...props}:SelectInputProps) => {
         className={twMerge(bgVariant, textVariantContent)}
         onChange={(e) => onChange(e.currentTarget.value)}
       >
-        {props.default !== false && (
+        {props.placeholder && (
           <option className={textVariantContent} id={null}>
-            {props.placeholder ?? props.label}
+            {props.placeholder}
           </option>
         )}
         {props.items.map((item) => (
-          <option className={textVariantContent} key={item.id} value={item.id} selected={item.id === props.item}>
+          <option
+            className={textVariantContent}
+            key={item.id}
+            value={item.id}
+            selected={item.id === props.item}
+          >
             {item.name}
           </option>
         ))}

@@ -10,7 +10,6 @@ type StatExpViewProps = classNameProps & {
 
 const SkillView = (props:StatExpViewProps) => {
   const { user, isLoading } = userContext()
-  const [dialogOpen, setDialogOpen] = useState(false)
   
   return (
     <div className={props.className}>
@@ -19,7 +18,6 @@ const SkillView = (props:StatExpViewProps) => {
           <Typography>Skills</Typography>
         </h3>
       </div>
-      
     </div>
   )}
 
