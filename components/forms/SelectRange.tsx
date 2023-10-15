@@ -6,7 +6,7 @@ import {uuid} from 'utils/helpers'
 
 type Props = LabelProps & variantProps & classNameProps & {
   value:    number
-  setValue: Dispatch<SetStateAction<Number>>
+  setValue: (v:any) => void
   min:      number
   max:      number
   step:     number
@@ -29,11 +29,11 @@ const SelectRange = (props:Props) => {
         max={props.max}
         value={props.value}
         onChange={(e) =>
-          props.setValue((v) => {
+          props.setValue(() => {
             try {
               return parseInt(e.currentTarget.value)
             } catch (error) {
-              return v
+              return props.value
             }
           })
         }

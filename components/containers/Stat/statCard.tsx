@@ -12,7 +12,7 @@ type StatTreeCardProps = classNameProps & {
 const StatCard = ({stat, ...props}:StatTreeCardProps) => {
   return (
     <Card className="bg-neutral/20 odd:bg-neutral/30 group">
-      <CardTitle className={twMerge('text-primary group-odd:text-secondary', stat.cast ?  'italic' : '')}>
+      <CardTitle className={twMerge('text-lg text-primary group-odd:text-secondary', stat.cast ?  'italic' : '')}>
         {stat.name}
       </CardTitle>
       {props.noContent === undefined && (

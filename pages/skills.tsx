@@ -61,7 +61,7 @@ const Page = () => {
   }, [newName, newDescription, newStat])
 
   return (
-    <PageLayout title="Skills">
+    <PageLayout title="Skills" randomSide>
       <Typography className="px-4 bg-neutral/20">
         <p>
           On character creation, you may choose proficiency in 2 skills. Your
@@ -82,6 +82,7 @@ const Page = () => {
       </Typography>
 
       {user && (
+        <div className="text-right py-2 my-1 border-b border-neutral">
         <OpenDialog
           title="Add a New Skill"
           btnLabel="New Skill"
@@ -120,11 +121,12 @@ const Page = () => {
             </button>
           </div>
         </OpenDialog>
+        </div>
       )}
 
-      <div className="join min-w-full items-center">
-        <TextInput className='join-item bg-base-200/50 my-2' placeholder='Search...' value={search} setValue={setSearch} />
-        <button className='btn join-item' onClick={() => setSearch('')}>Clear</button>
+      <div className="join min-w-full items-center px-4">
+        <TextInput className='join-item bg-neutral/50 my-2' placeholder='Search...' value={search} setValue={setSearch} />
+        <button className='btn btn-primary join-item' disabled={search?.length<1} onClick={() => setSearch('')}>Clear</button>
       </div>
 
       {stats &&

@@ -1,11 +1,11 @@
 import React from 'react'
 import {twMerge} from 'tailwind-merge'
 import {uuid} from 'utils/helpers'
-import VmenuLink from '../links/VerticalMenuLink'
+import VmenuLink from '../../links/VerticalMenuLink'
 import {useSession} from 'next-auth/react'
-import GoogleLogin from '../googleLogin'
+import GoogleLogin from '../../googleLogin'
 
-const NavMenu = (props:{currentPath: string, mobile?: boolean}) => {
+const NavLinks = (props:{currentPath: string, mobile?: boolean}) => {
   const { status } = useSession()
 
   const sections = status === 'authenticated' ? [
@@ -13,11 +13,6 @@ const NavMenu = (props:{currentPath: string, mobile?: boolean}) => {
     label: 'Core',
     link: '/',
     noLogin: true
-  },
-  {
-    label: 'System',
-    link: '/system',
-    submenu: true
   },
   {
     label: 'Health',
@@ -96,4 +91,4 @@ const NavMenu = (props:{currentPath: string, mobile?: boolean}) => {
   </div>
 )}
 
-export default NavMenu
+export default NavLinks

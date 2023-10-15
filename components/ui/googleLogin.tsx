@@ -15,6 +15,7 @@ import {GoogleIcon} from './icons'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import Spinner from './spinner'
+import Avatar from './image/avatar'
 
 type MenuLoginProps = classNameProps & variantProps & {
   mobile?: boolean
@@ -46,11 +47,7 @@ const GoogleLogin = (props: MenuLoginProps) => {
       {isLoading && <Spinner />}
       {user &&
       <label tabIndex={0} className="m-1">
-        <div className="avatar">
-          <div className="w-20 mask mask-hexagon uppercase text-base-content">
-            {user.image ? <img loading='lazy' src={user.image!} /> : user.name.substring(0, 1)}
-          </div>
-        </div>
+        {user.image ? <Avatar admin={isAdmin} dm={isDM} src={user.image!} hex /> : user.name.substring(0, 1)}
       </label>
       }
       {user && (

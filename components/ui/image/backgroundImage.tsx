@@ -13,7 +13,7 @@ const BackgroundImage = (props: Props) => {
   return (
     <div
       className={twMerge(
-        'bg-no-repeat',
+        'bg-no-repeat max-h-screen',
         props.contain
           ? 'bg-contain'
           : props.cover

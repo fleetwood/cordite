@@ -12,6 +12,7 @@ export const UserStubInclude = {
         charClass: true,
         stats: true,
         skills: true,
+        abilities: true
       },
     },
   },

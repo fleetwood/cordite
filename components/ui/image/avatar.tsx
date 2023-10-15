@@ -7,6 +7,8 @@ type Props = classNameProps & {
   src:      string
   hex?:     boolean
   round?:   boolean
+  admin?:   boolean
+  dm?:      boolean
 }
 
 const Avatar = ({src, size = 'md',...props}:Props) => {
@@ -19,10 +21,18 @@ const Avatar = ({src, size = 'md',...props}:Props) => {
               : props.round ? 'rounded-full '
               : ''
   return (
-    <div className='avatar' >
-      <div className={twMerge(w, shape)}>
-        <SafeImage src={src} />
-      </div>
+    <div className={twMerge("avatar relative", w)}>
+      <SafeImage src={src} className={shape} />
+      {props.admin && (
+        <span className="top-4 right-0 absolute text-xs text-secondary-content bg-secondary p-1 rounded-full">
+          ADM
+        </span>
+      )}
+      {props.dm && (
+        <span className="top-4 right-0 absolute bg-primary text-xs text-primary-content p-1 rounded-full">
+          DM
+        </span>
+      )}
     </div>
   )
 }

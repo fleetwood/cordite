@@ -6,7 +6,7 @@ const Page = () => {
   const { user, isLoading } = userContext()
 
   return (
-    <PageLayout title="Health">
+    <PageLayout title="Health" randomSide>
       <Typography className="px-4 bg-neutral/20">
         <p>
           Hit points are called Will in my system. Taking damage is not just

@@ -1,19 +1,23 @@
+import {useRandomSide} from 'hooks/useRandomBanner'
 import {useSession} from 'next-auth/react'
 import {useRouter} from 'next/router'
 import React,{ReactNode} from 'react'
 import {twMerge} from 'tailwind-merge'
-import {GearboxIcon} from '../icons'
+import BackgroundImage from '../image/backgroundImage'
 import Section,{SectionProps} from '../section'
 import Toasts from '../toasts'
 import Semibold from '../typography/semibold'
-import NavMenu from './NavMenu'
+import Navigation from './navigation'
+import MobileHeader from './navigation/MobileHeader'
 
 type Props = SectionProps & {
-  requireLogin?:  boolean
-  children:       ReactNode
-  dark?:          boolean
-  banner?:        string
-  randomBanner?:  boolean
+  requireLogin?: boolean
+  children: ReactNode
+  dark?: boolean
+  banner?: string
+  sideImage?: string
+  sideClass?: string
+  randomSide?: boolean
 }
 
 const PageLayout: React.FC<Props> = ({
@@ -27,55 +31,25 @@ const PageLayout: React.FC<Props> = ({
   if (requireLogin && status === 'unauthenticated') {
     router.push('/')
   }
+  const side = props.sideImage
+    ? props.sideImage
+    : props.randomSide
+    ? useRandomSide()
+    : undefined
 
   return (
-    <main className="grid grid-cols-9 h-screen">
+    <main className="grid grid-cols-9 h-screen pageMesh">
       <Toasts />
-      <div className="md:hidden drawer absolute z-50 w-max">
-        <input id="mobile-menu" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-side">
-          <label
-            htmlFor="mobile-menu"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
-          <div className="menu p-4 w-80 min-h-full bg-base-200 ">
-            <label
-              htmlFor="mobile-menu"
-              className="btn btn-neutral drawer-button sm:hidden"
-            >
-              <GearboxIcon className="text-primary h-8 w-8" />
-            </label>
-            <NavMenu currentPath={currentPath} mobile />
-          </div>
-        </div>
-      </div>
-      <div className="hidden md:inline md:col-span-2 xl:col-span-1 relative">
-        <div
-          className={twMerge(
-            'min-w-full min-h-full bg-contain',
-            'shadow-lg shadow-black',
-            'border-r-[0.5rem] border-base-300/50'
-          )}
-          style={{ backgroundImage: 'url(/img/wallDark.jpg)' }}
-        >
-          <NavMenu currentPath={currentPath} />
-        </div>
-      </div>
-      <div className="overflow-y-scroll scrollbar-hide col-span-9 md:col-span-7 xl:col-span-8 relative pageMesh">
-        <div className="md:hidden sticky top-0 z-50 bg-base-100 col-span-8 grid grid-cols-2 items-center">
-          <div>
-            <label
-              htmlFor="mobile-menu"
-              className="btn btn-neutral drawer-button p-2 m-2"
-            >
-              <GearboxIcon className="text-primary h-8 w-8" />
-            </label>
-          </div>
-          <div className="text-right text-4xl pr-2 font-fraunces font-semibold text-primary">
-            CORDITE
-          </div>
-        </div>
+      <Navigation />
+      <div
+        className={twMerge(
+          'h-screen flex flex-col',
+          side !== undefined
+            ? 'col-span-9 md:col-span-5 xl:col-span-6'
+            : 'col-span-9 md:col-span-7 xl:col-span-8 '
+        )}
+      >
+        <MobileHeader />
         {status === 'loading' ? (
           <div>...</div>
         ) : (
@@ -83,23 +57,34 @@ const PageLayout: React.FC<Props> = ({
             <Section
               title={props.title}
               titleClass={twMerge(
+                'text-primary',
                 props.dark
-                  ? 'text-secondary shadow-md shadow-black px-4'
+                  ? 'shadow-md shadow-black px-4'
                   : 'bg-base-100 border-b border-neutral/50',
                 props.titleClass
               )}
-              className={twMerge('p-4 bg-cover h-full', props.className)}
+              className={twMerge(
+                'h-full overflow-y-scroll scrollbar-hide',
+                props.className
+              )}
               {...props}
             >
               {props.children}
-              <div className="sticky bottom-0 text-center p-1 bg-base-100 mt-4 text-sm">
-                <Semibold>CORDITE role-playing system</Semibold> {' '}
-                Copyright &copy;2021 John Fleetwood
-              </div>
             </Section>
           )
         )}
+        <div className="text-center p-1 bg-base-100 mt-4 text-sm">
+          <Semibold>CORDITE role-playing system</Semibold> Copyright &copy;2021
+          John Fleetwood
+        </div>
       </div>
+      {side && (
+        <BackgroundImage
+          className="hidden xl:inline col-span-2"
+          url={side}
+          cover
+        />
+      )}
     </main>
   )
 }

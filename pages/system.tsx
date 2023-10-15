@@ -6,7 +6,7 @@ const Page = () => {
   const { user, isLoading } = userContext()
 
   return (
-    <PageLayout title="Core System">
+    <PageLayout title="Core System" sideImage='img/equipment-side.png'>
       <Typography className="px-4 bg-neutral/20">
         Cordite originated as a fork of 5th Edition DnD (and some inspiration
         from other systems), and while it has long since deviated enough to be

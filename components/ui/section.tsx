@@ -12,42 +12,40 @@ export type SectionProps = classNameProps &
     bannerImage?: string
     bannerClass?: string
     randomBanner?: boolean
-    sideImage?: string
-    sideClass?: string
-    randomSide?: boolean
   }
 
 const Section = ({children, ...props}:SectionProps) => {
   const banner = props.bannerImage ? props.bannerImage : props.randomBanner ? useRandomBanner() : undefined
-  const side = props.sideImage ? props.sideImage : props.randomSide ? useRandomSide() : undefined
   
   return (
-    <div className="bg-base-200/50 grid grid-cols-6 justify-start h-full">
-      <div
-        className={twMerge(
-          'h-full col-span-6',
-          side ? ' xl:col-span-4' : ''
-        )}
-      >
-        {banner && (
-          <BackgroundImage
-            url={banner}
-            className={twMerge('xl:hidden h-[200px] md:h-[300px]',
-              props.bannerClass
+    <div 
+      className={twMerge(
+        'flex flex-col',
+        'bg-base-200/50 justify-start',
+        props.className
+      )}>
+        {(banner || props.title) &&
+          <div className="m-2">
+            {banner && (
+              <BackgroundImage
+                url={banner}
+                className={twMerge(
+                  'xl:hidden h-[200px] md:h-[300px]',
+                  props.bannerClass
+                )}
+              />
             )}
-          />
-        )}
-        {props.title && (
-          <h2 className={twMerge('font-fraunces p-2', props.titleClass)}>
-            {props.title}
-          </h2>
-        )}
-        {children}
+            {props.title && (
+              <h2 className={twMerge('font-fraunces p-2', props.titleClass)}>
+                {props.title}
+              </h2>
+            )}
+          </div>
+        }
+        <div className="m-2">
+          {children}
+        </div>
       </div>
-      {side && (
-        <BackgroundImage className="hidden xl:inline col-span-2" url={side} cover />
-      )}
-    </div>
   )
 }
 

@@ -6,7 +6,7 @@ const Page = () => {
   const { user, isLoading } = userContext()
 
   return (
-    <PageLayout title="Levels">
+    <PageLayout title="Levels" randomSide>
       <Typography className="px-4 bg-neutral/20">
         <p>
           There are 9 base levels, with an additional 4 prestige levels,
