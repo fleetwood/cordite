@@ -62,12 +62,7 @@ const Page = () => {
   return (
     <PageLayout title="Classes">
       <Typography className="px-4 bg-neutral/20">
-        <p>
-          Hit points are called Will in my system. Taking damage is not just
-          physical injury; it is primarily your will to fight eroding through
-          the stress of combat.
-        </p>
-
+        
         <Divider className="opacity-20" variant="secondary" />
 
         {classesLoading && <Spinner />}

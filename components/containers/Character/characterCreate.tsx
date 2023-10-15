@@ -1,12 +1,14 @@
 import {Transition} from '@headlessui/react'
 import SelectInput from 'components/forms/SelectInput'
-import SelectRange from 'components/forms/SelectRange'
 import TextInput from 'components/forms/TextInput'
+import Typography from 'components/ui/typography/typography'
 import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
 import {CharClassStub,CharStatCreateProps,Stat} from 'prisma/context'
 import {ReactNode, useEffect,useState} from 'react'
 import {twMerge} from 'tailwind-merge'
+import StatRange from './forms/StatRange'
+import SelectRange from 'components/forms/SelectRange'
 
 const charisma =  'charisma',
       finesse =   'finesse',
@@ -51,6 +53,9 @@ const CharacterCreateView = () => {
   const [level, setLevel] = useState(1)
   const [charClass, setCharClass] = useState<CharClassStub>()
   
+  const [statPoints, setStatPoints] = useState(0)
+  const [currentStatPoints, setCurrentStatPoints] = useState(0)
+
   const [phyStat, setPhy] = useState<CharStatCreateProps>()
   const [finStat, setFin] = useState<CharStatCreateProps>()
   const [witStat, setWit] = useState<CharStatCreateProps>()
@@ -72,13 +77,14 @@ const CharacterCreateView = () => {
     // hella ugly but ¯\_(ツ)_/¯
     if (!stats) return
 
-    const createProp = (prop: string) => {
+    const createProp = (prop: string, cast = false) => {
       const stat = stats.find((a) => a.name.toLowerCase() === prop)
       return stat
         ? {
             characterId: undefined,
             statId: stat.id,
             level: 0,
+            cast
           }
         : undefined
     }
@@ -90,14 +96,19 @@ const CharacterCreateView = () => {
     setPhy(() => createProp(physique))
     setWit(() => createProp(wit))
 
-    setAir(() => createProp(air))
-    setEarth(() => createProp(earth))
-    setWater(() => createProp(water))
-    setFire(() => createProp(fire))
-    setLight(() => createProp(light))
-    setLife(() => createProp(life))
-    setSpacetime(() => createProp(spacetime))
+    setAir(() => createProp(air, true))
+    setEarth(() => createProp(earth, true))
+    setWater(() => createProp(water, true))
+    setFire(() => createProp(fire, true))
+    setLight(() => createProp(light, true))
+    setLife(() => createProp(life, true))
+    setSpacetime(() => createProp(spacetime, true))
   }, [stats])
+
+  useEffect(() => {
+    setStatPoints(() => level+4)
+    setCurrentStatPoints(() => level+4)
+  }, [level])
 
   const [step, setStep] = useState(0)
   const Step = ({ children, current }: { children: ReactNode, current: number }) => (
@@ -195,162 +206,108 @@ const CharacterCreateView = () => {
         </Step>
         {/* STEP 2 */}
         <Step current={1}>
-          <SelectRange
+          <Typography>
+            CORDITE uses a unique system for generating stats; your stats on
+            character creation must have a sum of 5. You cannot lower a stat
+            below -2, and you cannot start with a stat above +3. Casting stats
+            count for double, and you cannot have access to more than 2
+            elements. 1 stat point is awarded at every level above 1. At even
+            levels, you gain an additional stat point; you can only increase
+            casting stats at even levels.
+          </Typography>
+          <h3 className="sticky top-0 z-10 shadow-sm shadow-black bg-base-100 p-2">
+            Available points:
+            <span className={twMerge(
+              'px-2 font-semibold',
+              currentStatPoints > 0 ? 'text-primary' :
+              currentStatPoints < 0 ? 'text-warning' :
+              'text-neutral'
+            )}>{currentStatPoints}</span>
+          </h3>
+          <StatRange 
             label="CHA"
-            value={chaStat?.level ?? 0}
-            setValue={(level) =>
-              setCha((c) => {
-                return { ...c, level }
-              })
-            }
+            value={chaStat}
+            setValue={setCha}
             min={-2}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="FIN"
-            value={finStat?.level ?? 0}
-            setValue={(level) =>
-              setFin((c) => {
-                return { ...c, level }
-              })
-            }
+            value={finStat}
+            setValue={setFin}
             min={-2}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="FORT"
-            value={fortStat?.level ?? 0}
-            setValue={(level) =>
-              setFort((c) => {
-                return { ...c, level }
-              })
-            }
+            value={fortStat}
+            setValue={setFort}
             min={-2}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="INT"
-            value={intStat?.level ?? 0}
-            setValue={(level) =>
-              setInt((c) => {
-                return { ...c, level }
-              })
-            }
+            value={intStat}
+            setValue={setInt}
             min={-2}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="PHY"
-            value={phyStat?.level ?? 0}
-            setValue={(level) =>
-              setPhy((c) => {
-                return { ...c, level }
-              })
-            }
+            value={phyStat}
+            setValue={setPhy}
             min={-2}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="WIT"
-            value={witStat?.level ?? 0}
-            setValue={(level) =>
-              setWit((c) => {
-                return { ...c, level }
-              })
-            }
+            value={witStat}
+            setValue={setWit}
             min={-2}
             max={2}
-            step={1}
           />
 
-          <SelectRange
+          <StatRange
             label="AIR"
-            value={airStat?.level ?? 0}
-            setValue={(level) =>
-              setAir((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={airStat}
+            setValue={setAir}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="EARTH"
-            value={earthStat?.level ?? 0}
-            setValue={(level) =>
-              setEarth((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={earthStat}
+            setValue={setEarth}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="WATER"
-            value={waterStat?.level ?? 0}
-            setValue={(level) =>
-              setWater((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={waterStat}
+            setValue={setWater}
             max={2}
-            step={1}
-          />
-          <SelectRange
+            />
+          <StatRange
             label="FIRE"
-            value={fireStat?.level ?? 0}
-            setValue={(level) =>
-              setFire((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={fireStat}
+            setValue={setFire}
             max={2}
-            step={1}
-          />
-          <SelectRange
+            />
+          <StatRange
             label="LIFE"
-            value={lifeStat?.level ?? 0}
-            setValue={(level) =>
-              setLife((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={lifeStat}
+            setValue={setLife}
             max={2}
-            step={1}
-          />
-          <SelectRange
+            />
+          <StatRange
             label="LIGHT"
-            value={lightStat?.level ?? 0}
-            setValue={(level) =>
-              setLight((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={lightStat}
+            setValue={setLight}
             max={2}
-            step={1}
           />
-          <SelectRange
+          <StatRange
             label="SPACE"
-            value={spacetimeStat?.level ?? 0}
-            setValue={(level) =>
-              setSpacetime((c) => {
-                return { ...c, level }
-              })
-            }
-            min={-2}
+            value={spacetimeStat}
+            setValue={setSpacetime}
             max={2}
-            step={1}
           />
         </Step>
 

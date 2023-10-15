@@ -11,17 +11,19 @@ import Navigation from './navigation'
 import MobileHeader from './navigation/MobileHeader'
 
 type Props = SectionProps & {
-  requireLogin?: boolean
-  children: ReactNode
-  dark?: boolean
-  banner?: string
-  sideImage?: string
-  sideClass?: string
-  randomSide?: boolean
+  requireLogin?:    boolean
+  children:         ReactNode | ReactNode[]
+  dark?:            boolean
+  backgroundImage?: string
+  banner?:          string
+  sideImage?:       string
+  sideClass?:       string
+  randomSide?:      boolean
 }
 
 const PageLayout: React.FC<Props> = ({
   requireLogin = true,
+  backgroundImage,
   ...props
 }: Props) => {
   const { data: session, status } = useSession()
@@ -39,11 +41,12 @@ const PageLayout: React.FC<Props> = ({
 
   return (
     <main className="grid grid-cols-9 h-screen pageMesh">
+      {backgroundImage && <BackgroundImage url={backgroundImage} className='z-0 absolute top-0 col-span-9 left-0 w-screen h-screen'/> }
       <Toasts />
       <Navigation />
       <div
         className={twMerge(
-          'h-screen flex flex-col',
+          'h-screen flex flex-col z-1',
           side !== undefined
             ? 'col-span-9 md:col-span-5 xl:col-span-6'
             : 'col-span-9 md:col-span-7 xl:col-span-8 '

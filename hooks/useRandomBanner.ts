@@ -17,6 +17,6 @@ export const useRandomSide = () => randArray([
   '/img/charClasses/rogue-side.png',
   '/img/charClasses/scoundrel-side.png',
   '/img/charClasses/stalker-side.png',
-  '/img/charClasses/vagabond-side.png',
+  '/img/charClasses/specter-side.png',
   '/img/charClasses/warrior-side.png',
 ])

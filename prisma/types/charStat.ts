@@ -9,4 +9,5 @@ export type CharStatCreateProps = {
   characterId: string
   statId:      string
   level:       number
+  cast?:       boolean
 }
