@@ -24,21 +24,29 @@ const CharacterCard = ({character, ...props}:Props) => {
 
   return (
     <Card
-      {...props}
       onClick={() =>
         props.link ? go(character.id) : props.onClick ? props.onClick() : {}
       }
       className={twMerge(
         'bg-base-100/50 odd:bg-base-100/30',
+        'border border-neutral/50',
+        'transition-colors duration-200 ',
         (props.link !== undefined || props.onClick !== undefined)
-          ? 'hover:bg-neutral transition-colors duration-200 cursor-pointer'
-          : ''
+          ? 'hover:bg-black/80 cursor-pointer'
+          : '',
+        props.className
       )}
     >
       <CardContent className="grid grid-cols-2 min-h-[80px]">
-        {character.avatar && <BackgroundImage url={cloudinary.avatar(character.avatar, 'md')} contain />}
-        <div>
-          <h3 className='text-primary'>{character.name}</h3>
+        {character.avatar && (
+          <BackgroundImage
+            className="col-span-2 md:col-span-1 min-h-[120px]"
+            url={cloudinary.avatar(character.avatar, 'md')}
+            contain
+          />
+        )}
+        <div className="col-span-2 md:col-span-1">
+          <h3 className="text-primary">{character.name}</h3>
           <div className="font-semibold">{character.charClass.name}</div>
         </div>
       </CardContent>

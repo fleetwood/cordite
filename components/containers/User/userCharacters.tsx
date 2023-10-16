@@ -18,11 +18,9 @@ const UserCharacters = ({user, ...props}:Props) => {
   
   return isLoading ? <Spinner />
     : characters && characters.length > 0 ?
-    <Section className='bg-base-100'>
-      <div className="grid grid-cols-3 gap-2">
-        {characters.map((c) => <CharacterCard character={c} link />)}
-      </div>
-    </Section>
+    <div className="grid grid-cols-3 gap-2">
+      {characters.map((c) => <CharacterCard className='col-span-3 lg:col-span-1' character={c} link />)}
+    </div>
     : 
     <Section className='bg-base-100'>
       <p className='px-4 font-semibold text-warning'>No characters yet!</p>

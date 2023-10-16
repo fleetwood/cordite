@@ -111,7 +111,7 @@ const CharacterCreateView = () => {
   useEffect(() => {
     // start 4, +1 per odd level, +2 even level
     setStatPoints(() => totalPoints(level))
-    setMaxStat(() => level < 2 ? 3 : level < 5 ? 8 : 10)
+    setMaxStat(() => level < 2 ? 3 : level < 5 ? 8 : 13)
   }, [level])
 
   useEffect(() => {
@@ -211,7 +211,7 @@ const CharacterCreateView = () => {
             <SelectRange
               label={`Level ${level}`}
               min={1}
-              max={10}
+              max={13}
               step={1}
               value={level}
               setValue={setLevel}
@@ -237,6 +237,7 @@ const CharacterCreateView = () => {
             />
           </div>
         </Step>
+        
         {/* STEP 2 */}
         <Step current={1}>
           <Typography>

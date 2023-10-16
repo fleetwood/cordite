@@ -17,9 +17,7 @@ const Page = (props) => {
   return (
     <PageLayout title="Characters" sideImage='/img/character-side.jpeg'>
       <div className="px-4">
-        <Typography>
-          {user && <UserCharacters user={user} />}
-        </Typography>
+        {user && <UserCharacters user={user} />}
         {user && <CharacterCreateView />}
         {isLoggedOut && (
           <div>

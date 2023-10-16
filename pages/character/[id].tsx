@@ -49,7 +49,10 @@ const Page = ({id, ...props}:Props) => {
   }
   
   return (
-    <PageLayout>
+    <PageLayout breadcrumbs={[
+      {label: 'Home', url: '/'},
+      {label: 'Characters', url: '/user/characters'},
+    ]}>
       <Section
         title={character?.name ?? ''}
         titleClass="bg-base-100 text-primary"
@@ -91,7 +94,11 @@ const Page = ({id, ...props}:Props) => {
               <h4 className="mt-4 my-2 border-b border-primary">Abilities</h4>
               <div className="grid xl:grid-cols-2 gap-2">
                 {character.abilities.map((ability: CharAbilityStub) => (
-                  <AbilityStubCard noDescription ability={ability} key={ability.id} />
+                  <AbilityStubCard
+                    noDescription
+                    ability={ability}
+                    key={ability.id}
+                  />
                 ))}
               </div>
             </div>

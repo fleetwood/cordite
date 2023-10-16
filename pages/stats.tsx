@@ -6,8 +6,6 @@ import OpenDialog from "components/ui/dialogs/openDialog"
 import PageLayout from "components/ui/layouts/Page"
 import Section from "components/ui/section"
 import Toggle from "components/ui/toggle"
-import Ital from "components/ui/typography/ital"
-import Typography from "components/ui/typography/typography"
 import {userContext} from "context/UserContext"
 import useRocketQuery from "hooks/useRocketQuery"
 import {Stat} from "prisma/context"
@@ -50,55 +48,57 @@ const Page = () => {
 
   return (
     <PageLayout title="Stats">
-      {isAdmin && (
-        <div className="text-right py-2 my-1 border-b border-neutral">
-        <OpenDialog
-          title="Add a Stat"
-          btnLabel="New Stat"
-          btnClassname="text-xs btn-sm rounded-full btn-accent"
-          open={dialogOpen}
-          setOpen={setDialogOpen}
-        >
-          <div>
-            <TextInput
-              label="Name"
-              placeholder="Give it a name"
-              value={newName}
-              setValue={setNewName}
-            />
-            <TextArea
-              label="Description"
-              placeholder="Describe it!"
-              value={newDescription}
-              setValue={setNewDescription}
-            />
-            <Toggle
-              label="Cast Stat?"
-              value={cast}
-              setValue={setCast}
-              className="my-2"
-              background
-              yn
-            />
-            <button className="btn btn-info" onClick={addStat}>
-              Add Stat
-            </button>
+      <div className="col-span-9 md:col-span-7">
+        {isAdmin && (
+          <div className="text-right py-2 my-1 border-b border-neutral">
+            <OpenDialog
+              title="Add a Stat"
+              btnLabel="New Stat"
+              btnClassname="text-xs btn-sm rounded-full btn-accent"
+              open={dialogOpen}
+              setOpen={setDialogOpen}
+            >
+              <div>
+                <TextInput
+                  label="Name"
+                  placeholder="Give it a name"
+                  value={newName}
+                  setValue={setNewName}
+                />
+                <TextArea
+                  label="Description"
+                  placeholder="Describe it!"
+                  value={newDescription}
+                  setValue={setNewDescription}
+                />
+                <Toggle
+                  label="Cast Stat?"
+                  value={cast}
+                  setValue={setCast}
+                  className="my-2"
+                  background
+                  yn
+                />
+                <button className="btn btn-info" onClick={addStat}>
+                  Add Stat
+                </button>
+              </div>
+            </OpenDialog>
           </div>
-        </OpenDialog>
-        </div>
-      )}
-      <Section
-        title="Physical Stats"
-        titleClass="mt-5 text-secondary uppercase text-xl bg-neutral/20 shadow shadow-black"
+        )}
+        <Section
+          title="Physical Stats"
+          titleClass="bg-base-100 mt-5 text-secondary uppercase text-xl shadow shadow-black"
         >
-        <StatView physicalStats />
-      </Section>
-      <Section
-        title="Casting Stats"
-        titleClass="mt-5 text-secondary uppercase text-xl bg-neutral/20 shadow shadow-black"
-      >
-        <StatView castingStats />
-      </Section>
+          <StatView physicalStats />
+        </Section>
+        <Section
+          title="Casting Stats"
+          titleClass="bg-base-100 mt-5 text-secondary uppercase text-xl shadow shadow-black"
+        >
+          <StatView castingStats />
+        </Section>
+      </div>
     </PageLayout>
   )
 }

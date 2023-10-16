@@ -9,6 +9,8 @@ import Toasts from '../toasts'
 import Semibold from '../typography/semibold'
 import Navigation from './navigation'
 import MobileHeader from './navigation/MobileHeader'
+import {uuid} from 'utils/helpers'
+import Link from 'next/link'
 
 type Props = SectionProps & {
   requireLogin?:    boolean
@@ -19,6 +21,7 @@ type Props = SectionProps & {
   sideImage?:       string
   sideClass?:       string
   randomSide?:      boolean
+  breadcrumbs?:     {label:string, url: string}[]
 }
 
 const PageLayout: React.FC<Props> = ({
@@ -41,18 +44,33 @@ const PageLayout: React.FC<Props> = ({
 
   return (
     <main className="grid grid-cols-9 h-screen pageMesh">
-      {backgroundImage && <BackgroundImage url={backgroundImage} className='z-0 absolute top-0 col-span-9 left-0 w-screen h-screen'/> }
+      {backgroundImage && (
+        <BackgroundImage
+          url={backgroundImage}
+          className="z-0 absolute top-0 col-span-9 left-0 w-screen h-screen"
+        />
+      )}
       <Toasts />
       <Navigation />
       <div
         className={twMerge(
           'h-screen flex flex-col z-1',
           side !== undefined
-            ? 'col-span-9 md:col-span-5 xl:col-span-6'
-            : 'col-span-9 md:col-span-7 xl:col-span-8 '
+            ? 'col-span-9 md:col-span-7 xl:col-span-6'
+            : 'col-span-9 md:col-span-8'
         )}
       >
         <MobileHeader />
+        {props.breadcrumbs && (
+          <div className="text-sm breadcrumbs pl-2 col-span-7 overflow-hidden">
+            <ul>
+              {props.breadcrumbs.map(b => (
+                <li key={uuid()}><Link href={b.url}>{b.label}</Link></li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {status === 'loading' ? (
           <div>...</div>
         ) : (

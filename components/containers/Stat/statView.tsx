@@ -41,7 +41,6 @@ const StatView = (props:StatTreeViewProps) => {
             className="cursor-pointer border border-primary/0 hover:border-primary/50"
             stat={s}
             key={uuid()}
-            noContent
           />
         ))}
     </div>
