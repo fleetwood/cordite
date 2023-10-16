@@ -1,37 +1,45 @@
+import {Disclosure} from '@headlessui/react'
 import {LabelProps} from 'components/forms/Label'
-import React, {ReactNode, useState} from 'react'
-import {twMerge} from 'tailwind-merge'
+import {ReactNode} from 'react'
 import {classNameProps} from 'types'
-import {CaretLeftIcon} from './icons'
+import {ChevronUpIcon} from './icons'
 
 type Props = classNameProps & LabelProps & {
+  label?:   string
   children: ReactNode | ReactNode[]
 }
 
 const Collapse = ({children, ...props}:Props) => {
-  const [open, setOpen] = useState(false)
   return (
-    <div className={twMerge('collapse border border-neutral/50 py-1 px-4')}>
-      <input type="checkbox" className="peer" />
-      <div className="
-        collapse-title text-primary 
-        flex items-center 
-        hover:text-secondary cursor-pointer
-        "
-        onClick={(() => setOpen(o => !o))}>
-        <span className="text-right">
-          <CaretLeftIcon
-            className={twMerge(
-              'transition-all duration-300 ease-out',
-              'text-primary w-8 h-8',
-              open ? 'rotate-90' : '-rotate-90',
-              )}
+    <Disclosure>
+      {({ open }) => (
+        <div className="my-2">
+          <Disclosure.Button
+            className={`
+                  flex w-full justify-between 
+                  px-4 py-2 text-left text-sm 
+                  font-medium text-secondary-content 
+                  hover:bg-secondary transform duration-300
+                  ${open ? 'bg-secondary' : 'bg-neutral'}
+                  `}
+          >
+            {props.label && <span>{props.label}</span>}
+            <ChevronUpIcon
+              className={`transform duration-300 ${
+                open ? '' : '-rotate-180 '
+              } h-8 w-8`}
             />
-        </span>
-        <span className="">{props.label ? props.label : open ? 'CLOSE' : 'OPEN'}</span>
-      </div>
-      <div className={twMerge(open ? "collapse-open" : 'collapse-content')}>{children}</div>
-    </div>
+          </Disclosure.Button>
+          <Disclosure.Panel
+            className="
+                  border border-dashed border-secondary
+                  px-4 pt-4 pb-2 text-sm"
+          >
+            {children}
+          </Disclosure.Panel>
+        </div>
+      )}
+    </Disclosure>
   )
 }
 

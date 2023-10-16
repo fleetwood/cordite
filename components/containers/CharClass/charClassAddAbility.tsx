@@ -5,8 +5,7 @@ import TextInput from 'components/forms/TextInput'
 import OpenDialog from 'components/ui/dialogs/openDialog'
 import {useToast} from 'context/ToastContextProvider'
 import {useState} from 'react'
-import {twMerge} from 'tailwind-merge'
-import {sendApi} from 'utils/helpers'
+import {notNullOrEmpty,sendApi} from 'utils/helpers'
 
 type Props = {
   charClassId: string
@@ -21,7 +20,7 @@ const AddAbilityDialog = ({charClassId, ...props}:Props) => {
   const [description, setDescription] = useState()
   const [level, setLevel] = useState(0)
 
-  const isValid = (property:string) => property !== undefined && property.trim().length > 0
+  const isValid = (property:string) => notNullOrEmpty(property)
 
   const valid = isValid(name) && isValid(description)
 

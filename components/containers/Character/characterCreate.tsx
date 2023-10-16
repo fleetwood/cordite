@@ -1,4 +1,4 @@
-import {Transition} from '@headlessui/react'
+import {Disclosure, Transition} from '@headlessui/react'
 import SelectInput from 'components/forms/SelectInput'
 import TextInput from 'components/forms/TextInput'
 import Typography from 'components/ui/typography/typography'
@@ -10,11 +10,20 @@ import {twMerge} from 'tailwind-merge'
 import StatRange from './forms/StatRange'
 import SelectRange from 'components/forms/SelectRange'
 import useDebug from 'hooks/useDebug'
-import {DEBUG} from 'utils/helpers'
+import {DEBUG, notNullOrEmpty} from 'utils/helpers'
 import Label from 'components/forms/Label'
 import Collapse from 'components/ui/collapse'
+import {BackpackIcon, BarchartIcon, CheckmarkIcon, ChevronUpIcon, GraduateIcon, UserCheckIcon, UserIcon} from 'components/ui/icons'
+import {Retryer} from 'react-query/types/core/retryer'
+import CharCreateNav from './create/Nav'
+import CharStepPanel from './create/Panel'
 
 const {debug} = useDebug('characterCreate', DEBUG)
+
+type StepProps = {
+  children?: ReactNode
+  current: number 
+}
 
 const CharacterCreateView = () => {
   const {user, invalidate: invalidateUser, isLoggedOut, isAdmin, isDm} = userContext()
@@ -60,7 +69,6 @@ const CharacterCreateView = () => {
   const [lifeStat, setLife] = useState<CharStatCreateProps>()
   const [lightStat, setLight] = useState<CharStatCreateProps>()
   const [spacetimeStat, setSpacetime] = useState<CharStatCreateProps>()
-
   const CreateStats = [
     phyStat,
     finStat,
@@ -84,8 +92,14 @@ const CharacterCreateView = () => {
   const availablePoints = statPoints - pointsSpent
 
   const [maxStat, setMaxStat ] = useState(3)
-  const [minStat, setMinStat ] = useState(-2)
   const [numCast, setNumCast] = useState(0)
+  const validations = [
+    notNullOrEmpty(name) && notNullOrEmpty(charClass?.name),
+    statPoints > 0 && availablePoints >= 0,
+    false,
+    false,
+    false,
+  ]
   
   useEffect(() => {
       // hella ugly but ¯\_(ツ)_/¯
@@ -106,7 +120,7 @@ const CharacterCreateView = () => {
         setLife,
         setSpacetime,
       })
-    }, [stats])
+  }, [stats])
 
   useEffect(() => {
     // start 4, +1 per odd level, +2 even level
@@ -139,135 +153,82 @@ const CharacterCreateView = () => {
     } else setMaxStat(4)
   }, CreateStats)
 
-  useEffect(() => {
-
-  }, [])
-
   const [step, setStep] = useState(0)
-  const Step = ({ children, current }: { children: ReactNode, current: number }) => (
-    <Transition
-      as={'div'}
-      enter='transition-opacity duration-200'
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-      leave='transition-opacity duration-200'
-      show={step === current}
-    >
-      {children}
-    </Transition>
-  )
-
   return (
     <div className="flex flex-col">
       {/* NAVIGATION */}
-      <div className="mt-4 border-t border-primary/30 w-full">
-        <ul className="steps w-full">
-          <li
-            className={twMerge(
-              'step cursor-pointer hover:step-info',
-              step === 0 ? 'step-primary' : ''
-            )}
-            onClick={() => setStep(0)}
-          ></li>
-          <li
-            className={twMerge(
-              'step cursor-pointer hover:step-info',
-              step === 1 ? 'step-primary' : ''
-            )}
-            onClick={() => setStep(1)}
-          ></li>
-          <li
-            className={twMerge(
-              'step cursor-pointer hover:step-info',
-              step === 2 ? 'step-primary' : ''
-            )}
-            onClick={() => setStep(2)}
-          ></li>
-          <li
-            className={twMerge(
-              'step cursor-pointer hover:step-info',
-              step === 3 ? 'step-primary' : ''
-            )}
-            onClick={() => setStep(3)}
-          ></li>
-          <li
-            className={twMerge(
-              'step cursor-pointer hover:step-info',
-              step === 4 ? 'step-primary' : ''
-            )}
-            onClick={() => setStep(4)}
-          ></li>
-        </ul>
-      </div>
+      <CharCreateNav step={step} setStep={setStep} validation={validations} />
 
       <div className="relative">
         {/* STEP 1 */}
-        <Step current={0}>
-          <div>
-            <TextInput label="Name" value={name} setValue={setName} />
+        <CharStepPanel step={step} current={0} title="The Basics">
+          <TextInput label="Name" value={name} setValue={setName} />
 
-            <SelectRange
-              label={`Level ${level}`}
-              min={1}
-              max={13}
-              step={1}
-              value={level}
-              setValue={setLevel}
-              className={twMerge(
-                level > 9
-                  ? 'range-error bg-error/10'
-                  : level > 6
-                  ? 'range-warning bg-warning/10'
-                  : level > 3
-                  ? 'range-primary bg-primary/10'
-                  : level > 1
-                  ? 'range-secondary bg-secondary/10'
-                  : 'range-neutral'
-              )}
-            />
+          <SelectRange
+            label={`Level ${level}`}
+            min={1}
+            max={13}
+            step={1}
+            value={level}
+            setValue={setLevel}
+            className={twMerge(
+              level > 9
+                ? 'range-error bg-error/10'
+                : level > 6
+                ? 'range-warning bg-warning/10'
+                : level > 3
+                ? 'range-primary bg-primary/10'
+                : level > 1
+                ? 'range-secondary bg-secondary/10'
+                : 'range-neutral'
+            )}
+          />
 
-            <SelectInput
-              label="Choose your Character Class"
-              placeholder="Choose..."
-              items={classList}
-              item={charClass}
-              setItem={setCharClass}
-            />
-          </div>
-        </Step>
-        
+          <SelectInput
+            label="Choose your Character Class"
+            placeholder="Choose..."
+            items={classList}
+            item={charClass}
+            setItem={setCharClass}
+          />
+
+        </CharStepPanel>
+
         {/* STEP 2 */}
-        <Step current={1}>
-          <Typography>
+        <CharStepPanel step={step} current={1} title="Your Stats">
+          <Collapse label="How To">
             <p>
-              CORDITE uses a unique system for generating stats. 1 stat point is
-              awarded at every level above 1. At even levels, you gain an
-              additional stat point, and you may only only increase casting
-              stats at even levels.
+              CORDITE uses a unique system for generating stats. 1 stat
+              point is awarded at every level above 1. At even levels, you
+              gain an additional stat point, and you may only only
+              increase casting stats at even levels.
             </p>
-            <Collapse label="Rules">
-              <Label label="Level 1" />
-              <ul className="list-disc pl-4">
-                <li>Your stats on character creation must have a sum of 5.</li>
-                <li>You cannot start with a stat above +3</li>
-                <li>Only one stat can be 3</li>
-              </ul>
-              <Label label="All levels" />
-              <ul className="list-disc pl-4">
-                <li>You cannot lower a stat below -2</li>
-                <li>Casting stats cost double</li>
-                <li>You cannot have access to more than 2 elements</li>
-              </ul>
-              <p>
-                The caps (outside of prestige levels) for players stats are +5,
-                and cannot go below -2. You cannot raise a stat to +5 until
-                level 5, and you cannot raise a second stat to +5 until level 9.
-              </p>
-            </Collapse>
-          </Typography>
-          <h3 className="sticky top-0 z-10 shadow-sm shadow-black bg-base-100 p-2">
+            <Label label="Level 1" />
+            <ul className="list-disc pl-4">
+              <li>
+                Your stats on character creation must have a sum of 5.
+              </li>
+              <li>You cannot start with a stat above +3</li>
+              <li>Only one stat can be 3</li>
+            </ul>
+            <Label label="All levels" />
+            <ul className="list-disc pl-4">
+              <li>You cannot lower a stat below -2</li>
+              <li>Casting stats cost double</li>
+              <li>You cannot have access to more than 2 elements</li>
+            </ul>
+            <p>
+              The caps (outside of prestige levels) for players stats are
+              +5, and cannot go below -2. You cannot raise a stat to +5
+              until level 5, and you cannot raise a second stat to +5
+              until level 9.
+            </p>
+          </Collapse>
+          <h4
+            className="sticky top-0 z-10 
+            shadow-sm shadow-black 
+            bg-neutral p-2"
+          >
             <span
               className={twMerge(
                 'px-2 font-semibold',
@@ -275,12 +236,12 @@ const CharacterCreateView = () => {
                   ? 'text-secondary'
                   : availablePoints < 0
                   ? 'text-warning'
-                  : 'text-neutral'
+                  : 'text-neutral-content/50'
               )}
             >
               Available Points: {availablePoints} / {statPoints}
             </span>
-          </h3>
+          </h4>
           <StatRange
             label="CHA"
             value={chaStat}
@@ -379,17 +340,19 @@ const CharacterCreateView = () => {
             max={maxStat}
             available={availablePoints}
           />
-        </Step>
+        </CharStepPanel>
 
         {/* STEP 3 */}
-        <Step current={2}>
-          <h2>Step 3</h2>
-        </Step>
+        <CharStepPanel
+          step={step}
+          current={2}
+          title="Class Abilities"
+        ></CharStepPanel>
 
         {/* REVIEW */}
-        <Step current={3}>
+        <CharStepPanel step={step} current={3}>
           <h2>Step 4</h2>
-        </Step>
+        </CharStepPanel>
       </div>
     </div>
   )

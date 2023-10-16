@@ -1,19 +1,18 @@
 import SkillCard from 'components/containers/Skill/skillCard'
-import StatStubView from 'components/containers/Stat/statStubView'
 import SelectInput from 'components/forms/SelectInput'
 import TextArea from 'components/forms/TextArea'
 import TextInput from 'components/forms/TextInput'
-import {Card, CardContent, CardTitle} from 'components/ui/Card'
+import {Card,CardContent,CardTitle} from 'components/ui/Card'
 import OpenDialog from 'components/ui/dialogs/openDialog'
 import PageLayout from 'components/ui/layouts/Page'
 import Semibold from 'components/ui/typography/semibold'
 import Typography from 'components/ui/typography/typography'
-import { userContext } from 'context/UserContext'
+import {userContext} from 'context/UserContext'
 import useDebug from 'hooks/useDebug'
 import useRocketQuery from 'hooks/useRocketQuery'
-import {Skill, Stat, StatStub} from 'prisma/context'
-import {useEffect, useState} from 'react'
-import {DEBUG, sendApi} from 'utils/helpers'
+import {Skill,Stat,StatStub} from 'prisma/context'
+import {useEffect,useState} from 'react'
+import {notNullOrEmpty,sendApi} from 'utils/helpers'
 
 const {debug} = useDebug('skills')
 
@@ -55,9 +54,10 @@ const Page = () => {
 
   useEffect(() => {
     setValid(() => 
-    (newName !== undefined && newName.trim().length>0) && 
-    (newDescription !== undefined  && newDescription.trim().length>0) && 
-    newStat !== undefined)
+      notNullOrEmpty(newName) && 
+      notNullOrEmpty(newDescription) &&
+      newStat !== undefined
+    )
   }, [newName, newDescription, newStat])
 
   return (
