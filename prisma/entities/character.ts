@@ -26,8 +26,21 @@ const detail = async (id:string) => {
     include: {
       owner: true,
       charClass: true,
-      skills: true,
-      stats: true
+      skills: {
+        include: {
+          skill: true
+        }
+      },
+      stats: {
+        include: {
+          stat: true
+        }
+      },
+      abilities: {
+        include: {
+          ability: true
+        }
+      }
     }
   }) as CharacterDetail
 }

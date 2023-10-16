@@ -4,7 +4,7 @@ import TextInput from 'components/forms/TextInput'
 import Typography from 'components/ui/typography/typography'
 import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
-import {CharClassStub,CharStatCreateProps,GenerateCharacterCreateProps,PointsSpent,Stat, air, charisma, earth, finesse, fire, fortitude, intuition, life, light, physique, spacetime, water, wit} from 'prisma/context'
+import {CharClassStub,CharStatCreateProps,GenerateCharacterCreateProps,PointsSpent,Stat, air, charisma, earth, finesse, fire, fortitude, intuition, life, light, physique, spacetime, totalPoints, water, wit} from 'prisma/context'
 import {ReactNode, useEffect,useState} from 'react'
 import {twMerge} from 'tailwind-merge'
 import StatRange from './forms/StatRange'
@@ -110,7 +110,7 @@ const CharacterCreateView = () => {
 
   useEffect(() => {
     // start 4, +1 per odd level, +2 even level
-    setStatPoints(() => 4 + (Math.floor(level * 1.5)))
+    setStatPoints(() => totalPoints(level))
     setMaxStat(() => level < 2 ? 3 : level < 5 ? 8 : 10)
   }, [level])
 

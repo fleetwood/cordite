@@ -4,19 +4,9 @@ export type UserStub = User & {
   characters: CharacterStub[]
 }
 
-export const UserStubInclude = {
-  include: {
-    characters: {
-      include: {
-        owner: true,
-        charClass: true,
-        stats: true,
-        skills: true,
-        abilities: true
-      },
-    },
-  },
-}
+export const UserStubInclude = { include: {
+  characters: CharacterStubInclude
+}}
 
 export type UserDetailProps = {
   id?: string

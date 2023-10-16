@@ -35,7 +35,7 @@ const players = async (): Promise<UserStub[]> =>{
         role: 'PLAYER'
       },
       ...UserStubInclude
-    })
+    }) as unknown as UserStub[]
   } catch (error) {
    return undefined 
   }
