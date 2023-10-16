@@ -1,31 +1,20 @@
-import useDebug from "hooks/useDebug"
-import {prisma} from "prisma/context"
+import useDebug, {DEBUG} from "hooks/useDebug"
+import {SkillCreateProps, prisma} from "prisma/context"
 
-const {debug} = useDebug('entities/statExp')
+const {debug} = useDebug('entities/statExp', DEBUG)
 
 const all = async () => prisma.skill.findMany({})
 
 const find = async (id:string) => prisma.skill.findUnique({where: {id}, include: {stat: true}})
 
-const create = async ({
-  name,
-  description,
-  statId,
-}: {
-  name: string
-  description: string
-  statId: string
-}) => {
-  debug('create', {name, description, statId})
+const create = async (props:SkillCreateProps) => {
+  const data = { data: {
+    ...props,
+    icon: ''
+  }}
+  debug('create', data)
 
-  return prisma.skill.create({
-    data: {
-      name,
-      description,
-      icon: '',
-      statId,
-    },
-  })
+  return prisma.skill.create(data)
 }
 
 export const PrismaSkill = {

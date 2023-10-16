@@ -13,9 +13,20 @@ export type CharClassStub = CharClass & {
   subclasses:   CharClass[]
   parentClass?: CharClass
   abilities:    Ability[]
+  _count:       {
+                  characters: number
+                }
+}
+
+export const CharClassStubInclude = {
+  subClasses: true,
+  parentClass: true,
+  abilities: true,
   _count: {
-    characters: number
-  }
+    select: {
+      characters: true,
+    },
+  },
 }
 
 export type CharClassDetail = CharClassStub & {

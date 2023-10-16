@@ -1,8 +1,10 @@
-import {prisma} from "prisma/context";
+import useDebug, {DEBUG} from "hooks/useDebug";
+import {AbilityCreateProps, prisma} from "prisma/context";
 
-const create = async ({ name, description, level, charClassId }) =>
-  prisma.ability.create({
-    data: { name, icon: '', description, level, requirement: level, charClassId },
+const { debug, fail } = useDebug('entities/character', DEBUG)
+
+const create = async (data:AbilityCreateProps) =>
+  prisma.ability.create({data,
   })
 
 export const PrismaAbility = {
