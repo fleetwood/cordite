@@ -1,4 +1,4 @@
-import {CharAbility, CharClass, CharSkill, CharStat, Character, Skill, Stat, User} from "prisma/context";
+import {CharAbility, CharClass, CharSkill, CharStat, CharStatStub, Character, Skill, Stat, User} from "prisma/context";
 
 export type CharacterDetail = Character & {
   owner:      User
@@ -11,7 +11,7 @@ export type CharacterDetail = Character & {
 export type CharacterStub = Character & {
   owner:      User
   charClass:  CharClass
-  stats:      CharStat[]
+  stats:      CharStatStub[]
   skills:     CharSkill[]
   abilities:  CharAbility[]
 }
