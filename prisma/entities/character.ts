@@ -1,54 +1,59 @@
 import useDebug from "hooks/useDebug"
-import {CharacterDetail, CharacterStub, CharacterStubInclude, prisma} from "prisma/context"
+import {CharacterDetail,CharacterDetailInclude,CharacterStub,CharacterStubInclude,prisma} from "prisma/context"
 import {DEBUG} from "utils/helpers"
 
 const {debug, fail} = useDebug('entities/character', DEBUG)
 
-const playerCharacters = async (ownerId:string) => {
-  return await prisma.character.findMany({
-    where: {
-      visible: true,
-      ownerId
-    },
-    ...CharacterStubInclude
-  }) as CharacterStub[]
-}
-
-const stubs = async (ownerId: string) => {
-  return (await prisma.character.findMany({
-    where: {
-      visible: true,
-      ownerId,
-    },
-    ...CharacterStubInclude,
-  })) as CharacterStub[]
-}
-
-const detail = async (id:string) => {
-  const where = {
-    where: { id },
-    include: {
-      owner: true,
-      charClass: true,
-      skills: {
-        include: {
-          skill: true,
-        },
+const playerCharacters = async (ownerId:string):Promise<CharacterStub[]> => {
+  try {
+    const where = {
+        visible: true,
+        ownerId,
       },
-      stats: {
-        include: {
-          stat: true,
-        },
-      },
-      abilities: {
-        include: {
-          ability: true,
-        },
-      },
-    },
+      include = CharacterStubInclude
+    debug('playerCharacters', {where, include})
+    return (await prisma.character.findMany({
+      where,
+      ...include
+    })) as CharacterStub[]
+  } catch (error) {
+    fail('playerCharacters', {error})
+    return null
   }
-  debug('detail', where)
-  return await prisma.character.findUnique(where) as CharacterDetail
+}
+
+const stubs = async (ownerId: string):Promise<CharacterStub[]> => {
+  try {
+    const where = {
+        visible: true,
+        ownerId,
+      },
+      include = CharacterStubInclude
+
+    return (await prisma.character.findMany({
+      where,
+      ...include,
+    })) as CharacterStub[]
+  } catch (error) {
+    fail('stubs', { error })
+    return null
+  }
+}
+
+const detail = async (id:string):Promise<CharacterDetail> => {
+  try {
+    const where = { id },
+      include = CharacterDetailInclude
+
+    debug('detail', { where })
+    return (await prisma.character.findUnique({
+      where,
+      ...include,
+    })) as CharacterDetail
+  } catch (error) {
+    fail('detail', { error })
+    return null
+  }
 }
 
 export const PrismaCharacter = {

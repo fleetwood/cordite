@@ -7,35 +7,26 @@ import { PrismaClient } from '@prisma/client'
 import ws from 'ws'
 
 const {debug} = useDebug('prisma/context', DEBUG)
-
-neonConfig.webSocketConstructor = ws
 const connectionString = `${env.NEXT_PUBLIC_DATABASE_URL}`
 
 // Init prisma client
 const pool = new Pool({ connectionString })
-const adapter = new PrismaNeon(pool)
+// neonConfig.webSocketConstructor = ws
+// const adapter = new PrismaNeon(pool)
 export const prisma = new PrismaClient({
-  adapter,
-  log: [
-    {
-      emit: 'event',
-      level: 'query',
-    },
-    {
-      emit: 'event',
-      level: 'error',
-    },
-  ],
+  // adapter,
+  log: ['query', 'info', 'error'],
+  errorFormat: 'pretty'
 })
 
-prisma.$on('query', (e) => {
-  const {query, params} = e
-  debug('query', { query, params })
-})
+// prisma.$on('query', (e) => {
+//   const {query, params} = e
+//   debug('query', { query, params })
+// })
 
-prisma.$on('error', (e) => {
-  debug('error', { message: e.message })
-})
+// prisma.$on('error', (e) => {
+//   debug('error', { message: e.message })
+// })
 
 // Use Prisma Client as normal
 export * from '@prisma/client'

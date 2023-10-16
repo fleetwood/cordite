@@ -8,6 +8,26 @@ export type CharacterDetail = Character & {
   abilities:  CharAbilityStub[]
 }
 
+export const CharacterDetailInclude = { include: {
+  owner: true,
+  charClass: true,
+  skills: {
+    include: {
+      skill: true,
+    },
+  },
+  stats: {
+    include: {
+      stat: true,
+    },
+  },
+  abilities: {
+    include: {
+      ability: true,
+    },
+  },
+}}
+
 export type CharacterStub = Character & {
   owner:      User
   charClass:  CharClass
