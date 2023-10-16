@@ -7,23 +7,30 @@ import {twMerge} from 'tailwind-merge'
 import {variantProps,classNameProps} from 'types'
 import {DEBUG, uuid} from 'utils/helpers'
 
-const {debug} = useDebug('StatRange', DEBUG)
+const {debug} = useDebug('StatRange')
 
 type Props = LabelProps &
   variantProps &
   classNameProps & {
-    min?:     number
-    max?:     number
-    value:    CharStatCreateProps
-    setValue: Dispatch<SetStateAction<CharStatCreateProps>>
-    enabled?: boolean
+    range?:     [number, number]
+    min?:       number
+    max?:       number
+    value:      CharStatCreateProps
+    setValue:   Dispatch<SetStateAction<CharStatCreateProps>>
+    capped?:    boolean
+    available?: number
   }
 
-const StatRange = ({min = -2, max = 10, enabled = true, ...props}:Props) => {
+const defaultRange = [-2, 5]
+    , castRange = [0,5]
+
+const StatRange = ({available = 0, min = -2, max = 10, ...props}:Props) => {
   const step = 1
+  const range = props.range ?? props.value.cast ? castRange : defaultRange
+
   const genItems = () => {
     let items = []
-    for (var i = props.value.cast ? 0 : -2; i <= 10; i += step) {
+    for (var i = range[0]; i <= range[1]; i += step) {
       items.push(i)
     }
     return items
@@ -33,22 +40,39 @@ const StatRange = ({min = -2, max = 10, enabled = true, ...props}:Props) => {
   const [level, setLevel] = useState(props.value.level)
   
   const setValue = (n:any) => {
+    debug('setVal', n)
     if (!n) { return }
-    const num = n as number
-    if (num < min || num > max) { return }
+    const num = parseInt(n) as number
+    const theRentIsTooDamnHigh = (n - level) * (props.value.cast ? 2 : 1) > available
+    const outOfRange = num < min || num > max
+    if (theRentIsTooDamnHigh || outOfRange) { return }
 
-    setLevel(() => n as number)
-    const current = {...props.value, level: n}
-    debug('setValue', {value: {stat: props.label, ...props.value}, setTo: current})
-    // props.setValue(() => current)
+    setLevel(() => num)
+    const current = {...props.value, level: num}
+    props.setValue(() => current)
+  }
+
+  const btnClass = (i:number) => {
+    const classes = []
+    const selected = i === level
+    const inRange = (i >= min && i <= max)
+    const unAvailable = (i - level) * (props.value.cast ? 2 : 1) > available
+    
+    classes.push(selected ? 'btn-secondary' 
+      : unAvailable ? 'btn-disabled'
+      : 'btn-neutral'
+    )
+    classes.push(inRange ? 'hover:btn-primary' : selected ? 'btn-secondary' : 'btn-disabled')
+    return twMerge(classes)
   }
 
   return (
-    <div>
+    <div className='bg-base-100/50 odd:bg-base-100/70 my-2 p-2 border border-neutral'>
       {props.label && (
         <Label
           label={props.label + ` : ${level}`}
           labelClass={twMerge(
+            'mt-0 text-lg',
             props.value.cast ? 'text-secondary' : 'text-primary',
             props.labelClass
           )}
@@ -56,14 +80,21 @@ const StatRange = ({min = -2, max = 10, enabled = true, ...props}:Props) => {
       )}
       <input
         type="range"
-        min={props.value.cast ? 0 : -2}
-        max={10}
+        min={range[0]}
+        max={range[1]}
         value={level}
         onChange={(e) => {
           e.preventDefault()
           setValue(e.currentTarget?.value)
         }}
-        className={twMerge('range', props.className)}
+        className={twMerge(
+          'range', 
+          level >= 5 ? 'range-' : '',
+          level >= 3 ? 'range-success' : 
+          level > 0 ? 'range-secondary' :
+          level < 0 ? 'range-warning' : 'range-neutral',
+          props.className
+          )}
         step={step.toString()}
       />
       <div className="w-full flex justify-between text-xs px-2">
@@ -77,10 +108,9 @@ const StatRange = ({min = -2, max = 10, enabled = true, ...props}:Props) => {
             className={twMerge(
               'cursor-pointer transition-colors duration-200',
               'btn btn-xs',
-              (i >= min && i <= max) ? 'btn-circle hover:btn-primary' : 'btn-disabled',
-              i === level ? 'btn-secondary' : 'btn-neutral'
+              btnClass(i)
             )}
-            onClick={() => setValue(i)}
+            onClick={() => setValue(i.toString())}
           >
             {i}
           </span>

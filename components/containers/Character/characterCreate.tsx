@@ -4,25 +4,17 @@ import TextInput from 'components/forms/TextInput'
 import Typography from 'components/ui/typography/typography'
 import {userContext} from 'context/UserContext'
 import useRocketQuery from 'hooks/useRocketQuery'
-import {CharClassStub,CharStatCreateProps,Stat} from 'prisma/context'
+import {CharClassStub,CharStatCreateProps,GenerateCharacterCreateProps,PointsSpent,Stat, air, charisma, earth, finesse, fire, fortitude, intuition, life, light, physique, spacetime, water, wit} from 'prisma/context'
 import {ReactNode, useEffect,useState} from 'react'
 import {twMerge} from 'tailwind-merge'
 import StatRange from './forms/StatRange'
 import SelectRange from 'components/forms/SelectRange'
+import useDebug from 'hooks/useDebug'
+import {DEBUG} from 'utils/helpers'
+import Label from 'components/forms/Label'
+import Collapse from 'components/ui/collapse'
 
-const charisma =  'charisma',
-      finesse =   'finesse',
-      fortitude = 'fortitude',
-      intuition = 'intuition',
-      physique =  'physique',
-      wit =       'wit',
-      air =       'air',
-      earth =     'earth',
-      water =     'water',
-      fire =      'fire',
-      light =     'light',
-      life =      'life',
-      spacetime = 'spacetime'
+const {debug} = useDebug('characterCreate', DEBUG)
 
 const CharacterCreateView = () => {
   const {user, invalidate: invalidateUser, isLoggedOut, isAdmin, isDm} = userContext()
@@ -52,9 +44,6 @@ const CharacterCreateView = () => {
   const [name, setName] = useState()
   const [level, setLevel] = useState(1)
   const [charClass, setCharClass] = useState<CharClassStub>()
-  
-  const [statPoints, setStatPoints] = useState(0)
-  const [currentStatPoints, setCurrentStatPoints] = useState(0)
 
   const [phyStat, setPhy] = useState<CharStatCreateProps>()
   const [finStat, setFin] = useState<CharStatCreateProps>()
@@ -71,44 +60,88 @@ const CharacterCreateView = () => {
   const [lifeStat, setLife] = useState<CharStatCreateProps>()
   const [lightStat, setLight] = useState<CharStatCreateProps>()
   const [spacetimeStat, setSpacetime] = useState<CharStatCreateProps>()
+
+  const CreateStats = [
+    phyStat,
+    finStat,
+    witStat,
+    fortStat,
+    intStat,
+    chaStat,
+    fireStat,
+    airStat,
+    earthStat,
+    waterStat,
+    lifeStat,
+    lightStat,
+    spacetimeStat,
+  ]
+
   // const [abilities, setAbilities] = useState<Ability[]>()
 
+  const [statPoints, setStatPoints] = useState(0)
+  const pointsSpent = PointsSpent(CreateStats)
+  const availablePoints = statPoints - pointsSpent
+
+  const [maxStat, setMaxStat ] = useState(3)
+  const [minStat, setMinStat ] = useState(-2)
+  const [numCast, setNumCast] = useState(0)
+  
   useEffect(() => {
-    // hella ugly but ¯\_(ツ)_/¯
-    if (!stats) return
-
-    const createProp = (prop: string, cast = false) => {
-      const stat = stats.find((a) => a.name.toLowerCase() === prop)
-      return stat
-        ? {
-            characterId: undefined,
-            statId: stat.id,
-            level: 0,
-            cast
-          }
-        : undefined
-    }
-
-    setCha(() => createProp(charisma))
-    setFin(() => createProp(finesse))
-    setFort(() => createProp(fortitude))
-    setInt(() => createProp(intuition))
-    setPhy(() => createProp(physique))
-    setWit(() => createProp(wit))
-
-    setAir(() => createProp(air, true))
-    setEarth(() => createProp(earth, true))
-    setWater(() => createProp(water, true))
-    setFire(() => createProp(fire, true))
-    setLight(() => createProp(light, true))
-    setLife(() => createProp(life, true))
-    setSpacetime(() => createProp(spacetime, true))
-  }, [stats])
+      // hella ugly but ¯\_(ツ)_/¯
+      if (!stats) return
+      GenerateCharacterCreateProps({
+        stats,
+        setCha,
+        setFin,
+        setFort,
+        setInt,
+        setPhy,
+        setWit,
+        setAir,
+        setEarth,
+        setWater,
+        setFire,
+        setLight,
+        setLife,
+        setSpacetime,
+      })
+    }, [stats])
 
   useEffect(() => {
-    setStatPoints(() => level+4)
-    setCurrentStatPoints(() => level+4)
+    // start 4, +1 per odd level, +2 even level
+    setStatPoints(() => 4 + (Math.floor(level * 1.5)))
+    setMaxStat(() => level < 2 ? 3 : level < 5 ? 8 : 10)
   }, [level])
+
+  useEffect(() => {
+    setNumCast(
+      () => CreateStats.filter((s) => s?.cast === true && s.level > 0).length
+    )
+    
+    if (pointsSpent >= statPoints) {
+      setMaxStat(() => 0)
+    }
+    if (level == 1) {
+      // can only have one level 3 stat
+      setMaxStat(() =>
+        CreateStats.filter((s) => s?.level >= 3).length > 0 ? 2 : 3
+      )
+    } else if (level < 5) {
+      setMaxStat(4)
+    } else if (level < 9) {
+      // can only have one level 5 stat
+      setMaxStat(() =>
+        CreateStats.filter((s) => s?.level >= 5).length > 0 ? 4 : 5
+      )
+    } else if (level >= 9) {
+      setMaxStat(5)
+    } else setMaxStat(4)
+  }, CreateStats)
+
+  useEffect(() => {
+
+  }, [])
 
   const [step, setStep] = useState(0)
   const Step = ({ children, current }: { children: ReactNode, current: number }) => (
@@ -207,107 +240,143 @@ const CharacterCreateView = () => {
         {/* STEP 2 */}
         <Step current={1}>
           <Typography>
-            CORDITE uses a unique system for generating stats; your stats on
-            character creation must have a sum of 5. You cannot lower a stat
-            below -2, and you cannot start with a stat above +3. Casting stats
-            count for double, and you cannot have access to more than 2
-            elements. 1 stat point is awarded at every level above 1. At even
-            levels, you gain an additional stat point; you can only increase
-            casting stats at even levels.
+            <p>
+              CORDITE uses a unique system for generating stats. 1 stat point is
+              awarded at every level above 1. At even levels, you gain an
+              additional stat point, and you may only only increase casting
+              stats at even levels.
+            </p>
+            <Collapse label="Rules">
+              <Label label="Level 1" />
+              <ul className="list-disc pl-4">
+                <li>Your stats on character creation must have a sum of 5.</li>
+                <li>You cannot start with a stat above +3</li>
+                <li>Only one stat can be 3</li>
+              </ul>
+              <Label label="All levels" />
+              <ul className="list-disc pl-4">
+                <li>You cannot lower a stat below -2</li>
+                <li>Casting stats cost double</li>
+                <li>You cannot have access to more than 2 elements</li>
+              </ul>
+              <p>
+                The caps (outside of prestige levels) for players stats are +5,
+                and cannot go below -2. You cannot raise a stat to +5 until
+                level 5, and you cannot raise a second stat to +5 until level 9.
+              </p>
+            </Collapse>
           </Typography>
           <h3 className="sticky top-0 z-10 shadow-sm shadow-black bg-base-100 p-2">
-            Available points:
-            <span className={twMerge(
-              'px-2 font-semibold',
-              currentStatPoints > 0 ? 'text-primary' :
-              currentStatPoints < 0 ? 'text-warning' :
-              'text-neutral'
-            )}>{currentStatPoints}</span>
+            <span
+              className={twMerge(
+                'px-2 font-semibold',
+                availablePoints > 0
+                  ? 'text-secondary'
+                  : availablePoints < 0
+                  ? 'text-warning'
+                  : 'text-neutral'
+              )}
+            >
+              Available Points: {availablePoints} / {statPoints}
+            </span>
           </h3>
-          <StatRange 
+          <StatRange
             label="CHA"
             value={chaStat}
             setValue={setCha}
             min={-2}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="FIN"
             value={finStat}
             setValue={setFin}
             min={-2}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="FORT"
             value={fortStat}
             setValue={setFort}
             min={-2}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="INT"
             value={intStat}
             setValue={setInt}
             min={-2}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="PHY"
             value={phyStat}
             setValue={setPhy}
             min={-2}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="WIT"
             value={witStat}
             setValue={setWit}
             min={-2}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
 
           <StatRange
             label="AIR"
             value={airStat}
             setValue={setAir}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="EARTH"
             value={earthStat}
             setValue={setEarth}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="WATER"
             value={waterStat}
             setValue={setWater}
-            max={2}
-            />
+            max={maxStat}
+            available={availablePoints}
+          />
           <StatRange
             label="FIRE"
             value={fireStat}
             setValue={setFire}
-            max={2}
-            />
+            max={maxStat}
+            available={availablePoints}
+          />
           <StatRange
             label="LIFE"
             value={lifeStat}
             setValue={setLife}
-            max={2}
-            />
+            max={maxStat}
+            available={availablePoints}
+          />
           <StatRange
             label="LIGHT"
             value={lightStat}
             setValue={setLight}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
           <StatRange
             label="SPACE"
             value={spacetimeStat}
             setValue={setSpacetime}
-            max={2}
+            max={maxStat}
+            available={availablePoints}
           />
         </Step>
 
