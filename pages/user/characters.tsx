@@ -18,7 +18,7 @@ const Page = (props) => {
     <PageLayout title="Characters" sideImage='/img/character-side.jpeg'>
       <div className="px-4">
         {user && <UserCharacters user={user} />}
-        {/* {user && <CharacterCreateView />} */}
+        {user && <CharacterCreateView />}
         {isLoggedOut && (
           <div>
             You must <span className='underline cursor-pointer hover:bg-primary/20' onClick={() => signIn()}>login</span> to create a character.
