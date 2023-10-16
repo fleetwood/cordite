@@ -1,11 +1,16 @@
-import {CharacterStub,CharacterStubInclude,Prisma,User} from "prisma/context"
+import {CharacterStub,Prisma,User} from "prisma/context"
 
 export type UserStub = User & {
   characters: CharacterStub[]
 }
 
 export const UserStubInclude:Prisma.UserInclude = {
-  characters: {include: CharacterStubInclude}
+  characters: {include: {
+    charClass: true,
+    abilities: {include: { ability: true}},
+    skills: { include: { skill: true}},
+    stats: {include: { stat: true}}
+  }}
 }
 
 export type UserDetailProps = {

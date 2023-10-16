@@ -47,7 +47,10 @@ const Page = () => {
   }
 
   return (
-    <PageLayout title="Stats">
+    <PageLayout
+      title="Stats"
+      breadcrumbs={[{ label: 'Stats' }]}
+    >
       <div className="col-span-9 md:col-span-7">
         {isAdmin && (
           <div className="text-right py-2 my-1 border-b border-neutral">

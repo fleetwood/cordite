@@ -1,7 +1,7 @@
 import {Card,CardTitle,CardContent} from 'components/ui/Card'
 import {CharacterStub, UserStub} from 'prisma/types'
 import React from 'react'
-import CharacterCard from '../Character/characterCard'
+import CharacterStubCard from '../Character/characterCard'
 import {useRouter} from 'next/router'
 import {twMerge} from 'tailwind-merge'
 
@@ -24,7 +24,7 @@ const PlayerStubCard = ({player, ...props}:Props) => {
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
           {player.characters.map((char) => (
-            <CharacterCard
+            <CharacterStubCard
               className={twMerge(
                 "bg-neutral/50 odd:bg-neutral/30",
                 props.link !== undefined 

@@ -2,25 +2,28 @@ import useDebug,{DEBUG} from 'hooks/useDebug'
 import {
   CharClass,
   CharClassDetail,
-  CharClassDetailInclude,
   CharClassStub,
-  CharClassStubInclude,
-  CharacterDetailInclude,
   ClassCreateProps,
-  prisma,
-  whereNameOrId,
-  whereSlugOrId
+  prisma
 } from 'prisma/context'
 
 const { debug, fail } = useDebug('entities/charClass', DEBUG)
 
 const stubs = async (): Promise<CharClassStub[]> => {
   try {
-    const include = CharClassStubInclude
-    debug('stubs', {include})
-    const result = (await prisma.charClass.findMany({
-      include,
-    })) as unknown as CharClassStub[]
+    debug('stubs')
+    const result = await prisma.charClass.findMany({
+      include: {
+        subClasses: true,
+        parentClass: true,
+        abilities: true,
+        _count: {
+          select: {
+            characters: true,
+          },
+        },
+      },
+    }) as unknown as CharClassStub[]
     return result
   } catch (error) {
     fail('stubs', { error })
@@ -42,10 +45,43 @@ const create = async (props: ClassCreateProps): Promise<CharClass> => {
 
 const detail = async (name: string): Promise<CharClassDetail> => {
   try {
-    const where = whereNameOrId({ name })
     const result = (await prisma.charClass.findFirst({
-      where,
-      include: CharClassDetailInclude,
+      where: {
+        name: {
+          equals: name,
+          mode: 'insensitive',
+        },
+      },
+      include: {
+        subClasses: {
+          include: {
+            parentClass: true,
+            abilities: true,
+            _count: {
+              select: {
+                characters: true,
+              },
+            },
+          },
+        },
+        parentClass: true,
+        abilities: { include: { charClass: true } },
+        characters: {
+          include: {
+            owner: true,
+            charClass: true,
+            skills: {
+              include: { skill: true },
+            },
+            stats: {
+              include: { stat: true },
+            },
+            abilities: {
+              include: { ability: true },
+            },
+          },
+        },
+      },
     })) as unknown as CharClassDetail
     return result
   } catch (error) {

@@ -8,25 +8,19 @@ import ws from 'ws'
 
 const {debug} = useDebug('prisma/context', DEBUG)
 const connectionString = `${env.NEXT_PUBLIC_DATABASE_URL}`
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
 // Init prisma client
 const pool = new Pool({ connectionString })
 // neonConfig.webSocketConstructor = ws
 // const adapter = new PrismaNeon(pool)
-export const prisma = new PrismaClient({
+export const prisma = globalForPrisma.prisma || new PrismaClient({
   // adapter,
   log: ['query', 'info', 'error'],
   errorFormat: 'pretty'
 })
 
-// prisma.$on('query', (e) => {
-//   const {query, params} = e
-//   debug('query', { query, params })
-// })
-
-// prisma.$on('error', (e) => {
-//   debug('error', { message: e.message })
-// })
+if (__prod__) globalForPrisma.prisma = prisma
 
 // Use Prisma Client as normal
 export * from '@prisma/client'

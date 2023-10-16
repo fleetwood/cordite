@@ -11,10 +11,5 @@ export type AbilityCreateProps = {
 }
 
 export type CharAbilityStub = CharAbility & {
-  character:  Character
   ability:      Ability
-}
-
-export const CharAbilityStubInclude:Prisma.CharAbilityInclude = {
-  ability: true
 }

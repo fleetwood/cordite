@@ -7,7 +7,10 @@ const Page = () => {
   const { user, isLoading } = userContext()
 
   return (
-    <PageLayout title="RAD">
+    <PageLayout
+      title="RAD"
+      breadcrumbs={[{ label: 'RAD' }]}
+    >
       <Typography className="px-4 bg-neutral/20">
         <p>
           RAD is a fundamental mechanic of CORDITE, which includes maneuvers

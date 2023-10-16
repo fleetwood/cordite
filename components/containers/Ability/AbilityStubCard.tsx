@@ -20,7 +20,7 @@ const AbilityStubCard = ({ability, ...props}:Props) => {
       )}
     >
       <CardContent className="flex gap-2 items-center">
-        <h3 className="text-lg">{ability.ability.name}</h3>
+        <h3 className="text-lg">{ability.ability?.name}</h3>
         <Ital>Level {ability.level}</Ital>
       </CardContent>
       {props.noDescription === undefined && (
@@ -29,7 +29,7 @@ const AbilityStubCard = ({ability, ...props}:Props) => {
             <div className="italic">Level {ability.level} Ability</div>
           )}
           <Divider variant="neutral" className="opacity-20" />
-          <HtmlContent content={ability.ability.description} />
+          <HtmlContent content={ability.ability?.description} />
         </CardContent>
       )}
     </Card>

@@ -1,9 +1,7 @@
-import {Card, CardContent, CardFooter, CardTitle} from 'components/ui/Card'
+import {Card,CardContent} from 'components/ui/Card'
 import BackgroundImage from 'components/ui/image/backgroundImage'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {CharacterStub} from 'prisma/types'
-import React from 'react'
 import {twMerge} from 'tailwind-merge'
 import {classNameProps} from 'types'
 import {cloudinary} from 'utils/cloudinary'
@@ -14,7 +12,7 @@ type Props = classNameProps & {
   link?:      boolean
 }
 
-const CharacterCard = ({character, ...props}:Props) => {
+const CharacterStubCard = ({character, ...props}:Props) => {
   const router = useRouter()
 
   const go = (char: string) => {
@@ -47,11 +45,12 @@ const CharacterCard = ({character, ...props}:Props) => {
         )}
         <div className="col-span-2 md:col-span-1">
           <h3 className="text-primary">{character.name}</h3>
-          <div className="font-semibold">{character.charClass.name}</div>
+          <div className="font-semibold">Level {character.level}</div>
+          <div className="font-semibold">{character.charClass?.name}</div>
         </div>
       </CardContent>
     </Card>
   )
 }
 
-export default CharacterCard
+export default CharacterStubCard

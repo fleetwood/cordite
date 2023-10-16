@@ -1,7 +1,7 @@
 import Section from 'components/ui/section'
 import useRocketQuery from 'hooks/useRocketQuery'
 import React from 'react'
-import CharacterCard from '../Character/characterCard'
+import CharacterStubCard from '../Character/characterCard'
 import {CharacterStub, User} from 'prisma/context'
 import Spinner from 'components/ui/spinner'
 
@@ -19,7 +19,7 @@ const UserCharacters = ({user, ...props}:Props) => {
   return isLoading ? <Spinner />
     : characters && characters.length > 0 ?
     <div className="grid grid-cols-3 gap-2">
-      {characters.map((c) => <CharacterCard className='col-span-3 lg:col-span-1' character={c} link />)}
+      {characters.map((c) => <CharacterStubCard className='col-span-3 lg:col-span-1' character={c} link />)}
     </div>
     : 
     <Section className='bg-base-100'>

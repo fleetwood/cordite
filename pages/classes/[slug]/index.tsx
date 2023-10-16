@@ -32,6 +32,10 @@ const Page = ({ slug, ...props }) => {
           ? `/img/charClasses/${charClass.name.toLowerCase()}-side.png`
           : undefined
       }
+      breadcrumbs={[
+        {label: 'Classes', url: '/classes'},
+        {label: title}
+      ]}
     >
       {isLoading && <Spinner />}
       {charClass && <CharClassDetailView charClass={charClass} invalidate={invalidate} />}

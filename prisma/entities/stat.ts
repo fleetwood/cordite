@@ -21,7 +21,9 @@ const stubs = async () => prisma.stat.findMany({
 
 const stub = async (id:string):Promise<StatStub> => prisma.stat.findUnique({
   where: { id },
-  ...StatStubInclude
+  include: {
+    skills: true
+  }
 })
 
 export const PrismaStat = {

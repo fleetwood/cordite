@@ -21,7 +21,7 @@ type Props = SectionProps & {
   sideImage?:       string
   sideClass?:       string
   randomSide?:      boolean
-  breadcrumbs?:     {label:string, url: string}[]
+  breadcrumbs?:     {label:string, url?: string}[]
 }
 
 const PageLayout: React.FC<Props> = ({
@@ -36,13 +36,25 @@ const PageLayout: React.FC<Props> = ({
   if (requireLogin && status === 'unauthenticated') {
     router.push('/')
   }
+
+  const breadcrumbs = [
+    { label: 'Home', url: '/' }, 
+    ...(props.breadcrumbs?? []).filter(b => b !== null)
+  ]
+
   const side = props.sideImage
     ? props.sideImage
     : props.randomSide
     ? useRandomSide()
     : undefined
 
-  return (
+  return requireLogin && status !== 'authenticated' ? 
+    (
+      <main className="grid grid-cols-9 h-screen pageMesh">
+        <h3>...</h3>
+      </main> 
+    ) : 
+    (
     <main className="grid grid-cols-9 h-screen pageMesh">
       {backgroundImage && (
         <BackgroundImage
@@ -64,8 +76,11 @@ const PageLayout: React.FC<Props> = ({
         {props.breadcrumbs && (
           <div className="text-sm breadcrumbs pl-2 col-span-7 overflow-hidden">
             <ul>
-              {props.breadcrumbs.map(b => (
-                <li key={uuid()}><Link href={b.url}>{b.label}</Link></li>
+              {breadcrumbs.map(b => (
+                <li key={uuid()}>{ b.url 
+                  ? <Link href={b.url}>{b.label}</Link>
+                  : <span>{b.label}</span>
+                  }</li>
               ))}
             </ul>
           </div>
@@ -107,7 +122,7 @@ const PageLayout: React.FC<Props> = ({
         />
       )}
     </main>
-  )
+    )
 }
 
 export default PageLayout

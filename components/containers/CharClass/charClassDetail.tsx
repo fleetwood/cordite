@@ -3,7 +3,7 @@ import {userContext} from 'context/UserContext'
 import {Ability, CharClassDetail} from 'prisma/context'
 import {classNameProps} from 'types'
 import AbilityCard from '../Ability/AbilityCard'
-import CharacterCard from '../Character/characterCard'
+import CharacterStubCard from '../Character/characterCard'
 import AddAbilityDialog from './charClassAddAbility'
 import {useState} from 'react'
 import {twMerge} from 'tailwind-merge'
@@ -73,7 +73,7 @@ const CharClassDetailView = ({ charClass, ...props }: Props) => {
           title={`Characters (${charClass.characters.length})`}
         >
           {charClass.characters?.map((char) => (
-            <CharacterCard character={char} />
+            <CharacterStubCard character={char} />
           ))}
         </Section>
       )}

@@ -1,5 +1,5 @@
-import {Ability,CharClass,CharacterStub,CharacterStubInclude,Prisma} from "prisma/context"
-import {AbilityStub, AbilityStubInclude} from "./ability"
+import {Ability,CharClass,CharacterStub,Prisma} from "prisma/context"
+import {AbilityStub} from "./ability"
 
 export type ClassCreateProps = {
   name: string
@@ -18,27 +18,47 @@ export type CharClassStub = CharClass & {
                 }
 }
 
-export const CharClassStubInclude:Prisma.CharClassInclude = {
-  subClasses: true,
-  parentClass: true,
-  abilities: true,
-  _count: {
-    select: {
-      characters: true,
-    },
-  },
-}
 
 export type CharClassDetail = CharClass & {
-  subclasses:   CharClassStub[]
+  subclasses:   []
   parentClass?: CharClass
   abilities:    AbilityStub[]
   characters:   CharacterStub[]
 }
 
 export const CharClassDetailInclude: Prisma.CharClassInclude = {
-  subClasses: { include: CharClassStubInclude },
+  subClasses: {
+    include: {
+      parentClass: true,
+      abilities: true,
+      _count: {
+        select: {
+          characters: true,
+        },
+      },
+    },
+  },
   parentClass: true,
-  abilities: { include: AbilityStubInclude},
-  characters: { include: CharacterStubInclude}
+  abilities: {
+    include: {
+      charClass: true,
+    },
+  },
+  characters: { include: {
+    abilities: {
+      include: {
+        ability: true
+      }
+    },
+    skills: {
+      include: {
+        skill: true
+      }
+    },
+    stats: {
+      include: {
+        stat: true
+      }
+    }
+  }},
 }

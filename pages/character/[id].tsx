@@ -41,17 +41,17 @@ const Page = ({id, ...props}:Props) => {
     return (
       <div className={twMerge(
         "p-2 flex gap-2 bg-neutral/30 odd:bg-neutral/50",
-        stat.stat.cast ? 'text-secondary italic' : ''
+        stat.stat?.cast ? 'text-secondary italic' : ''
         )}>
-        <Semibold>{stat.stat.name}</Semibold>: <span>{stat.level}</span>
+        <Semibold>{stat.stat?.name}</Semibold>: <span>{stat.level}</span>
       </div>
     )
   }
   
   return (
     <PageLayout breadcrumbs={[
-      {label: 'Home', url: '/'},
       {label: 'Characters', url: '/user/characters'},
+      character ? {label: character.name} : null
     ]}>
       <Section
         title={character?.name ?? ''}

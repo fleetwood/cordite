@@ -1,5 +1,5 @@
 import useDebug from "hooks/useDebug"
-import {CharStat,Character,Prisma,Stat} from "prisma/context"
+import {CharStat,Stat} from "prisma/context"
 import {Dispatch,SetStateAction} from "react"
 
 const {debug} = useDebug('charStats')
@@ -19,13 +19,7 @@ export const charisma = 'charisma',
   spacetime = 'spacetime'
 
 export type CharStatStub = CharStat & {
-  character:  Character
   stat:       Stat
-}
-
-export const CharStatStubInclude:Prisma.CharStatInclude = {
-  character: true,
-  stat: true
 }
 
 export type CharStatCreateProps = {

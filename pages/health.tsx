@@ -6,7 +6,11 @@ const Page = () => {
   const { user, isLoading } = userContext()
 
   return (
-    <PageLayout title="Health" randomSide>
+    <PageLayout
+      title="Health"
+      randomSide
+      breadcrumbs={[{ label: 'Health' }]}
+    >
       <Typography className="px-4 bg-neutral/20">
         <p>
           Hit points are called Will in my system. Taking damage is not just

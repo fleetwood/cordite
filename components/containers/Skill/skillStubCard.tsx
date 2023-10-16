@@ -20,11 +20,11 @@ const SkillStubCard = ({ skill, ...props }: SkillCardProps) => {
       )}
     >
       <CardContent className="flex gap-2 items-center">
-        <h3 className="text-lg">{skill.skill.name}</h3>
+        <h3 className="text-lg">{skill.skill?.name}</h3>
         <Ital>Level {skill.level}</Ital>
       </CardContent>
       {props.noDescription === undefined && (
-        <CardContent>{skill.skill.description}</CardContent>
+        <CardContent>{skill.skill?.description}</CardContent>
       )}
     </Card>
   )

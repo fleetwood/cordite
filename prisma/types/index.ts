@@ -1,19 +1,21 @@
-export const whereSlugOrId = (props: { id?: string; slug?: string }) => {
+export const whereSlugOrId = <T>(props: { id?: string; slug?: string }) => {
   const { id, slug } = props
   const params = slug
     ? { slug: slug.toLowerCase() }
     : id
     ? { id: id }
     : undefined
-  return params
+  return params as T
 }
-export const whereNameOrId = (props: { id?: string; name?: string }) => {
-  const { id, name } = props
+export const whereNameOrId = <T>(props: { id?: string; name?: string }) => {
   const params = 
-    name ? { name: name } :
-    id ? { id: id } : 
+    props.name ? { name: {
+      equals: props.name,
+      mode: 'insensitive'
+    } } :
+    props.id ? { id: props.id } : 
     undefined
-  return params
+  return params as T
 }
 
 export * from './character'

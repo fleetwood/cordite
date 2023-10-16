@@ -60,7 +60,7 @@ const Page = () => {
   const valid = isValid(name) && isValid(description)
 
   return (
-    <PageLayout title="Classes">
+    <PageLayout title="Classes" breadcrumbs={[{label: 'Classes'}]}>
       <Typography className="px-4 bg-neutral/20">
         
         <Divider className="opacity-20" variant="secondary" />
