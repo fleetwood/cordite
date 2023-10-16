@@ -1,5 +1,5 @@
 import useDebug from "hooks/useDebug"
-import {CharAbility, Character, Ability} from "prisma/context"
+import {CharAbility, Character, Ability, Prisma} from "prisma/context"
 
 const {debug} = useDebug('charAbility')
 
@@ -13,4 +13,8 @@ export type AbilityCreateProps = {
 export type CharAbilityStub = CharAbility & {
   character:  Character
   ability:      Ability
+}
+
+export const CharAbilityStubInclude:Prisma.CharAbilityInclude = {
+  ability: true
 }

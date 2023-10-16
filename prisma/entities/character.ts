@@ -7,14 +7,13 @@ const {debug, fail} = useDebug('entities/character', DEBUG)
 const playerCharacters = async (ownerId:string):Promise<CharacterStub[]> => {
   try {
     const where = {
-        visible: true,
-        ownerId,
-      },
-      include = CharacterStubInclude
-    debug('playerCharacters', {where, include})
+      visible: true,
+      ownerId,
+    }
+    debug('playerCharacters', {where, CharacterStubInclude})
     return (await prisma.character.findMany({
       where,
-      ...include
+      include: CharacterStubInclude
     })) as CharacterStub[]
   } catch (error) {
     fail('playerCharacters', {error})
@@ -25,14 +24,12 @@ const playerCharacters = async (ownerId:string):Promise<CharacterStub[]> => {
 const stubs = async (ownerId: string):Promise<CharacterStub[]> => {
   try {
     const where = {
-        visible: true,
-        ownerId,
-      },
-      include = CharacterStubInclude
-
+      visible: true,
+      ownerId,
+    }
     return (await prisma.character.findMany({
       where,
-      ...include,
+      include: CharacterStubInclude
     })) as CharacterStub[]
   } catch (error) {
     fail('stubs', { error })
@@ -42,14 +39,12 @@ const stubs = async (ownerId: string):Promise<CharacterStub[]> => {
 
 const detail = async (id:string):Promise<CharacterDetail> => {
   try {
-    const where = { id },
-      include = CharacterDetailInclude
-
-    debug('detail', { where })
+    const where = { id }
+    debug('detail', { where, CharacterDetailInclude })
     return (await prisma.character.findUnique({
       where,
-      ...include,
-    })) as CharacterDetail
+      include: CharacterDetailInclude,
+    })) as unknown as CharacterDetail
   } catch (error) {
     fail('detail', { error })
     return null

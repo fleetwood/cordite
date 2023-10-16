@@ -1,13 +1,15 @@
-import useDebug, { DEBUG } from 'hooks/useDebug'
+import useDebug,{DEBUG} from 'hooks/useDebug'
 import {
   CharClass,
   CharClassDetail,
+  CharClassDetailInclude,
   CharClassStub,
   CharClassStubInclude,
-  CharacterStubInclude,
+  CharacterDetailInclude,
   ClassCreateProps,
   prisma,
-  whereSlugOrId,
+  whereNameOrId,
+  whereSlugOrId
 } from 'prisma/context'
 
 const { debug, fail } = useDebug('entities/charClass', DEBUG)
@@ -38,19 +40,12 @@ const create = async (props: ClassCreateProps): Promise<CharClass> => {
   }
 }
 
-const detail = async (slug: string): Promise<CharClassDetail> => {
+const detail = async (name: string): Promise<CharClassDetail> => {
   try {
-    
-    const where = whereSlugOrId({ slug }),
-      include = {
-        subClasses: true,
-        parentClass: true,
-        abilities: true,
-        characters: CharacterStubInclude,
-      }
+    const where = whereNameOrId({ name })
     const result = (await prisma.charClass.findFirst({
       where,
-      include,
+      include: CharClassDetailInclude,
     })) as unknown as CharClassDetail
     return result
   } catch (error) {

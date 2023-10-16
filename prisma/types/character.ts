@@ -1,47 +1,56 @@
-import {CharAbility, CharAbilityStub, CharClass, CharSkill, CharSkillStub, CharStat, CharStatStub, Character, Skill, Stat, User} from "prisma/context";
+import {
+  CharAbility,
+  CharAbilityStub,
+  CharAbilityStubInclude,
+  CharClass,
+  CharSkill,
+  CharSkillStub,
+  CharSkillStubInclude,
+  CharStat,
+  CharStatStub,
+  CharStatStubInclude,
+  Character,
+  Prisma,
+  User,
+} from 'prisma/context'
 
 export type CharacterDetail = Character & {
-  owner:      User
-  charClass:  CharClass
-  stats:      CharStatStub[]
-  skills:     CharSkillStub[]
-  abilities:  CharAbilityStub[]
+  owner: User
+  charClass: CharClass
+  stats: CharStatStub[]
+  skills: CharSkillStub[]
+  abilities: CharAbilityStub[]
 }
 
-export const CharacterDetailInclude = { include: {
-  owner: true,
-  charClass: true,
-  skills: {
-    include: {
-      skill: true,
+export const CharacterDetailInclude: Prisma.CharacterInclude =
+{
+    owner: true,
+    charClass: true,
+    skills: {
+      include: CharSkillStubInclude
     },
-  },
-  stats: {
-    include: {
-      stat: true,
+    stats: {
+      include: CharStatStubInclude
     },
-  },
-  abilities: {
-    include: {
-      ability: true,
+    abilities: {
+      include: CharAbilityStubInclude
     },
-  },
-}}
+  }
 
 export type CharacterStub = Character & {
-  owner:      User
-  charClass:  CharClass
-  stats:      CharStatStub[]
-  skills:     CharSkillStub[]
-  abilities:  CharAbilityStub[]
+  owner: User
+  charClass: CharClass
+  stats: CharStat[]
+  skills: CharSkill[]
+  abilities: CharAbility[]
 }
 
-export const CharacterStubInclude = { include: {
+export const CharacterStubInclude:Prisma.CharacterInclude = {
   owner: true,
   charClass: true,
-  stats: {include: {stat: true}},
-  skills: {include: {skill: true}},
-  abilities: true
-}}
+  stats: true,
+  skills: true,
+  abilities: true,
+}
 
-export const totalPoints = (level:number) => 4 + (Math.floor(level * 1.5))
+export const totalPoints = (level: number) => 4 + Math.floor(level * 1.5)

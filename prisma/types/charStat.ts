@@ -1,8 +1,6 @@
 import useDebug from "hooks/useDebug"
-import stats from "pages/stats"
-import {CharStat, Character, Stat} from "prisma/context"
+import {CharStat,Character,Prisma,Stat} from "prisma/context"
 import {Dispatch,SetStateAction} from "react"
-import {DEBUG} from "utils/helpers"
 
 const {debug} = useDebug('charStats')
 
@@ -23,6 +21,11 @@ export const charisma = 'charisma',
 export type CharStatStub = CharStat & {
   character:  Character
   stat:       Stat
+}
+
+export const CharStatStubInclude:Prisma.CharStatInclude = {
+  character: true,
+  stat: true
 }
 
 export type CharStatCreateProps = {

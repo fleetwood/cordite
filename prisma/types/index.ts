@@ -1,10 +1,18 @@
-export const whereSlugOrId = (props: {id?: string, slug?: string}) => {
+export const whereSlugOrId = (props: { id?: string; slug?: string }) => {
   const { id, slug } = props
   const params = slug
     ? { slug: slug.toLowerCase() }
     : id
     ? { id: id }
     : undefined
+  return params
+}
+export const whereNameOrId = (props: { id?: string; name?: string }) => {
+  const { id, name } = props
+  const params = 
+    name ? { name: name } :
+    id ? { id: id } : 
+    undefined
   return params
 }
 

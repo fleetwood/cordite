@@ -1,12 +1,12 @@
-import {Character, CharacterStub, CharacterStubInclude, User} from "prisma/context"
+import {CharacterStub,CharacterStubInclude,Prisma,User} from "prisma/context"
 
 export type UserStub = User & {
   characters: CharacterStub[]
 }
 
-export const UserStubInclude = { include: {
-  characters: CharacterStubInclude
-}}
+export const UserStubInclude:Prisma.UserInclude = {
+  characters: {include: CharacterStubInclude}
+}
 
 export type UserDetailProps = {
   id?: string
